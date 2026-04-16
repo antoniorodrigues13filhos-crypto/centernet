@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Center Net Informática | Performance Elite</title>
+    <meta name="google" content="notranslate">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,16 +37,7 @@
                 width: 100%;
                 max-width: 1280px;
                 margin: 0 auto;
-                padding: 0 2rem;
-            }
-
-            .btn-glow {
-                box-shadow: 0 0 20px rgba(255, 122, 0, 0.3);
-                transition: all 0.3s ease;
-            }
-            .btn-glow:hover {
-                box-shadow: 0 0 35px rgba(255, 167, 38, 0.6);
-                transform: translateY(-2px);
+                padding: 0 1.5rem;
             }
 
             .headline-main {
@@ -53,7 +45,6 @@
                 background: linear-gradient(135deg, #FFF 30%, rgba(255,255,255,0.5) 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
-                text-shadow: 0 10px 30px rgba(0,0,0,0.3);
             }
 
             .text-highlight {
@@ -61,86 +52,61 @@
                 @apply text-tech-primary;
             }
 
-            .subheadline-main {
-                @apply text-lg md:text-xl text-white/80 font-medium mb-10 max-w-2xl leading-relaxed;
+            /* OTIMIZAÇÃO DE PERFORMANCE MOBILE */
+            .text-group {
+                grid-column: 1 / span 12;
+                @apply opacity-0 translate-y-8 filter blur-[8px] md:blur-[15px] transition-all duration-700;
+                transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+                pointer-events: none;
+                will-change: transform, opacity;
             }
 
-            .text-group {
-                grid-column: 1 / span 10;
-                text-align: left;
-                opacity: 0;
-                transform: translateY(40px);
-                filter: blur(15px);
-                transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
-                pointer-events: none;
+            @media (min-width: 768px) {
+                .text-group { grid-column: 1 / span 10; @apply translate-y-10; }
             }
 
             .text-group.active {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0px);
-                pointer-events: auto;
+                @apply opacity-100 translate-y-0 blur-none pointer-events-auto;
             }
 
+            .glass-container {
+                @apply relative p-6 md:p-12 overflow-hidden;
+                background: rgba(255, 255, 255, 0.03);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            /* PRODUTOS */
             .product-card {
-                @apply relative overflow-hidden transition-all duration-500;
-                background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-                border: 1px solid rgba(255,255,255,0.08);
-                box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
-                will-change: transform;
+                @apply relative overflow-hidden transition-all duration-700 bg-white/5 border border-white/10;
             }
-
-            .product-card::before {
+            .product-card::after {
                 content: '';
                 position: absolute;
-                inset: 0;
-                background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,122,0,0.15) 0%, transparent 50%);
-                opacity: 0;
-                transition: opacity 0.5s;
+                top: 0; left: -100%; width: 50%; height: 100%;
+                background: linear-gradient(to right, transparent, rgba(255, 122, 0, 0.2), transparent);
+                transform: skewX(-25deg);
             }
-
-            .product-card:hover::before {
-                opacity: 1;
-            }
-
-            .card-reveal {
-                opacity: 0;
-                transform: translateY(30px);
-                transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-            }
-            .card-reveal.active {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            .delay-1 { transition-delay: 0.1s; }
-            .delay-2 { transition-delay: 0.2s; }
-            .delay-3 { transition-delay: 0.3s; }
-
-            #preloader {
-                @apply fixed inset-0 z-[100] bg-tech-bg flex flex-col items-center justify-center transition-opacity duration-700;
-            }
-            .load-bar-container {
-                @apply w-48 h-[2px] bg-white/10 overflow-hidden relative;
-            }
-            .load-bar-fill {
-                @apply absolute top-0 left-0 h-full bg-tech-primary w-0 transition-all duration-500 ease-out;
-                box-shadow: 0 0 15px var(--color-tech-primary);
+            .product-card.active::after {
+                animation: scan 1.5s ease-in-out forwards;
             }
 
             @keyframes scan {
                 0% { left: -100%; }
                 100% { left: 150%; }
             }
+
+            .card-reveal {
+                @apply opacity-0 translate-y-8 transition-all duration-700;
+            }
+            .card-reveal.active {
+                @apply opacity-100 translate-y-0;
+            }
         }
 
         .hero-sticky-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            width: 100%;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
+            position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; display: flex; align-items: center;
         }
 
         #hero-canvas {
@@ -149,13 +115,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            will-change: transform; /* Força aceleração por hardware */
         }
 
         .hero-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 5;
-            background: transparent;
+            position: absolute; inset: 0; z-index: 5; background: transparent;
         }
 
         @media (min-width: 768px) {
@@ -167,17 +131,17 @@
 </head>
 <body class="antialiased">
 
-    <div id="preloader">
-        <div class="mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Iniciando Sistemas</div>
-        <div class="load-bar-container">
-            <div id="load-fill" class="load-bar-fill"></div>
+    <div id="preloader" class="fixed inset-0 z-[100] bg-tech-bg flex flex-col items-center justify-center transition-opacity duration-700">
+        <div class="mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Sistemas Center Net</div>
+        <div class="w-48 h-[2px] bg-white/10 overflow-hidden relative">
+            <div id="load-fill" class="h-full bg-tech-primary transition-all duration-500 w-0" style="box-shadow: 0 0 15px #FF7A00;"></div>
         </div>
     </div>
 
     <nav class="fixed top-0 left-0 w-full z-50 bg-tech-bg/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <span class="font-black text-xl tracking-tighter uppercase">Center<span class="text-tech-primary">Net</span></span>
-            <a href="#contato" class="bg-tech-primary text-tech-bg px-6 py-2 text-[10px] font-black uppercase tracking-widest btn-glow">WhatsApp Elite</a>
+            <a href="#contato" class="bg-tech-primary text-tech-bg px-6 py-2 text-[10px] font-black uppercase tracking-widest">WhatsApp Elite</a>
         </div>
     </nav>
 
@@ -188,20 +152,19 @@
             
             <div class="hero-grid relative z-10">
                 <div id="step-1" class="text-group">
-                    <h2 class="headline-main">O seu fluxo de trabalho <span class="text-highlight">não pode parar</span> por limitações técnicas.</h2>
+                    <div class="glass-container">
+                        <h2 class="headline-main">O seu fluxo de trabalho <span class="text-highlight">não pode parar</span>.</h2>
+                    </div>
                 </div>
-
                 <div id="step-2" class="text-group absolute">
-                    <h2 class="headline-main">Esqueça a lentidão e os <span class="text-highlight">travamentos</span> que interrompem sua produtividade.</h2>
+                    <div class="glass-container">
+                        <h2 class="headline-main">Esqueça a lentidão e os <span class="text-highlight">travamentos</span> constantes.</h2>
+                    </div>
                 </div>
-
                 <div id="step-3" class="text-group absolute">
-                    <h2 class="headline-main">Na Center Net, unimos <span class="text-highlight">Hardware de Elite</span> e manutenção.</h2>
-                    <p class="subheadline-main text-white">Performance máxima. Estabilidade absoluta. Soluções sob medida para o seu resultado.</p>
-                    <div class="flex flex-col sm:flex-row gap-5">
-                        <a href="#produtos" class="inline-flex items-center justify-center border border-white/40 px-10 py-5 text-sm font-black uppercase tracking-widest bg-black/20 backdrop-blur-sm hover:bg-black/40 transition-all">
-                            Conheça nossos produtos
-                        </a>
+                    <div class="glass-container">
+                        <h2 class="headline-main">Na Center Net, unimos <span class="text-highlight">Hardware de Elite</span>.</h2>
+                        <p class="text-white/70 uppercase tracking-widest text-[10px] font-bold mt-4">Performance Máxima • Anápolis, GO</p>
                     </div>
                 </div>
             </div>
@@ -210,105 +173,27 @@
 
     <section id="produtos" class="py-32 bg-tech-bg relative z-20 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter card-reveal">
-                    Vitrine <span class="text-tech-primary">Elite Performance</span>
-                </h2>
-                <p class="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold card-reveal delay-1">
-                    // Hardware selecionado por especialistas
-                </p>
-            </div>
+            <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16 card-reveal">
+                Produtos <span class="text-tech-primary">Alta Performance</span>
+            </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <div class="product-card card-reveal delay-1 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
-                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
-                    
-                    <div class="mb-2 flex justify-between items-start">
-                        <span class="text-[9px] font-black bg-tech-primary text-black px-2 py-1 uppercase tracking-tighter">Gamer Pro</span>
-                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-5600</span>
-                    </div>
-
-                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
-                        <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-110 group-hover:rotate-2 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.15)]">
-                    </div>
-
-                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">AMD Ryzen 5 <br> 5600GT Performance</h3>
-                    
-                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Processador</p>
-                            <p class="text-xs font-bold text-white/80">6 Cores / 12 Threads</p>
-                        </div>
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Gráficos</p>
-                            <p class="text-xs font-bold text-white/80">Radeon™ 7-Core</p>
-                        </div>
-                    </div>
-
-                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+tenho+interesse+no+PC+Ryzen+5600GT" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
-                        Orçamento Instantâneo
-                    </a>
+                <div class="product-card card-reveal delay-1 group p-8 backdrop-blur-sm">
+                    <img src="produtos/amdryzen5.png" class="h-48 mx-auto mb-6 object-contain group-hover:scale-110 transition-transform duration-700">
+                    <h3 class="text-2xl font-bold uppercase mb-2">amd rayzen 5 5600gt</h3>
+                    <a href="#contato" class="text-tech-primary text-[10px] font-black uppercase tracking-widest">Orçamento →</a>
                 </div>
 
-                <div class="product-card card-reveal delay-2 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
-                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
-                    
-                    <div class="mb-2 flex justify-between items-start">
-                        <span class="text-[9px] font-black bg-white text-black px-2 py-1 uppercase tracking-tighter">High-End Laptop</span>
-                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-NITRO-V</span>
-                    </div>
-
-                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
-                        <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.1)]">
-                    </div>
-
-                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">Acer Nitro V <br> Intel Core RTX</h3>
-                    
-                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Tela</p>
-                            <p class="text-xs font-bold text-white/80">144Hz IPS FHD</p>
-                        </div>
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">GPU</p>
-                            <p class="text-xs font-bold text-white/80">NVIDIA RTX Series</p>
-                        </div>
-                    </div>
-
-                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+gostaria+de+consultar+o+estoque+do+Acer+Nitro+V" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
-                        Consultar Estoque
-                    </a>
+                <div class="product-card card-reveal delay-2 group p-8 backdrop-blur-sm">
+                    <img src="produtos/nitrov5.png" class="h-48 mx-auto mb-6 object-contain group-hover:scale-110 transition-transform duration-700">
+                    <h3 class="text-2xl font-bold uppercase mb-2">nitro v intel core</h3>
+                    <a href="#contato" class="text-tech-primary text-[10px] font-black uppercase tracking-widest">Estoque →</a>
                 </div>
 
-                <div class="product-card card-reveal delay-3 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
-                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
-                    
-                    <div class="mb-2 flex justify-between items-start">
-                        <span class="text-[9px] font-black bg-tech-primary text-black px-2 py-1 uppercase tracking-tighter">Peças Elite</span>
-                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-RTX-3060</span>
-                    </div>
-
-                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
-                        <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.15)]">
-                    </div>
-
-                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">Placa de Vídeo <br> RTX 3060 OC</h3>
-                    
-                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Memória VRAM</p>
-                            <p class="text-xs font-bold text-white/80">12GB GDDR6</p>
-                        </div>
-                        <div>
-                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Arquitetura</p>
-                            <p class="text-xs font-bold text-white/80">Ampere Architecture</p>
-                        </div>
-                    </div>
-
-                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+tenho+interesse+na+RTX+3060" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
-                        Ver Preços
-                    </a>
+                <div class="product-card card-reveal delay-3 group p-8 backdrop-blur-sm">
+                    <img src="produtos/rtx3090.png" class="h-48 mx-auto mb-6 object-contain group-hover:scale-110 transition-transform duration-700">
+                    <h3 class="text-2xl font-bold uppercase mb-2">rtx 3060 elite</h3>
+                    <a href="#contato" class="text-tech-primary text-[10px] font-black uppercase tracking-widest">Preços →</a>
                 </div>
             </div>
         </div>
@@ -318,21 +203,8 @@
         lucide.createIcons();
 
         window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            setTimeout(() => {
-                preloader.style.opacity = '0';
-                setTimeout(() => preloader.style.display = 'none', 700);
-            }, 800);
-        });
-
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-                const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-                card.style.setProperty('--x', `${x}%`);
-                card.style.setProperty('--y', `${y}%`);
-            });
+            const pre = document.getElementById('preloader');
+            setTimeout(() => { pre.style.opacity = '0'; setTimeout(() => pre.style.display = 'none', 700); }, 800);
         });
 
         const canvas = document.getElementById('hero-canvas');
@@ -340,18 +212,16 @@
         const frameCount = 100;
         const images = [];
         let loadedCount = 0;
-        const baseUrl = "./hardline/ezgif-frame-";
+        const baseUrl = "./hardline/ezgif-frame-"; 
 
-        let currentFrame = 0;
-        let targetFrame = 0;
-        let lastTime = 0;
-        const speed = 0.012; 
+        let currentFrame = 0, targetFrame = 0, lastTime = 0;
+        // Velocidade otimizada: 0.015 para ser mais responsivo ao toque no mobile
+        const speed = 0.015; 
 
         function preloadImages() {
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
                 img.src = `${baseUrl}${i.toString().padStart(3, '0')}.jpg`;
-                if (i <= 15) img.loading = "eager";
                 img.onload = () => {
                     loadedCount++;
                     document.getElementById('load-fill').style.width = `${(loadedCount / frameCount) * 100}%`;
@@ -363,69 +233,47 @@
         }
 
         function mainLoop(timestamp) {
-            if (!lastTime) lastTime = timestamp;
             const deltaTime = timestamp - lastTime;
             lastTime = timestamp;
-
             const diff = targetFrame - currentFrame;
+            
+            // Suavização Delta-Time: ignora lags do processador mobile
             currentFrame += diff * Math.min(1, speed * deltaTime);
-
-            if (Math.abs(diff) > 0.01) {
-                renderFrame(Math.round(currentFrame));
-            }
+            
+            if (Math.abs(diff) > 0.01) renderFrame(Math.round(currentFrame));
             requestAnimationFrame(mainLoop);
         }
 
         function renderFrame(index) {
-            const safeIndex = Math.max(0, Math.min(frameCount - 1, index));
-            const img = images[safeIndex];
+            const img = images[index];
             if (!img || !img.complete) return;
-
-            const canvasRatio = canvas.width / canvas.height;
-            const imgRatio = img.width / img.height;
-            let rw, rh, ox = 0, oy = 0;
-
-            if (canvasRatio > imgRatio) {
-                rw = canvas.width; rh = img.height * (canvas.width / img.width);
-                oy = (canvas.height - rh) / 2;
-            } else {
-                rh = canvas.height; rw = img.width * (canvas.height / img.height);
-                ox = (canvas.width - rw) / 2;
-            }
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+            const w = img.width * ratio, h = img.height * ratio;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(img, ox, oy, rw, rh);
+            ctx.drawImage(img, (canvas.width-w)/2, (canvas.height-h)/2, w, h);
         }
 
         window.addEventListener('scroll', () => {
             const scrollArea = document.getElementById('scroll-hero');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const scrollHeight = scrollArea.scrollHeight - window.innerHeight;
-            const scrollFraction = Math.max(0, Math.min(1, scrollTop / scrollHeight));
-            
-            targetFrame = scrollFraction * (frameCount - 1);
+            const progress = window.pageYOffset / (scrollArea.scrollHeight - window.innerHeight);
+            targetFrame = progress * (frameCount - 1);
 
-            const s1 = document.getElementById('step-1');
-            const s2 = document.getElementById('step-2');
-            const s3 = document.getElementById('step-3');
-            s1.classList.remove('active'); s2.classList.remove('active'); s3.classList.remove('active');
+            const steps = [document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3')];
+            steps.forEach(s => s.classList.remove('active'));
 
-            if (scrollFraction > 0.05 && scrollFraction < 0.3) s1.classList.add('active');
-            else if (scrollFraction >= 0.35 && scrollFraction < 0.6) s2.classList.add('active');
-            else if (scrollFraction >= 0.65) s3.classList.add('active');
+            if (progress > 0.05 && progress < 0.3) steps[0].classList.add('active');
+            else if (progress >= 0.35 && progress < 0.6) steps[1].classList.add('active');
+            else if (progress >= 0.65) steps[2].classList.add('active');
 
-            if (scrollFraction >= 0.93) {
+            if (progress >= 0.93) {
                 document.querySelectorAll('.card-reveal').forEach(el => el.classList.add('active'));
+                document.querySelectorAll('.product-card').forEach(el => el.classList.add('active'));
             }
         });
 
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            renderFrame(Math.round(currentFrame));
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', () => renderFrame(Math.round(currentFrame)));
         preloadImages();
     </script>
 </body>
