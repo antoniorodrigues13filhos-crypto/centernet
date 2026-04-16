@@ -126,6 +126,11 @@
                 @apply absolute top-0 left-0 h-full bg-tech-primary w-0 transition-all duration-500 ease-out;
                 box-shadow: 0 0 15px var(--color-tech-primary);
             }
+
+            @keyframes scan {
+                0% { left: -100%; }
+                100% { left: 150%; }
+            }
         }
 
         .hero-sticky-container {
@@ -146,16 +151,14 @@
             object-fit: cover;
         }
 
-        /* REMOÇÃO DA SOMBRA NO MOBILE */
         .hero-overlay {
             position: absolute;
             inset: 0;
             z-index: 5;
-            background: transparent; /* Zero sombra por padrão (Mobile) */
+            background: transparent;
         }
 
         @media (min-width: 768px) {
-            /* Mantém apenas no PC para ajudar na leitura lateral */
             .hero-overlay {
                 background: radial-gradient(circle at 20% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
             }
@@ -207,36 +210,105 @@
 
     <section id="produtos" class="py-32 bg-tech-bg relative z-20 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
-            <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-16 card-reveal">
-                Produtos de <span class="text-tech-primary">Alta Performance</span>
-            </h2>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter card-reveal">
+                    Vitrine <span class="text-tech-primary">Elite Performance</span>
+                </h2>
+                <p class="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold card-reveal delay-1">
+                    // Hardware selecionado por especialistas
+                </p>
+            </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="product-card card-reveal delay-1 group p-8 bg-black/40 backdrop-blur-md hover:border-tech-primary/50 transition-all">
-                    <div class="mb-6 h-48 flex items-center justify-center relative z-10">
-                        <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                
+                <div class="product-card card-reveal delay-1 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                    
+                    <div class="mb-2 flex justify-between items-start">
+                        <span class="text-[9px] font-black bg-tech-primary text-black px-2 py-1 uppercase tracking-tighter">Gamer Pro</span>
+                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-5600</span>
                     </div>
-                    <h3 class="text-2xl font-bold uppercase mb-4 relative z-10">amd rayzen 5 5600gt</h3>
-                    <p class="text-white/60 mb-8 leading-relaxed relative z-10">Configurações otimizadas para edição 4K e multitarefa extrema.</p>
-                    <a href="#contato" class="inline-block text-tech-primary font-black uppercase tracking-widest text-xs group-hover:translate-x-2 transition-transform relative z-10">Solicitar Orçamento →</a>
+
+                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
+                        <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-110 group-hover:rotate-2 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.15)]">
+                    </div>
+
+                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">AMD Ryzen 5 <br> 5600GT Performance</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Processador</p>
+                            <p class="text-xs font-bold text-white/80">6 Cores / 12 Threads</p>
+                        </div>
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Gráficos</p>
+                            <p class="text-xs font-bold text-white/80">Radeon™ 7-Core</p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+tenho+interesse+no+PC+Ryzen+5600GT" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+                        Orçamento Instantâneo
+                    </a>
                 </div>
 
-                <div class="product-card card-reveal delay-2 group p-8 bg-black/40 backdrop-blur-md hover:border-tech-primary/50 transition-all">
-                    <div class="mb-6 h-48 flex items-center justify-center relative z-10">
-                        <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                <div class="product-card card-reveal delay-2 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                    
+                    <div class="mb-2 flex justify-between items-start">
+                        <span class="text-[9px] font-black bg-white text-black px-2 py-1 uppercase tracking-tighter">High-End Laptop</span>
+                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-NITRO-V</span>
                     </div>
-                    <h3 class="text-2xl font-bold uppercase mb-4 relative z-10">nitro v intel core</h3>
-                    <p class="text-white/60 mb-8 leading-relaxed relative z-10">O poder das placas RTX aliado a refrigeração de última geração.</p>
-                    <a href="#contato" class="inline-block text-tech-primary font-black uppercase tracking-widest text-xs group-hover:translate-x-2 transition-transform relative z-10">Ver Disponibilidade →</a>
+
+                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
+                        <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.1)]">
+                    </div>
+
+                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">Acer Nitro V <br> Intel Core RTX</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Tela</p>
+                            <p class="text-xs font-bold text-white/80">144Hz IPS FHD</p>
+                        </div>
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">GPU</p>
+                            <p class="text-xs font-bold text-white/80">NVIDIA RTX Series</p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+gostaria+de+consultar+o+estoque+do+Acer+Nitro+V" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+                        Consultar Estoque
+                    </a>
                 </div>
 
-                <div class="product-card card-reveal delay-3 group p-8 bg-black/40 backdrop-blur-md hover:border-tech-primary/50 transition-all">
-                    <div class="mb-6 h-48 flex items-center justify-center relative z-10">
-                        <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500">
+                <div class="product-card card-reveal delay-3 group p-8 bg-black/40 backdrop-blur-md border border-white/5 hover:border-tech-primary/50 transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-tech-primary/10 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                    
+                    <div class="mb-2 flex justify-between items-start">
+                        <span class="text-[9px] font-black bg-tech-primary text-black px-2 py-1 uppercase tracking-tighter">Peças Elite</span>
+                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">ID: CN-RTX-3060</span>
                     </div>
-                    <h3 class="text-2xl font-bold uppercase mb-4 relative z-10">placa de video rtx 3060</h3>
-                    <p class="text-white/60 mb-8 leading-relaxed relative z-10">Hardware selecionado para upgrades de performance extrema.</p>
-                    <a href="#contato" class="inline-block text-tech-primary font-black uppercase tracking-widest text-xs group-hover:translate-x-2 transition-transform relative z-10">Ver Preços →</a>
+
+                    <div class="mb-8 h-56 flex items-center justify-center relative z-10">
+                        <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-110 group-hover:-rotate-2 transition-transform duration-700 drop-shadow-[0_20px_50px_rgba(255,122,0,0.15)]">
+                    </div>
+
+                    <h3 class="text-2xl font-black uppercase mb-4 leading-tight group-hover:text-tech-primary transition-colors">Placa de Vídeo <br> RTX 3060 OC</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8 pt-4 border-t border-white/5">
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Memória VRAM</p>
+                            <p class="text-xs font-bold text-white/80">12GB GDDR6</p>
+                        </div>
+                        <div>
+                            <p class="text-[8px] text-white/30 uppercase font-bold tracking-widest">Arquitetura</p>
+                            <p class="text-xs font-bold text-white/80">Ampere Architecture</p>
+                        </div>
+                    </div>
+
+                    <a href="https://wa.me/seunumeroprofissional?text=Olá,+tenho+interesse+na+RTX+3060" target="_blank" class="w-full bg-white/5 border border-white/10 hover:bg-tech-primary hover:text-black py-4 text-[10px] font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2">
+                        Ver Preços
+                    </a>
                 </div>
             </div>
         </div>
@@ -245,7 +317,6 @@
     <script>
         lucide.createIcons();
 
-        // MOTOR DE VÍDEO E LÓGICA MANTIDOS CONFORME AJUSTE DE PERFORMANCE ANTERIOR
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
             setTimeout(() => {
