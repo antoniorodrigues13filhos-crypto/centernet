@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,7 +83,6 @@
                 pointer-events: auto;
             }
 
-            /* Novo estilo Extreme Glass para os cards */
             .product-card {
                 @apply relative overflow-hidden transition-all duration-500 rounded-2xl;
                 background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 100%);
@@ -324,11 +323,13 @@
     <script>
         lucide.createIcons();
 
-        // Inicialização do Lenis (Smooth Scroll Premium)
+        // Inicialização do Lenis configurado para máxima fluidez no Desktop
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
+            orientation: 'vertical',
+            gestureOrientation: 'vertical'
         });
 
         function raf(time) {
@@ -361,11 +362,8 @@
         const images = [];
         let loadedCount = 0;
         const baseUrl = "./hardline/ezgif-frame-";
-
-        let currentFrame = 0;
-        let targetFrame = 0;
-        let lastTime = 0;
-        const speed = 0.012; 
+        
+        let currentFrameIndex = 0; // Guarda o frame atual para redesenhar no resize
 
         function preloadImages() {
             for (let i = 1; i <= frameCount; i++) {
@@ -376,28 +374,14 @@
                     loadedCount++;
                     document.getElementById('load-fill').style.width = `${(loadedCount / frameCount) * 100}%`;
                     if (loadedCount === 1) renderFrame(0);
-                    if (loadedCount === frameCount) requestAnimationFrame(mainLoop);
                 };
                 images.push(img);
             }
         }
 
-        function mainLoop(timestamp) {
-            if (!lastTime) lastTime = timestamp;
-            const deltaTime = timestamp - lastTime;
-            lastTime = timestamp;
-
-            const diff = targetFrame - currentFrame;
-            currentFrame += diff * Math.min(1, speed * deltaTime);
-
-            if (Math.abs(diff) > 0.01) {
-                renderFrame(Math.round(currentFrame));
-            }
-            requestAnimationFrame(mainLoop);
-        }
-
         function renderFrame(index) {
             const safeIndex = Math.max(0, Math.min(frameCount - 1, index));
+            currentFrameIndex = safeIndex; 
             const img = images[safeIndex];
             if (!img || !img.complete) return;
 
@@ -416,14 +400,20 @@
             ctx.drawImage(img, ox, oy, rw, rh);
         }
 
-        window.addEventListener('scroll', () => {
+        // INTEGRAÇÃO PREMIUM: Escutando diretamente o evento do Lenis para sync perfeito
+        lenis.on('scroll', (e) => {
             const scrollArea = document.getElementById('scroll-hero');
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // e.scroll é o valor já suavizado pelo Lenis (substitui a necessidade de mainLoop interpolado)
+            const scrollTop = e.scroll; 
             const scrollHeight = scrollArea.scrollHeight - window.innerHeight;
             const scrollFraction = Math.max(0, Math.min(1, scrollTop / scrollHeight));
             
-            targetFrame = scrollFraction * (frameCount - 1);
+            // Calcula o frame exato
+            const targetFrame = scrollFraction * (frameCount - 1);
+            renderFrame(Math.round(targetFrame));
 
+            // Lógica de textos e opacidade
             const s1 = document.getElementById('step-1');
             const s2 = document.getElementById('step-2');
             const s3 = document.getElementById('step-3');
@@ -441,7 +431,7 @@
         function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            renderFrame(Math.round(currentFrame));
+            renderFrame(currentFrameIndex); // Mantém o frame certo no resize
         }
 
         window.addEventListener('resize', resize);
