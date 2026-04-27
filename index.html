@@ -47,7 +47,10 @@
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
                 box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                /* OTIMIZADO: Evita transition-all */
+                transition-property: color, background-color, box-shadow, transform;
+                transition-duration: 0.4s;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
             }
             @media (hover: hover) {
                 .btn-glow:hover {
@@ -81,21 +84,25 @@
                 grid-column: 1 / span 10;
                 text-align: left;
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(40px) translateZ(0); /* Força GPU */
                 filter: blur(15px);
-                transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+                /* OTIMIZADO */
+                transition-property: opacity, transform, filter;
+                transition-duration: 0.9s;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
                 pointer-events: none;
+                will-change: transform, opacity, filter;
             }
 
             .text-group.active {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) translateZ(0);
                 filter: blur(0px);
                 pointer-events: auto;
             }
 
             .product-card {
-                @apply relative overflow-hidden transition-all duration-700 rounded-3xl;
+                @apply relative overflow-hidden rounded-3xl;
                 background: rgba(20, 20, 20, 0.3);
                 border: 1px solid rgba(255,255,255,0.06);
                 box-shadow: 
@@ -103,7 +110,11 @@
                     0 24px 48px rgba(0,0,0,0.6);
                 backdrop-filter: blur(40px);
                 -webkit-backdrop-filter: blur(40px);
+                /* OTIMIZADO */
+                transition-property: transform, border-color, background-color;
+                transition-duration: 0.7s;
                 will-change: transform;
+                transform: translateZ(0);
             }
 
             .product-card::before {
@@ -113,12 +124,13 @@
                 background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.1) 0%, transparent 60%);
                 opacity: 0;
                 transition: opacity 0.5s;
+                pointer-events: none;
             }
 
             @media (hover: hover) {
                 .product-card:hover {
                     border-color: rgba(255, 255, 255, 0.3);
-                    transform: translateY(-8px) scale(1.02);
+                    transform: translateY(-8px) scale(1.02) translateZ(0);
                     background: rgba(30, 30, 30, 0.5);
                 }
                 .product-card:hover::before {
@@ -128,12 +140,16 @@
 
             .card-reveal {
                 opacity: 0;
-                transform: translateY(30px);
-                transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+                transform: translateY(30px) translateZ(0);
+                /* OTIMIZADO */
+                transition-property: opacity, transform;
+                transition-duration: 1s;
+                transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                will-change: transform, opacity;
             }
             .card-reveal.active {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) translateZ(0);
             }
             .delay-1 { transition-delay: 0.1s; }
             .delay-2 { transition-delay: 0.2s; }
@@ -160,18 +176,17 @@
 
             #preloader {
                 @apply fixed inset-0 z-[100] bg-tech-bg flex flex-col items-center justify-center transition-opacity duration-1000;
+                will-change: opacity;
             }
             .load-bar-container {
                 @apply w-64 h-[1px] bg-white/5 overflow-hidden relative;
             }
             .load-bar-fill {
-                @apply absolute top-0 left-0 h-full bg-white w-0 transition-all duration-700 ease-out;
+                @apply absolute top-0 left-0 h-full bg-white w-0 ease-out;
+                transition-property: width;
+                transition-duration: 0.7s;
                 box-shadow: 0 0 20px rgba(255,255,255,0.5);
-            }
-
-            @keyframes scan {
-                0% { left: -100%; }
-                100% { left: 150%; }
+                will-change: width;
             }
         }
 
@@ -192,6 +207,9 @@
             height: 100%;
             object-fit: fill;
             filter: contrast(1.05) brightness(1.0);
+            /* OTIMIZADO: GPU Acceleration */
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         .hero-overlay {
@@ -200,6 +218,7 @@
             z-index: 5;
             background: transparent;
             backdrop-filter: blur(1px); 
+            pointer-events: none;
         }
     </style>
 </head>
@@ -210,7 +229,7 @@
         <div class="hero-overlay"></div>
     </div>
 
-    <div class="pointer-events-none fixed inset-0 z-40 opacity-[0.015]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+    <div class="pointer-events-none fixed inset-0 z-40 opacity-[0.015]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); transform: translateZ(0);"></div>
 
     <div id="preloader">
         <div class="mb-6 text-[9px] font-medium uppercase tracking-[0.4em] text-white/50">Carregando Interface</div>
@@ -245,7 +264,7 @@
                         <h2 class="headline-main">Renderize sem <br><span class="text-highlight">limites.</span></h2>
                         <p class="subheadline-main">Estabilidade absoluta. Montagem cirúrgica. Desenvolvido para profissionais que não têm tempo a perder com máquinas lentas.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="#produtos" class="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-[11px] font-medium uppercase tracking-widest bg-white text-black hover:bg-transparent hover:text-white transition-all rounded-full">
+                            <a href="#produtos" class="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-[11px] font-medium uppercase tracking-widest bg-white text-black hover:bg-transparent hover:text-white transition-colors duration-300 rounded-full">
                                 Ver Configurações
                             </a>
                         </div>
@@ -255,7 +274,7 @@
         </section>
 
         <div class="w-full bg-black/50 backdrop-blur-xl py-12 relative z-10 overflow-hidden border-t border-white/5">
-            <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 transition-all hover:opacity-100 duration-700">
+            <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 transition-opacity duration-700 hover:opacity-100">
                 <span class="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">Stack Otimizada</span>
                 <span class="font-bold text-lg tracking-widest drop-shadow-md">BLENDER</span>
                 <span class="font-bold text-lg tracking-widest drop-shadow-md">CINEMA 4D</span>
@@ -277,13 +296,13 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="product-card card-reveal delay-1 group p-10">
-                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite] pointer-events-none"></div>
                         <div class="mb-4 flex justify-between items-start">
                             <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Workstation V1</span>
                             <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: AMD-5600</span>
                         </div>
                         <div class="mb-10 h-64 flex items-center justify-center relative z-10">
-                            <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                            <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-105 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
                         </div>
                         <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">AMD Ryzen 5 <br>5600GT</h3>
                         <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
@@ -296,19 +315,19 @@
                                 <p class="text-sm font-medium text-white">Radeon™ Integrado</p>
                             </div>
                         </div>
-                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Tenho interesse na Workstation V1 (Ryzen 5600GT)'}, 300)" class="w-full bg-white text-black hover:bg-white/90 py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Tenho interesse na Workstation V1 (Ryzen 5600GT)'}, 300)" class="w-full bg-white text-black hover:bg-white/90 py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                             Solicitar Cotação
                         </button>
                     </div>
 
                     <div class="product-card card-reveal delay-2 group p-10">
-                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite] pointer-events-none"></div>
                         <div class="mb-4 flex justify-between items-start">
                             <span class="text-[10px] font-medium bg-white text-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.3)]">Mobilidade Studio</span>
                             <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: NITRO-V</span>
                         </div>
                         <div class="mb-10 h-64 flex items-center justify-center relative z-10">
-                            <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                            <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-105 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
                         </div>
                         <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">Acer Nitro V <br>Intel Core RTX</h3>
                         <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
@@ -321,19 +340,19 @@
                                 <p class="text-sm font-medium text-white">NVIDIA RTX Series</p>
                             </div>
                         </div>
-                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Quero verificar a disponibilidade do Acer Nitro V'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Quero verificar a disponibilidade do Acer Nitro V'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer">
                             Verificar Estoque
                         </button>
                     </div>
 
                     <div class="product-card card-reveal delay-3 group p-10">
-                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite] pointer-events-none"></div>
                         <div class="mb-4 flex justify-between items-start">
                             <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Upgrade GPU</span>
                             <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: RTX-3060</span>
                         </div>
                         <div class="mb-10 h-64 flex items-center justify-center relative z-10">
-                            <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                            <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-105 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
                         </div>
                         <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">GeForce RTX <br>3060 OC</h3>
                         <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
@@ -346,7 +365,7 @@
                                 <p class="text-sm font-medium text-white">Ampere Vibe Code</p>
                             </div>
                         </div>
-                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Preciso de valores para a RTX 3060'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Preciso de valores para a RTX 3060'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-colors duration-300 flex items-center justify-center gap-2 cursor-pointer">
                             Consultar Valor
                         </button>
                     </div>
@@ -356,7 +375,7 @@
 
         <section id="anim-finale" class="relative z-10 h-[800vh] md:h-[400vh]">
             <div class="sticky top-0 w-full h-screen flex flex-col items-center justify-center pointer-events-none">
-                <h2 id="finale-text" class="text-4xl md:text-7xl font-black tracking-tighter text-white opacity-0 translate-y-10 transition-all duration-1000 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] text-center px-4">
+                <h2 id="finale-text" class="text-4xl md:text-7xl font-black tracking-tighter text-white opacity-0 translate-y-10 transition-property-[opacity,transform] duration-1000 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] text-center px-4 will-change-[transform,opacity]">
                     A performance <br>que <span class="text-tech-accent">você exige.</span>
                 </h2>
             </div>
@@ -534,6 +553,8 @@
     <script>
         lucide.createIcons();
 
+        // Lenis apenas para interpolação onde necessário (Desktop). 
+        // No mobile ele já estava com touch falso, mas agora o scroll passivo assume a frente.
         const lenis = new Lenis({
             duration: 1.2, 
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -652,8 +673,12 @@
             lastRenderedIndex = safeIndex;
         }
 
-        lenis.on('scroll', (e) => {
-            const scrollTop = e.scroll; 
+        // OTIMIZAÇÃO MAXIMA: Loop de scroll desvencilhado do Lenis, 
+        // usando passive nativo + requestAnimationFrame debounce.
+        let ticking = false;
+
+        function updateScrollLogic() {
+            const scrollTop = window.scrollY;
             
             const trackFraction = Math.max(0, Math.min(1, scrollTop / metrics.trackScrollHeight));
             const targetFrame = trackFraction * (frameCount - 1);
@@ -664,11 +689,11 @@
             const s1 = document.getElementById('step-1');
             const s2 = document.getElementById('step-2');
             const s3 = document.getElementById('step-3');
-            s1.classList.remove('active'); s2.classList.remove('active'); s3.classList.remove('active');
-
-            if (heroFraction > 0.05 && heroFraction < 0.3) s1.classList.add('active');
-            else if (heroFraction >= 0.35 && heroFraction < 0.6) s2.classList.add('active');
-            else if (heroFraction >= 0.65 && heroFraction < 0.95) s3.classList.add('active');
+            
+            if (heroFraction > 0.05 && heroFraction < 0.3) { s1.classList.add('active'); s2.classList.remove('active'); s3.classList.remove('active'); }
+            else if (heroFraction >= 0.35 && heroFraction < 0.6) { s1.classList.remove('active'); s2.classList.add('active'); s3.classList.remove('active'); }
+            else if (heroFraction >= 0.65 && heroFraction < 0.95) { s1.classList.remove('active'); s2.classList.remove('active'); s3.classList.add('active'); }
+            else { s1.classList.remove('active'); s2.classList.remove('active'); s3.classList.remove('active'); }
 
             if (trackFraction >= 0.35) {
                 document.querySelectorAll('.card-reveal').forEach(el => el.classList.add('active'));
@@ -682,7 +707,17 @@
                 finaleText.classList.add('opacity-0', 'translate-y-10');
                 finaleText.classList.remove('opacity-100', 'translate-y-0');
             }
-        });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    updateScrollLogic();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
 
         function resize() {
             updateMetrics(); 
