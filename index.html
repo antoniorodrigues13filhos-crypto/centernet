@@ -17,9 +17,9 @@
         @theme {
             /* Paleta Cinematográfica e Dessaturada */
             --color-tech-bg: #030303; 
-            --color-tech-primary: #F5F5F7; /* Apple Titanium White */
+            --color-tech-primary: #F5F5F7;
             --color-tech-primary-light: #FFFFFF;
-            --color-tech-accent: #86868B; /* Space Gray Accent */
+            --color-tech-accent: #86868B;
             --font-sans: 'Space Grotesk', sans-serif;
         }
 
@@ -42,7 +42,6 @@
                 padding: 0 2rem;
             }
 
-            /* Extreme Glass UI Buttons */
             .btn-glow {
                 background: rgba(255, 255, 255, 0.05);
                 border: 1px solid rgba(255, 255, 255, 0.1);
@@ -94,11 +93,10 @@
                 pointer-events: auto;
             }
 
-            /* Extreme Glassmorphism Cards */
             .product-card {
                 @apply relative overflow-hidden transition-all duration-700 rounded-3xl;
-                background: rgba(20, 20, 20, 0.3);
-                border: 1px solid rgba(255,255,255,0.06);
+                background: rgba(20, 20, 20, 0.4);
+                border: 1px solid rgba(255,255,255,0.08);
                 box-shadow: 
                     inset 0 1px 1px rgba(255,255,255,0.08),
                     0 24px 48px rgba(0,0,0,0.6);
@@ -108,16 +106,16 @@
             }
 
             .product-card:hover {
-                border-color: rgba(255, 255, 255, 0.2);
+                border-color: rgba(255, 255, 255, 0.3);
                 transform: translateY(-8px) scale(1.02);
-                background: rgba(30, 30, 30, 0.4);
+                background: rgba(30, 30, 30, 0.5);
             }
 
             .product-card::before {
                 content: '';
                 position: absolute;
                 inset: 0;
-                background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%);
+                background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.1) 0%, transparent 60%);
                 opacity: 0;
                 transition: opacity 0.5s;
             }
@@ -211,6 +209,11 @@
 </head>
 <body class="antialiased relative">
 
+    <div class="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-overlay"></div>
+    </div>
+
     <div class="pointer-events-none fixed inset-0 z-40 opacity-[0.015]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
 
     <div id="preloader">
@@ -220,7 +223,7 @@
         </div>
     </div>
 
-    <nav class="fixed top-0 left-0 w-full z-50 bg-tech-bg/50 backdrop-blur-2xl border-b border-white/5">
+    <nav class="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-2xl border-b border-white/5">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <span class="font-bold text-lg tracking-tight">Center<span class="text-white/50">Net.</span></span>
             <button onclick="document.getElementById('chat-fab').click()" class="px-6 py-2.5 text-[11px] font-medium uppercase tracking-widest text-white btn-glow cursor-pointer rounded-full">
@@ -229,12 +232,9 @@
         </div>
     </nav>
 
-    <section id="scroll-hero" class="relative" style="height: 1200vh;">
+    <section id="scroll-hero" class="relative z-10" style="height: 1200vh;">
         <div class="hero-sticky-container">
-            <canvas id="hero-canvas"></canvas>
-            <div class="hero-overlay"></div>
-            
-            <div class="hero-grid relative z-10">
+            <div class="hero-grid relative z-10 w-full">
                 <div id="step-1" class="text-group">
                     <h2 class="headline-main">Engenharia de <br><span class="text-highlight">Performance.</span></h2>
                 </div>
@@ -256,21 +256,21 @@
         </div>
     </section>
 
-    <div class="w-full bg-tech-bg py-12 relative z-10 overflow-hidden border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-40 transition-all hover:opacity-100 duration-700">
+    <div class="w-full bg-black/40 backdrop-blur-xl py-12 relative z-10 overflow-hidden border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 transition-all hover:opacity-100 duration-700">
             <span class="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">Stack Otimizada</span>
-            <span class="font-bold text-lg tracking-widest">BLENDER</span>
-            <span class="font-bold text-lg tracking-widest">CINEMA 4D</span>
-            <span class="font-bold text-lg tracking-widest">AFTER EFFECTS</span>
-            <span class="font-bold text-lg tracking-widest">FIGMA</span>
+            <span class="font-bold text-lg tracking-widest drop-shadow-md">BLENDER</span>
+            <span class="font-bold text-lg tracking-widest drop-shadow-md">CINEMA 4D</span>
+            <span class="font-bold text-lg tracking-widest drop-shadow-md">AFTER EFFECTS</span>
+            <span class="font-bold text-lg tracking-widest drop-shadow-md">FIGMA</span>
         </div>
     </div>
 
-    <section id="produtos" class="py-40 bg-tech-bg relative z-20">
+    <section id="produtos" class="py-40 bg-black/70 backdrop-blur-2xl relative z-20">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
                 <h2 class="text-5xl md:text-7xl font-black tracking-tighter card-reveal">
-                    Arquitetura <br><span class="text-tech-accent">Premium.</span>
+                    Arquitetura <br><span class="text-white/60">Premium.</span>
                 </h2>
                 <p class="text-white/40 uppercase tracking-[0.2em] text-[11px] font-medium card-reveal delay-1">
                     Selecionado para alta demanda criativa.
@@ -282,7 +282,7 @@
                     <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
                     <div class="mb-4 flex justify-between items-start">
                         <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Workstation V1</span>
-                        <span class="text-[10px] font-medium text-white/30 uppercase tracking-widest">SKU: AMD-5600</span>
+                        <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: AMD-5600</span>
                     </div>
                     <div class="mb-10 h-64 flex items-center justify-center relative z-10">
                         <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
@@ -307,7 +307,7 @@
                     <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
                     <div class="mb-4 flex justify-between items-start">
                         <span class="text-[10px] font-medium bg-white text-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.3)]">Mobilidade Studio</span>
-                        <span class="text-[10px] font-medium text-white/30 uppercase tracking-widest">SKU: NITRO-V</span>
+                        <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: NITRO-V</span>
                     </div>
                     <div class="mb-10 h-64 flex items-center justify-center relative z-10">
                         <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
@@ -332,7 +332,7 @@
                     <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
                     <div class="mb-4 flex justify-between items-start">
                         <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Upgrade GPU</span>
-                        <span class="text-[10px] font-medium text-white/30 uppercase tracking-widest">SKU: RTX-3060</span>
+                        <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: RTX-3060</span>
                     </div>
                     <div class="mb-10 h-64 flex items-center justify-center relative z-10">
                         <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
@@ -356,12 +356,12 @@
         </div>
     </section>
 
-    <section class="py-24 bg-black relative z-20">
+    <section class="py-24 bg-black/80 backdrop-blur-3xl relative z-20 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
-            <h3 class="text-2xl font-medium tracking-tight mb-16 text-center text-tech-accent">Validação em ambiente de produção real.</h3>
+            <h3 class="text-2xl font-medium tracking-tight mb-16 text-center text-white/70">Validação em ambiente de produção real.</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="product-card p-8 bg-transparent shadow-none border-white/5">
-                    <p class="text-white/70 text-lg font-light mb-8 leading-relaxed">"A estabilidade do workflow mudou drasticamente. A equipe realizou uma otimização lógica na arquitetura da máquina. Zero gargalos no After Effects."</p>
+                <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                    <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"A estabilidade do workflow mudou drasticamente. A equipe realizou uma otimização lógica na arquitetura da máquina. Zero gargalos no After Effects."</p>
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
                         <div>
@@ -370,8 +370,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card p-8 bg-transparent shadow-none border-white/5">
-                    <p class="text-white/70 text-lg font-light mb-8 leading-relaxed">"Manutenção preventiva impecável. Temperatura da CPU caiu 20 graus sob stress. O setup voltou a operar como um produto novo."</p>
+                <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                    <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"Manutenção preventiva impecável. Temperatura da CPU caiu 20 graus sob stress. O setup voltou a operar como um produto novo."</p>
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
                         <div>
@@ -380,8 +380,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="product-card p-8 bg-transparent shadow-none border-white/5">
-                    <p class="text-white/70 text-lg font-light mb-8 leading-relaxed">"Setup inteiro estruturado pela Center Net. A consultoria deles é focada na necessidade técnica real, não apenas em vender hardware."</p>
+                <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                    <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"Setup inteiro estruturado pela Center Net. A consultoria deles é focada na necessidade técnica real, não apenas em vender hardware."</p>
                     <div class="flex items-center gap-4">
                         <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
                         <div>
@@ -394,44 +394,44 @@
         </div>
     </section>
 
-    <section class="py-40 bg-tech-bg relative z-20 border-t border-white/5">
+    <section class="py-40 bg-black/80 backdrop-blur-3xl relative z-20 border-t border-white/5">
         <div class="max-w-3xl mx-auto px-6">
-            <h2 class="text-4xl md:text-5xl font-bold tracking-tighter mb-16 text-center">
-                Especificações & <br><span class="text-tech-accent">Suporte.</span>
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tighter mb-16 text-center text-white">
+                Especificações & <br><span class="text-white/50">Suporte.</span>
             </h2>
             
             <div class="space-y-4">
-                <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/10 transition-colors">
-                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none">
+                <details class="group bg-white/10 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/15 transition-colors">
+                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
                         Engenharia de setups personalizados?
                         <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
                     </summary>
                     <div class="faq-answer">
-                        <div class="px-8 pb-8 text-white/60 text-base font-light leading-relaxed">
+                        <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
                             Sim. Projetamos a arquitetura do seu PC focada exatamente no software que você utiliza, garantindo o melhor custo-benefício e performance extrema para renderização e código.
                         </div>
                     </div>
                 </details>
 
-                <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/10 transition-colors">
-                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none">
+                <details class="group bg-white/10 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/15 transition-colors">
+                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
                         Manutenção e otimização de Laptops?
                         <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
                     </summary>
                     <div class="faq-answer">
-                        <div class="px-8 pb-8 text-white/60 text-base font-light leading-relaxed">
+                        <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
                             Efetuamos upgrades cirúrgicos (SSD NVMe, RAM) e reparos complexos em placas. Restauramos a velocidade e eficiência térmica do seu equipamento.
                         </div>
                     </div>
                 </details>
 
-                <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/10 transition-colors">
-                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none">
+                <details class="group bg-white/10 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-xl cursor-pointer hover:bg-white/15 transition-colors">
+                    <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
                         Garantia de componentes?
                         <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
                     </summary>
                     <div class="faq-answer">
-                        <div class="px-8 pb-8 text-white/60 text-base font-light leading-relaxed">
+                        <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
                             Trabalhamos exclusivamente com hardware de primeira linha. Garantia direta e suporte técnico local focado em não deixar seu workflow parar.
                         </div>
                     </div>
@@ -440,12 +440,12 @@
         </div>
     </section>
 
-    <footer class="bg-black border-t border-white/5 relative z-20 pt-32 pb-12">
+    <footer class="bg-black/95 backdrop-blur-[40px] border-t border-white/10 relative z-20 pt-32 pb-12">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row items-center justify-between mb-24 pb-24 border-b border-white/5 gap-10 text-center md:text-left">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-24 pb-24 border-b border-white/10 gap-10 text-center md:text-left">
                 <div>
-                    <h2 class="text-5xl md:text-6xl font-bold tracking-tighter mb-6">Workflow<br><span class="text-tech-accent">travando?</span></h2>
-                    <p class="text-white/50 text-xl font-light">Elimine gargalos. Feche a equação com nosso hardware.</p>
+                    <h2 class="text-5xl md:text-6xl font-bold tracking-tighter mb-6 text-white">Workflow<br><span class="text-white/50">travando?</span></h2>
+                    <p class="text-white/60 text-xl font-light">Elimine gargalos. Feche a equação com nosso hardware.</p>
                 </div>
                 <button onclick="document.getElementById('chat-fab').click()" class="bg-white text-black px-12 py-5 rounded-full text-[11px] font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer">
                     Iniciar Diagnóstico
@@ -454,14 +454,14 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                    <span class="font-bold text-2xl tracking-tight mb-6 block">Center<span class="text-white/50">Net.</span></span>
-                    <p class="text-white/40 text-sm max-w-sm mb-6 font-light leading-relaxed">
+                    <span class="font-bold text-2xl tracking-tight mb-6 block text-white">Center<span class="text-white/50">Net.</span></span>
+                    <p class="text-white/50 text-sm max-w-sm mb-6 font-light leading-relaxed">
                         Projetando soluções de infraestrutura para profissionais criativos e desenvolvedores que exigem performance premium.
                     </p>
                 </div>
                 
                 <div class="md:text-right">
-                    <h4 class="font-medium uppercase tracking-[0.2em] text-[10px] mb-6 text-white/30">Base Operacional</h4>
+                    <h4 class="font-medium uppercase tracking-[0.2em] text-[10px] mb-6 text-white/40">Base Operacional</h4>
                     <address class="not-italic text-sm text-white/60 font-light leading-relaxed flex flex-col md:items-end gap-3">
                         <span class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-white/50"></i> Rua 15 de Dezembro, 98 sl A lj 26/27</span>
                         <span>Centro - Anápolis, GO</span>
@@ -470,7 +470,7 @@
                 </div>
             </div>
 
-            <div class="mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-medium uppercase tracking-[0.2em] text-white/30">
+            <div class="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-medium uppercase tracking-[0.2em] text-white/40">
                 <p>&copy; 2026 Center Net. Design de Interface Premium.</p>
                 <div class="flex gap-6">
                     <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
@@ -483,7 +483,7 @@
     <div class="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
         
         <div id="chat-box" class="hidden flex-col w-[360px] h-[520px] mb-6 rounded-3xl overflow-hidden product-card transform transition-all duration-500 translate-y-12 opacity-0 shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
-            <div class="bg-white/5 border-b border-white/10 p-5 flex items-center justify-between backdrop-blur-xl">
+            <div class="bg-black/60 border-b border-white/10 p-5 flex items-center justify-between backdrop-blur-3xl">
                 <div class="flex items-center gap-4">
                     <div class="relative">
                         <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
@@ -492,7 +492,7 @@
                         <span class="absolute bottom-0 right-0 w-3 h-3 bg-white border-2 border-[#141414] rounded-full shadow-[0_0_10px_#FFFFFF]"></span>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm tracking-wide">Triagem Automática</h4>
+                        <h4 class="font-bold text-sm tracking-wide text-white">Triagem Automática</h4>
                         <p class="text-[9px] text-white/50 font-medium tracking-widest uppercase">Concierge IA</p>
                     </div>
                 </div>
@@ -501,14 +501,14 @@
                 </button>
             </div>
             
-            <div id="chat-messages" class="flex-1 p-5 overflow-y-auto flex flex-col gap-5 bg-gradient-to-b from-transparent to-black/60">
+            <div id="chat-messages" class="flex-1 p-5 overflow-y-auto flex flex-col gap-5 bg-black/40 backdrop-blur-xl">
                 <div class="bg-white/10 rounded-2xl rounded-tl-none p-5 max-w-[85%] self-start border border-white/10 text-sm shadow-xl backdrop-blur-xl">
                     <p class="mb-2 font-medium text-white text-xs uppercase tracking-widest">Interface Conectada.</p>
                     <p class="text-white/80 font-light leading-relaxed">Olá. Bem-vindo à Center Net. Informe sua necessidade e eu farei o roteamento imediato para um especialista de hardware.</p>
                 </div>
             </div>
 
-            <div class="p-5 bg-white/5 border-t border-white/10 flex gap-3 items-center backdrop-blur-xl">
+            <div class="p-5 bg-black/60 border-t border-white/10 flex gap-3 items-center backdrop-blur-3xl">
                 <input type="text" id="chat-input" placeholder="Comando de entrada..." class="flex-1 bg-black/40 border border-white/10 rounded-xl px-5 py-3 text-sm focus:outline-none focus:border-white/40 text-white placeholder-white/30 transition-all font-light">
                 <button id="send-chat" class="bg-white text-black p-3.5 rounded-xl hover:scale-105 transition-all cursor-pointer flex-shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                     <i data-lucide="arrow-up" class="w-5 h-5"></i>
@@ -524,14 +524,14 @@
     <script>
         lucide.createIcons();
 
-        // 1. Lenis Smooth Scroll - CALIBRADO PARA 150 FRAMES E MOBILE/MOUSE LIVRES
+        // 1. Lenis Smooth Scroll
         const lenis = new Lenis({
             duration: 1.2, 
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
             smoothTouch: true,
-            touchMultiplier: 2.2, // Destrava o deslize no celular
-            wheelMultiplier: 1.3, // Deixa a rodinha do mouse mais elástica
+            touchMultiplier: 2.2,
+            wheelMultiplier: 1.3,
             orientation: 'vertical',
             gestureOrientation: 'vertical'
         });
@@ -627,6 +627,9 @@
             const scrollArea = document.getElementById('scroll-hero');
             const scrollTop = e.scroll; 
             const scrollHeight = scrollArea.scrollHeight - window.innerHeight;
+            
+            // A animação do Canvas é mapeada estritamente à altura do `#scroll-hero` (1200vh).
+            // Passando dessa altura, scrollFraction trava em 1, mantendo o último frame na tela.
             const scrollFraction = Math.max(0, Math.min(1, scrollTop / scrollHeight));
             
             const targetFrame = scrollFraction * (frameCount - 1);
@@ -639,7 +642,7 @@
 
             if (scrollFraction > 0.05 && scrollFraction < 0.3) s1.classList.add('active');
             else if (scrollFraction >= 0.35 && scrollFraction < 0.6) s2.classList.add('active');
-            else if (scrollFraction >= 0.65) s3.classList.add('active');
+            else if (scrollFraction >= 0.65 && scrollFraction < 0.95) s3.classList.add('active');
 
             if (scrollFraction >= 0.93) {
                 document.querySelectorAll('.card-reveal').forEach(el => el.classList.add('active'));
@@ -720,7 +723,7 @@
                 setTimeout(() => {
                     document.getElementById('typing-indicator').remove();
                     
-                    const numeroWhatsApp = "5562999999999"; 
+                    const numeroWhatsApp = "5562993362276"; 
                     const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(text)}`;
                     window.open(linkWhatsApp, '_blank');
                     
