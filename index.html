@@ -49,11 +49,13 @@
                 box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
-            .btn-glow:hover {
-                background: rgba(255, 255, 255, 0.95);
-                color: #000;
-                box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
-                transform: translateY(-2px);
+            @media (hover: hover) {
+                .btn-glow:hover {
+                    background: rgba(255, 255, 255, 0.95);
+                    color: #000;
+                    box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+                    transform: translateY(-2px);
+                }
             }
 
             .headline-main {
@@ -104,12 +106,6 @@
                 will-change: transform;
             }
 
-            .product-card:hover {
-                border-color: rgba(255, 255, 255, 0.2);
-                transform: translateY(-8px) scale(1.02);
-                background: rgba(30, 30, 30, 0.4);
-            }
-
             .product-card::before {
                 content: '';
                 position: absolute;
@@ -119,8 +115,16 @@
                 transition: opacity 0.5s;
             }
 
-            .product-card:hover::before {
-                opacity: 1;
+            /* BLOQUEIO DO EFEITO DE PUXAR NO MOBILE: Só ativa hover se o dispositivo tiver mouse */
+            @media (hover: hover) {
+                .product-card:hover {
+                    border-color: rgba(255, 255, 255, 0.3);
+                    transform: translateY(-8px) scale(1.02);
+                    background: rgba(30, 30, 30, 0.5);
+                }
+                .product-card:hover::before {
+                    opacity: 1;
+                }
             }
 
             .card-reveal {
@@ -353,14 +357,15 @@
 
         <section id="anim-finale" class="relative z-10" style="height: 400vh;">
             <div class="sticky top-0 w-full h-screen flex flex-col items-center justify-center pointer-events-none">
-                <h2 id="finale-text" class="text-4xl md:text-7xl font-black tracking-tighter text-white opacity-0 translate-y-10 transition-all duration-1000 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] text-center">
+                <h2 id="finale-text" class="text-4xl md:text-7xl font-black tracking-tighter text-white opacity-0 translate-y-10 transition-all duration-1000 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] text-center px-4">
                     A performance <br>que <span class="text-tech-accent">você exige.</span>
                 </h2>
             </div>
         </section>
         
-    </div> <div class="bg-black relative z-20">
-        
+    </div>
+
+    <div class="bg-black relative z-20">
         <section class="py-24 border-t border-white/5">
             <div class="max-w-7xl mx-auto px-6">
                 <h3 class="text-2xl font-medium tracking-tight mb-16 text-center text-white/70">Validação em ambiente de produção real.</h3>
@@ -528,14 +533,13 @@
     <script>
         lucide.createIcons();
 
-        // 1. Lenis Smooth Scroll
+        // 1. Lenis Smooth Scroll - CONFIGURAÇÃO FLUIDA PARA MOBILE E DESKTOP
         const lenis = new Lenis({
             duration: 1.2, 
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
-            smoothTouch: true,
-            touchMultiplier: 2.2,
-            wheelMultiplier: 1.3,
+            smoothTouch: false, // DESATIVADO: Libera a física nativa perfeita do toque no celular
+            wheelMultiplier: 1.2,
             orientation: 'vertical',
             gestureOrientation: 'vertical'
         });
@@ -555,16 +559,18 @@
             }, 800);
         });
 
-        // 3. Efeito Glassmorphism Cards (Mouse tracking)
-        document.querySelectorAll('.product-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
-                const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
-                card.style.setProperty('--x', `${x}%`);
-                card.style.setProperty('--y', `${y}%`);
+        // 3. Efeito Glassmorphism Cards (Apenas ativado em Desktop para evitar "puxões" no Mobile)
+        if (window.matchMedia("(hover: hover)").matches) {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+                    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+                    card.style.setProperty('--x', `${x}%`);
+                    card.style.setProperty('--y', `${y}%`);
+                });
             });
-        });
+        }
 
         // 4. Canvas Hero Animation Logic
         const canvas = document.getElementById('hero-canvas');
@@ -630,17 +636,15 @@
         lenis.on('scroll', (e) => {
             const scrollTop = e.scroll; 
             
-            // LÓGICA PRINCIPAL: O vídeo é medido pela altura do "#animation-track"
+            // Lógica do Canvas baseada na trilha de animação total
             const track = document.getElementById('animation-track');
             const trackScrollHeight = track.offsetHeight - window.innerHeight;
-            
-            // Fração do scroll baseada em TUDO antes do Footer/Validação
             const trackFraction = Math.max(0, Math.min(1, scrollTop / trackScrollHeight));
             
             const targetFrame = trackFraction * (frameCount - 1);
             renderFrame(Math.round(targetFrame));
 
-            // Controle individual dos Textos Iniciais (focado apenas no hero container de 600vh)
+            // Lógica dos textos do Hero
             const hero = document.getElementById('scroll-hero');
             const heroScrollHeight = hero.offsetHeight - window.innerHeight;
             const heroFraction = Math.max(0, Math.min(1, scrollTop / heroScrollHeight));
@@ -654,17 +658,16 @@
             else if (heroFraction >= 0.35 && heroFraction < 0.6) s2.classList.add('active');
             else if (heroFraction >= 0.65 && heroFraction < 0.95) s3.classList.add('active');
 
-            // Animação dos Cards de Produto
+            // Revelar os produtos
             if (trackFraction >= 0.35) {
                 document.querySelectorAll('.card-reveal').forEach(el => el.classList.add('active'));
             }
 
-            // Animação do Texto Final (Grand Finale)
+            // Animação do Texto Final
             const finale = document.getElementById('anim-finale');
             const finaleText = document.getElementById('finale-text');
             const finaleTop = finale.offsetTop;
             
-            // Revela o texto quando a seção finale entra na metade da tela
             if (scrollTop > finaleTop - (window.innerHeight / 1.5)) {
                 finaleText.classList.remove('opacity-0', 'translate-y-10');
                 finaleText.classList.add('opacity-100', 'translate-y-0');
