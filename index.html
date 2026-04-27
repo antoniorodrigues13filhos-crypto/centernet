@@ -522,11 +522,13 @@
     <script>
         lucide.createIcons();
 
-        // 1. Lenis Smooth Scroll
+        // 1. Lenis Smooth Scroll (Atualizado para fluidez com 60 frames)
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.5, // Levemente mais longo para compensar menos frames
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true,
+            smoothTouch: true, // Ativa o scroll suave no touch mobile
+            touchMultiplier: 1.5, // Deixa o swipe no celular mais responsivo
             orientation: 'vertical',
             gestureOrientation: 'vertical'
         });
@@ -557,7 +559,7 @@
             });
         });
 
-        // 4. Canvas Hero Animation (Otimizado para 4K e Telas Retina)
+        // 4. Canvas Hero Animation (Otimizado para 4K e Telas Retina sem Flicker)
         const canvas = document.getElementById('hero-canvas');
         const ctx = canvas.getContext('2d');
         const frameCount = 60;
@@ -565,13 +567,13 @@
         let loadedCount = 0;
         const baseUrl = "./DIPS/ezgif-frame-";
         let currentFrameIndex = 0;
+        let lastRenderedIndex = -1; // Bloqueio para evitar redesenho do mesmo frame
 
         function preloadImages() {
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
                 img.src = `${baseUrl}${i.toString().padStart(3, '0')}.jpg`;
                 
-                // Decodificação assíncrona para não travar a GPU em dispositivos móveis
                 img.decoding = "async";
                 
                 if (i <= 15) img.loading = "eager";
@@ -587,10 +589,13 @@
         function renderFrame(index) {
             const safeIndex = Math.max(0, Math.min(frameCount - 1, index));
             currentFrameIndex = safeIndex; 
+            
+            // Se for o mesmo frame que já está desenhado, aborta para não piscar/perder nitidez
+            if (lastRenderedIndex === safeIndex) return;
+            
             const img = images[safeIndex];
             if (!img || !img.complete) return;
 
-            // Usamos innerWidth pois o CSS do canvas mapeia a tela, mas a resolução interna é multiplicada pelo DPR
             const w = window.innerWidth;
             const h = window.innerHeight;
 
@@ -610,6 +615,8 @@
             
             ctx.clearRect(0, 0, w, h);
             ctx.drawImage(img, ox, oy, rw, rh);
+            
+            lastRenderedIndex = safeIndex; // Atualiza a trava
         }
 
         lenis.on('scroll', (e) => {
@@ -638,21 +645,17 @@
         function resize() {
             const dpr = window.devicePixelRatio || 1;
             
-            // Define o tamanho real na tela via CSS
             canvas.style.width = `${window.innerWidth}px`;
             canvas.style.height = `${window.innerHeight}px`;
             
-            // Multiplica a matriz interna de pixels para telas High-DPI/Retina (4K)
             canvas.width = window.innerWidth * dpr;
             canvas.height = window.innerHeight * dpr;
             
-            // Escala o contexto para bater com o layout CSS e não precisar recalcular no drawImage
             ctx.scale(dpr, dpr);
-            
-            // Força renderização em alta qualidade
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
 
+            lastRenderedIndex = -1; // Força redesenho no redimensionamento
             renderFrame(currentFrameIndex);
         }
 
