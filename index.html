@@ -566,7 +566,10 @@
         const frameCount = 150;
         const images = [];
         let loadedCount = 0;
-        const baseUrl = "./DIPS/ezgif-frame-";
+        
+        // CORREÇÃO: O caminho aponta direto para a raiz, junto com o index.html
+        const baseUrl = "./ezgif-frame-";
+        
         let currentFrameIndex = 0;
         let lastRenderedIndex = -1;
 
