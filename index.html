@@ -3,490 +3,785 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InovaTech | Assistência & Produtos Exclusivos</title>
+    <title>Center Net Informática | Engenharia de Performance</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    
-    <script src="https://unpkg.com/lucide@latest"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <style type="text/tailwindcss">
         @theme {
-            --color-tech-950: #020617;
-            --color-tech-900: #0f172a;
-            --color-tech-800: #1e293b;
-            --color-tech-700: #334155;
-            --color-primary: #0ea5e9; /* Sky 500 */
-            --color-secondary: #3b82f6; /* Blue 500 */
-            --color-accent: #22d3ee; /* Cyan 400 */
-            
-            --font-sans: 'Inter', sans-serif;
-            --font-display: 'Space Grotesk', sans-serif;
+            --color-tech-bg: #030303; 
+            --color-tech-primary: #F5F5F7;
+            --color-tech-primary-light: #FFFFFF;
+            --color-tech-accent: #86868B;
+            --font-sans: 'Space Grotesk', sans-serif;
         }
 
-        body {
-            background-color: var(--color-tech-950);
-            color: white;
-            font-family: var(--font-sans);
-            /* Starts hidden, JS will enable */
+        @layer base {
+            body { 
+                @apply bg-tech-bg text-white antialiased overflow-x-hidden; 
+                font-family: var(--font-sans);
+                letter-spacing: -0.02em;
+            }
+        }
+
+        @layer utilities {
+            .hero-grid {
+                display: grid;
+                grid-template-columns: repeat(12, 1fr);
+                gap: 2rem;
+                width: 100%;
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+
+            .btn-glow {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            @media (hover: hover) {
+                .btn-glow:hover {
+                    background: rgba(255, 255, 255, 0.95);
+                    color: #000;
+                    box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+                    transform: translateY(-2px);
+                }
+            }
+
+            .headline-main {
+                @apply text-5xl md:text-8xl font-black tracking-tighter mb-6 leading-[0.9];
+                background: linear-gradient(180deg, #FFFFFF 0%, #86868B 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                text-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            }
+
+            .text-highlight {
+                -webkit-text-fill-color: #FFF !important;
+                @apply text-white;
+                background: none;
+                text-shadow: 0 0 30px rgba(255,255,255,0.4);
+            }
+
+            .subheadline-main {
+                @apply text-lg md:text-2xl text-tech-accent font-light mb-10 max-w-2xl leading-relaxed tracking-tight;
+            }
+
+            .text-group {
+                grid-column: 1 / span 10;
+                text-align: left;
+                opacity: 0;
+                transform: translateY(40px);
+                filter: blur(15px);
+                transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+                pointer-events: none;
+            }
+
+            .text-group.active {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0px);
+                pointer-events: auto;
+            }
+
+            .product-card {
+                @apply relative overflow-hidden transition-all duration-700 rounded-3xl;
+                background: rgba(20, 20, 20, 0.3);
+                border: 1px solid rgba(255,255,255,0.06);
+                box-shadow: 
+                    inset 0 1px 1px rgba(255,255,255,0.08),
+                    0 24px 48px rgba(0,0,0,0.6);
+                backdrop-filter: blur(40px);
+                -webkit-backdrop-filter: blur(40px);
+                will-change: transform;
+            }
+
+            .product-card::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255,255,255,0.1) 0%, transparent 60%);
+                opacity: 0;
+                transition: opacity 0.5s;
+            }
+
+            @media (hover: hover) {
+                .product-card:hover {
+                    border-color: rgba(255, 255, 255, 0.3);
+                    transform: translateY(-8px) scale(1.02);
+                    background: rgba(30, 30, 30, 0.5);
+                }
+                .product-card:hover::before {
+                    opacity: 1;
+                }
+            }
+
+            .card-reveal {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .card-reveal.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            .delay-1 { transition-delay: 0.1s; }
+            .delay-2 { transition-delay: 0.2s; }
+            .delay-3 { transition-delay: 0.3s; }
+
+            .faq-answer {
+                display: grid;
+                grid-template-rows: 0fr;
+                transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .faq-answer > div {
+                overflow: hidden;
+            }
+            details[open] .faq-answer {
+                grid-template-rows: 1fr;
+            }
+            details summary::-webkit-details-marker {
+                display: none;
+            }
+
+            #chat-messages::-webkit-scrollbar { width: 2px; }
+            #chat-messages::-webkit-scrollbar-track { background: transparent; }
+            #chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+
+            #preloader {
+                @apply fixed inset-0 z-[100] bg-tech-bg flex flex-col items-center justify-center transition-opacity duration-1000;
+            }
+            .load-bar-container {
+                @apply w-64 h-[1px] bg-white/5 overflow-hidden relative;
+            }
+            .load-bar-fill {
+                @apply absolute top-0 left-0 h-full bg-white w-0 transition-all duration-700 ease-out;
+                box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            }
+
+            @keyframes scan {
+                0% { left: -100%; }
+                100% { left: 150%; }
+            }
+        }
+
+        .hero-sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
             overflow: hidden;
-            scroll-behavior: smooth;
+            display: flex;
+            align-items: center;
         }
 
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            filter: contrast(1.05) brightness(1.0);
         }
 
-        .text-gradient {
-            background: linear-gradient(to right, var(--color-accent), var(--color-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .glow-effect {
-            box-shadow: 0 0 40px -10px var(--color-primary);
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            background: transparent;
+            backdrop-filter: blur(1px); 
         }
     </style>
 </head>
-<body>
+<body class="antialiased relative">
 
-    <div id="loader" style="position:fixed;inset:0;background:linear-gradient(135deg,#0f172a,#0ea5e9);z-index:9999;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:opacity 0.5s ease-out,visibility 0.5s;">
-        <div class="mb-4">
-            <i data-lucide="cpu" class="w-16 h-16 text-white animate-pulse"></i>
-        </div>
-        <h2 class="text-3xl font-display font-bold text-white mb-2 tracking-tight uppercase">INOVATECH</h2>
-        <div style="width:16rem;height:0.5rem;background:rgba(255,255,255,0.3);border-radius:9999px;overflow:hidden;">
-            <div id="progress-bar" style="height:100%;background:white;transition:all 100ms ease-out;width:0%;"></div>
-        </div>
-        <p id="loading-text" class="text-white/80 mt-2 text-sm font-medium font-sans">Inicializando sistemas 0%...</p>
+    <div class="fixed inset-0 w-full h-full z-0 pointer-events-none">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-overlay"></div>
     </div>
 
-    <nav class="fixed top-0 w-full z-50 glass-panel border-b-0 border-white/5 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <i data-lucide="zap" class="text-accent w-6 h-6 text-[#22d3ee]"></i>
-                <span class="font-display font-bold text-xl tracking-wide">INOVA<span class="text-[#0ea5e9]">TECH</span></span>
-            </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-white/80">
-                <a href="#servicos" class="hover:text-white transition-colors">Serviços</a>
-                <a href="#produtos" class="hover:text-white transition-colors">Produtos Exclusivos</a>
-                <a href="#sobre" class="hover:text-white transition-colors">Laboratório</a>
-                <a href="#contato" class="bg-[#0ea5e9] hover:bg-[#3b82f6] text-white px-5 py-2.5 rounded-full transition-all glow-effect font-semibold">Fale Conosco</a>
-            </div>
-            <button class="md:hidden text-white">
-                <i data-lucide="menu"></i>
+    <div class="pointer-events-none fixed inset-0 z-40 opacity-[0.015]" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+
+    <div id="preloader">
+        <div class="mb-6 text-[9px] font-medium uppercase tracking-[0.4em] text-white/50">Carregando Interface</div>
+        <div class="load-bar-container">
+            <div id="load-fill" class="load-bar-fill"></div>
+        </div>
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-50 bg-black/40 backdrop-blur-2xl border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <span class="font-bold text-lg tracking-tight">Center<span class="text-white/50">Net.</span></span>
+            <button onclick="document.getElementById('chat-fab').click()" class="px-6 py-2.5 text-[11px] font-medium uppercase tracking-widest text-white btn-glow cursor-pointer rounded-full">
+                Consultoria Elite
             </button>
         </div>
     </nav>
 
-    <section id="scroll-hero" style="height:400vh;position:relative;">
-        <div style="position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#020617;">
-            <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
-            
-            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(2,6,23,0.9) 0%, rgba(2,6,23,0.4) 40%, transparent 100%);z-index:1;"></div>
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at center, transparent 0%, rgba(2,6,23,0.6) 100%);z-index:1;"></div>
-            
-            <div style="position:absolute;inset:0;z-index:2;display:flex;align-items:center;padding:0 5%;max-w-7xl mx-auto" id="hero-text-wrapper">
-                
-                <div id="hero-text-content" class="max-w-2xl mt-20" style="will-change: transform, opacity;">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
-                        <span class="w-2 h-2 rounded-full bg-[#22d3ee] animate-pulse"></span>
-                        <span class="text-xs font-semibold tracking-wider text-white/90 uppercase">Poder & Precisão</span>
-                    </div>
-                    
-                    <h1 class="text-5xl md:text-7xl font-display font-bold leading-tight mb-6">
-                        Eleve seu Setup ao <span class="text-gradient">Nível Extremo</span>.
-                    </h1>
-                    
-                    <p class="text-lg md:text-xl text-white/70 font-light mb-8 leading-relaxed max-w-xl">
-                        Nossa equipe especializada domina a arte da performance. Combinamos <strong>assistência técnica de elite</strong> com uma seleção de <strong>produtos exclusivos</strong> que você não encontra em qualquer lugar.
-                    </p>
-                    
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#produtos" class="bg-white text-tech-950 font-semibold px-8 py-4 rounded-lg flex items-center gap-2 hover:bg-gray-200 transition-colors">
-                            Ver Exclusivos <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#servicos" class="glass-panel text-white font-semibold px-8 py-4 rounded-lg hover:bg-white/10 transition-colors">
-                            Agendar Diagnóstico
-                        </a>
-                    </div>
-                </div>
-
-                <div id="scroll-indicator" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
-                    <span class="text-xs tracking-widest uppercase">Role para explorar</span>
-                    <div class="w-[1px] h-12 bg-gradient-to-b from-white to-transparent"></div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="servicos" class="py-24 bg-tech-950 relative z-10 border-t border-white/10">
-        <div class="max-w-7xl mx-auto px-6 relative">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">Assistência de <span class="text-gradient">Alta Fidelidade</span></h2>
-                <p class="text-white/60 text-lg">Não apenas consertamos. Nós otimizamos, aprimoramos e extraímos cada gota de performance do seu hardware com protocolos rigorosos.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
-                    <div class="w-14 h-14 rounded-xl bg-tech-800 flex items-center justify-center mb-6 group-hover:bg-[#0ea5e9] transition-colors">
-                        <i data-lucide="wrench" class="w-7 h-7 text-[#22d3ee] group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Manutenção Preventiva</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Limpeza profunda, troca de pasta térmica de metal líquido e testes de stress para garantir durabilidade.</p>
-                </div>
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
-                    <div class="w-14 h-14 rounded-xl bg-tech-800 flex items-center justify-center mb-6 group-hover:bg-[#0ea5e9] transition-colors">
-                        <i data-lucide="microchip" class="w-7 h-7 text-[#22d3ee] group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Reparo de Placas</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Microeletrônica avançada. Recuperamos placas-mãe e GPUs condenadas por outras assistências.</p>
-                </div>
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
-                    <div class="w-14 h-14 rounded-xl bg-tech-800 flex items-center justify-center mb-6 group-hover:bg-[#0ea5e9] transition-colors">
-                        <i data-lucide="layers" class="w-7 h-7 text-[#22d3ee] group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Custom Builds</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Montagem sob medida para gamers e profissionais, com cable management impecável e refrigeração customizada.</p>
-                </div>
-                <div class="glass-panel p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300 group">
-                    <div class="w-14 h-14 rounded-xl bg-tech-800 flex items-center justify-center mb-6 group-hover:bg-[#0ea5e9] transition-colors">
-                        <i data-lucide="hard-drive" class="w-7 h-7 text-[#22d3ee] group-hover:text-white transition-colors"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Recuperação de Dados</h3>
-                    <p class="text-white/50 text-sm leading-relaxed">Laboratório limpo classe 100. Resgatamos seus arquivos cruciais de HDDs e SSDs danificados com sigilo total.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="produtos" class="py-32 bg-tech-900 relative z-10 overflow-hidden">
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[#0ea5e9]/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div id="animation-track" class="relative z-10 w-full">
         
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
-                <div class="lg:w-1/2">
-                    <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Hardware <br/><span class="text-gradient text-6xl">Exclusivo</span></h2>
-                    <p class="text-white/70 text-lg mb-8 leading-relaxed">
-                        Nossa loja não vende apenas caixas. Nós curamos peças. Importamos diretamente componentes de edição limitada, periféricos entusiastas e gabinetes que são verdadeiras obras de arte.
-                    </p>
-                    
-                    <ul class="space-y-6">
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-white/10 p-2 rounded-lg text-[#22d3ee]">
-                                <i data-lucide="check-circle" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">Edições Limitadas</h4>
-                                <p class="text-white/50 text-sm">Placas de vídeo e placas-mãe séries especiais com design exclusivo.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-white/10 p-2 rounded-lg text-[#22d3ee]">
-                                <i data-lucide="cpu" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">CPUs Binned</h4>
-                                <p class="text-white/50 text-sm">Processadores selecionados a dedo (binning) para atingir os maiores clocks de overclocking do mercado.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div class="mt-1 bg-white/10 p-2 rounded-lg text-[#22d3ee]">
-                                <i data-lucide="mouse" class="w-5 h-5"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-lg">Periféricos Entusiastas</h4>
-                                <p class="text-white/50 text-sm">Teclados customizados, mouses ultraleves e áudio de estúdio para setups definitivos.</p>
-                            </div>
-                        </li>
-                    </ul>
+        <section id="scroll-hero" class="relative z-10" style="height: 600vh;">
+            <div class="hero-sticky-container">
+                <div class="hero-grid relative z-10 w-full">
+                    <div id="step-1" class="text-group">
+                        <h2 class="headline-main">Engenharia de <br><span class="text-highlight">Performance.</span></h2>
+                    </div>
+
+                    <div id="step-2" class="text-group absolute">
+                        <h2 class="headline-main">Onde hardware brutal <br>encontra seu <span class="text-highlight">workflow.</span></h2>
+                    </div>
+
+                    <div id="step-3" class="text-group absolute">
+                        <h2 class="headline-main">Renderize sem <br><span class="text-highlight">limites.</span></h2>
+                        <p class="subheadline-main">Estabilidade absoluta. Montagem cirúrgica. Desenvolvido para profissionais que não têm tempo a perder com máquinas lentas.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="#produtos" class="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-[11px] font-medium uppercase tracking-widest bg-white text-black hover:bg-transparent hover:text-white transition-all rounded-full">
+                                Ver Configurações
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="lg:w-1/2 relative">
-                    <div class="aspect-square w-full max-w-md mx-auto relative group">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-[#0ea5e9] to-[#22d3ee] rounded-3xl transform rotate-6 opacity-20 group-hover:rotate-12 group-hover:opacity-30 transition-all duration-500"></div>
-                        <div class="absolute inset-0 glass-panel rounded-3xl p-8 flex flex-col justify-between border border-white/20 transform transition-transform duration-500 z-10">
-                            <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold uppercase tracking-widest text-[#22d3ee]">Setup Masterpiece</span>
-                                <i data-lucide="award" class="text-white/50"></i>
-                            </div>
-                            
-                            <div class="flex-1 flex items-center justify-center py-10">
-                                <div class="relative w-48 h-48">
-                                    <div class="absolute inset-0 border-4 border-white/10 rounded-lg transform rotate-12"></div>
-                                    <div class="absolute inset-4 bg-gradient-to-br from-gray-800 to-black border border-white/20 rounded-lg flex items-center justify-center overflow-hidden">
-                                        <div class="w-20 h-20 rounded-full border-8 border-transparent border-t-[#0ea5e9] border-r-[#22d3ee] animate-spin" style="animation-duration: 3s;"></div>
-                                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            
+            </div>
+        </section>
+
+        <div class="w-full bg-black/50 backdrop-blur-xl py-12 relative z-10 overflow-hidden border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-6 flex flex-wrap justify-center items-center gap-10 md:gap-20 opacity-60 transition-all hover:opacity-100 duration-700">
+                <span class="text-[10px] font-medium uppercase tracking-[0.2em] text-white/50">Stack Otimizada</span>
+                <span class="font-bold text-lg tracking-widest drop-shadow-md">BLENDER</span>
+                <span class="font-bold text-lg tracking-widest drop-shadow-md">CINEMA 4D</span>
+                <span class="font-bold text-lg tracking-widest drop-shadow-md">AFTER EFFECTS</span>
+                <span class="font-bold text-lg tracking-widest drop-shadow-md">FIGMA</span>
+            </div>
+        </div>
+
+        <section id="produtos" class="py-40 bg-black/60 backdrop-blur-2xl relative z-10">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
+                    <h2 class="text-5xl md:text-7xl font-black tracking-tighter card-reveal">
+                        Arquitetura <br><span class="text-white/60">Premium.</span>
+                    </h2>
+                    <p class="text-white/40 uppercase tracking-[0.2em] text-[11px] font-medium card-reveal delay-1">
+                        Selecionado para alta demanda criativa.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="product-card card-reveal delay-1 group p-10">
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="mb-4 flex justify-between items-start">
+                            <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Workstation V1</span>
+                            <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: AMD-5600</span>
+                        </div>
+                        <div class="mb-10 h-64 flex items-center justify-center relative z-10">
+                            <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                        </div>
+                        <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">AMD Ryzen 5 <br>5600GT</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
                             <div>
-                                <h3 class="text-2xl font-bold mb-2">Project: <span class="text-[#0ea5e9]">NEXUS</span></h3>
-                                <p class="text-sm text-white/50">Watercooling customizado, tubos rígidos, RTX 4090 Matrix. Disponível sob encomenda.</p>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">Processamento</p>
+                                <p class="text-sm font-medium text-white">6 Cores / 12 Threads</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">Gráficos</p>
+                                <p class="text-sm font-medium text-white">Radeon™ Integrado</p>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Tenho interesse na Workstation V1 (Ryzen 5600GT)'}, 300)" class="w-full bg-white text-black hover:bg-white/90 py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                            Solicitar Cotação
+                        </button>
+                    </div>
+
+                    <div class="product-card card-reveal delay-2 group p-10">
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="mb-4 flex justify-between items-start">
+                            <span class="text-[10px] font-medium bg-white text-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-[0_0_15px_rgba(255,255,255,0.3)]">Mobilidade Studio</span>
+                            <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: NITRO-V</span>
+                        </div>
+                        <div class="mb-10 h-64 flex items-center justify-center relative z-10">
+                            <img src="produtos/nitrov5.png" alt="Nitro V Intel Core" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                        </div>
+                        <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">Acer Nitro V <br>Intel Core RTX</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
+                            <div>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">Display</p>
+                                <p class="text-sm font-medium text-white">144Hz IPS Fluido</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">Renderização</p>
+                                <p class="text-sm font-medium text-white">NVIDIA RTX Series</p>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Quero verificar a disponibilidade do Acer Nitro V'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            Verificar Estoque
+                        </button>
+                    </div>
+
+                    <div class="product-card card-reveal delay-3 group p-10">
+                        <div class="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-25deg] group-hover:animate-[scan_1.5s_ease-in-out_infinite]"></div>
+                        <div class="mb-4 flex justify-between items-start">
+                            <span class="text-[10px] font-medium bg-white/10 border border-white/10 text-white px-3 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-md">Upgrade GPU</span>
+                            <span class="text-[10px] font-medium text-white/50 uppercase tracking-widest">SKU: RTX-3060</span>
+                        </div>
+                        <div class="mb-10 h-64 flex items-center justify-center relative z-10">
+                            <img src="produtos/rtx3090.png" alt="Placa de Video RTX 3060" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000 opacity-90 drop-shadow-[0_20px_40px_rgba(255,255,255,0.05)]">
+                        </div>
+                        <h3 class="text-3xl font-bold tracking-tight mb-4 leading-tight">GeForce RTX <br>3060 OC</h3>
+                        <div class="grid grid-cols-2 gap-4 mb-8 pt-6 border-t border-white/5">
+                            <div>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">VRAM</p>
+                                <p class="text-sm font-medium text-white">12GB GDDR6</p>
+                            </div>
+                            <div>
+                                <p class="text-[9px] text-white/40 uppercase font-medium tracking-widest mb-1">Arquitetura</p>
+                                <p class="text-sm font-medium text-white">Ampere Vibe Code</p>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('chat-fab').click(); setTimeout(()=> {document.getElementById('chat-input').value='Preciso de valores para a RTX 3060'}, 300)" class="w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black py-4 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer">
+                            Consultar Valor
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="anim-finale" class="relative z-10" style="height: 400vh;">
+            <div class="sticky top-0 w-full h-screen flex flex-col items-center justify-center pointer-events-none">
+                <h2 id="finale-text" class="text-4xl md:text-7xl font-black tracking-tighter text-white opacity-0 translate-y-10 transition-all duration-1000 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] text-center px-4">
+                    A performance <br>que <span class="text-tech-accent">você exige.</span>
+                </h2>
+            </div>
+        </section>
+        
+    </div>
+
+    <div class="bg-black relative z-20">
+        <section class="py-24 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-6">
+                <h3 class="text-2xl font-medium tracking-tight mb-16 text-center text-white/70">Validação em ambiente de produção real.</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                        <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"A estabilidade do workflow mudou drasticamente. A equipe realizou uma otimização lógica na arquitetura da máquina. Zero gargalos no After Effects."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Lucas F.</p>
+                                <p class="text-[10px] font-medium uppercase tracking-widest text-white/40">Audiovisual</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                        <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"Manutenção preventiva impecável. Temperatura da CPU caiu 20 graus sob stress. O setup voltou a operar como um produto novo."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Rafael M.</p>
+                                <p class="text-[10px] font-medium uppercase tracking-widest text-white/40">Broadcasting</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card p-8 bg-transparent shadow-none border-white/10">
+                        <p class="text-white/80 text-lg font-light mb-8 leading-relaxed">"Setup inteiro estruturado pela Center Net. A consultoria deles é focada na necessidade técnica real, não apenas em vender hardware."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20"></div>
+                            <div>
+                                <p class="text-sm font-medium text-white">Carla S.</p>
+                                <p class="text-[10px] font-medium uppercase tracking-widest text-white/40">Design 3D</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="sobre" class="py-24 bg-tech-950 relative z-10">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent flex flex-col items-center text-center">
-                    <i data-lucide="shield-check" class="w-12 h-12 text-[#0ea5e9] mb-4"></i>
-                    <h3 class="text-4xl font-display font-bold mb-2">90 Dias</h3>
-                    <p class="text-white/60">Garantia mínima em qualquer serviço prestado. Confiança total no que fazemos.</p>
-                </div>
-                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent flex flex-col items-center text-center">
-                    <i data-lucide="users" class="w-12 h-12 text-[#0ea5e9] mb-4"></i>
-                    <h3 class="text-4xl font-display font-bold mb-2">+5.000</h3>
-                    <p class="text-white/60">Equipamentos recuperados e setups montados por nossa equipe técnica.</p>
-                </div>
-                <div class="p-8 border border-white/5 rounded-2xl bg-gradient-to-b from-white/5 to-transparent flex flex-col items-center text-center">
-                    <i data-lucide="flask-conical" class="w-12 h-12 text-[#0ea5e9] mb-4"></i>
-                    <h3 class="text-4xl font-display font-bold mb-2">Lab. ESD</h3>
-                    <p class="text-white/60">Laboratório 100% protegido contra energia estática. Segurança para seus componentes.</p>
+        <section class="py-40 border-t border-white/5">
+            <div class="max-w-3xl mx-auto px-6">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter mb-16 text-center text-white">
+                    Especificações & <br><span class="text-white/50">Suporte.</span>
+                </h2>
+                
+                <div class="space-y-4">
+                    <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:bg-white/10 transition-colors">
+                        <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
+                            Engenharia de setups personalizados?
+                            <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="faq-answer">
+                            <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
+                                Sim. Projetamos a arquitetura do seu PC focada exatamente no software que você utiliza, garantindo o melhor custo-benefício e performance extrema para renderização e código.
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:bg-white/10 transition-colors">
+                        <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
+                            Manutenção e otimização de Laptops?
+                            <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="faq-answer">
+                            <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
+                                Efetuamos upgrades cirúrgicos (SSD NVMe, RAM) e reparos complexos em placas. Restauramos a velocidade e eficiência térmica do seu equipamento.
+                            </div>
+                        </div>
+                    </details>
+
+                    <details class="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden cursor-pointer hover:bg-white/10 transition-colors">
+                        <summary class="flex items-center justify-between p-8 font-medium text-lg outline-none select-none text-white">
+                            Garantia de componentes?
+                            <i data-lucide="plus" class="w-5 h-5 text-white/50 transition-transform group-open:rotate-45"></i>
+                        </summary>
+                        <div class="faq-answer">
+                            <div class="px-8 pb-8 text-white/70 text-base font-light leading-relaxed">
+                                Trabalhamos exclusivamente com hardware de primeira linha. Garantia direta e suporte técnico local focado em não deixar seu workflow parar.
+                            </div>
+                        </div>
+                    </details>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="contato" class="py-24 relative z-10">
-        <div class="absolute inset-0 bg-[#0ea5e9] opacity-10"></div>
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
+        <footer class="bg-black border-t border-white/10 relative z-20 pt-32 pb-12">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-24 pb-24 border-b border-white/10 gap-10 text-center md:text-left">
+                    <div>
+                        <h2 class="text-5xl md:text-6xl font-bold tracking-tighter mb-6 text-white">Workflow<br><span class="text-white/50">travando?</span></h2>
+                        <p class="text-white/60 text-xl font-light">Elimine gargalos. Feche a equação com nosso hardware.</p>
+                    </div>
+                    <button onclick="document.getElementById('chat-fab').click()" class="bg-white text-black px-12 py-5 rounded-full text-[11px] font-bold uppercase tracking-widest hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)] cursor-pointer">
+                        Iniciar Diagnóstico
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <span class="font-bold text-2xl tracking-tight mb-6 block text-white">Center<span class="text-white/50">Net.</span></span>
+                        <p class="text-white/50 text-sm max-w-sm mb-6 font-light leading-relaxed">
+                            Projetando soluções de infraestrutura para profissionais criativos e desenvolvedores que exigem performance premium.
+                        </p>
+                    </div>
+                    
+                    <div class="md:text-right">
+                        <h4 class="font-medium uppercase tracking-[0.2em] text-[10px] mb-6 text-white/40">Base Operacional</h4>
+                        <address class="not-italic text-sm text-white/60 font-light leading-relaxed flex flex-col md:items-end gap-3">
+                            <span class="flex items-center gap-3"><i data-lucide="map-pin" class="w-4 h-4 text-white/50"></i> Rua 15 de Dezembro, 98 sl A lj 26/27</span>
+                            <span>Centro - Anápolis, GO</span>
+                            <span>CEP: 75024-070</span>
+                        </address>
+                    </div>
+                </div>
+
+                <div class="mt-24 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] font-medium uppercase tracking-[0.2em] text-white/40">
+                    <p>&copy; 2026 Center Net. Design de Interface Premium.</p>
+                    <div class="flex gap-6">
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="fixed bottom-8 right-8 z-[100] flex flex-col items-end">
         
-        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Pronto para o Próximo Nível?</h2>
-            <p class="text-xl text-white/80 mb-10">Seja para consertar sua máquina de trabalho ou construir o PC dos sonhos, nós temos a solução. Fale com um especialista agora.</p>
-            
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#" class="bg-[#0ea5e9] hover:bg-[#3b82f6] text-white px-8 py-4 rounded-lg font-bold text-lg transition-all glow-effect flex items-center justify-center gap-2">
-                    <i data-lucide="message-square"></i> Iniciar Atendimento via WhatsApp
-                </a>
-                <a href="#" class="glass-panel text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-                    <i data-lucide="map-pin"></i> Visitar Nossa Loja
-                </a>
+        <div id="chat-box" class="hidden flex-col w-[360px] h-[520px] mb-6 rounded-3xl overflow-hidden product-card transform transition-all duration-500 translate-y-12 opacity-0 shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
+            <div class="bg-black/80 border-b border-white/10 p-5 flex items-center justify-between backdrop-blur-3xl">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
+                            <i data-lucide="terminal" class="text-white w-4 h-4"></i>
+                        </div>
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-white border-2 border-[#141414] rounded-full shadow-[0_0_10px_#FFFFFF]"></span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm tracking-wide text-white">Triagem Automática</h4>
+                        <p class="text-[9px] text-white/50 font-medium tracking-widest uppercase">Concierge IA</p>
+                    </div>
+                </div>
+                <button id="close-chat" class="text-white/40 hover:text-white hover:rotate-90 transition-all cursor-pointer p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
             </div>
-        </div>
-    </section>
+            
+            <div id="chat-messages" class="flex-1 p-5 overflow-y-auto flex flex-col gap-5 bg-black/60 backdrop-blur-xl">
+                <div class="bg-white/10 rounded-2xl rounded-tl-none p-5 max-w-[85%] self-start border border-white/10 text-sm shadow-xl backdrop-blur-xl">
+                    <p class="mb-2 font-medium text-white text-xs uppercase tracking-widest">Interface Conectada.</p>
+                    <p class="text-white/80 font-light leading-relaxed">Olá. Bem-vindo à Center Net. Informe sua necessidade e eu farei o roteamento imediato para um especialista de hardware.</p>
+                </div>
+            </div>
 
-    <footer class="bg-black py-12 border-t border-white/10 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center gap-2">
-                <i data-lucide="zap" class="text-accent w-6 h-6 text-[#22d3ee]"></i>
-                <span class="font-display font-bold text-xl tracking-wide text-white/50">INOVA<span class="text-[#0ea5e9]/50">TECH</span></span>
-            </div>
-            
-            <div class="text-white/40 text-sm text-center md:text-left">
-                &copy; 2024 InovaTech Informática. Todos os direitos reservados.<br>
-                Avenida da Tecnologia, 1024 - Centro Empresarial.
-            </div>
-            
-            <div class="flex gap-4">
-                <a href="#" class="text-white/40 hover:text-[#0ea5e9] transition-colors"><i data-lucide="instagram"></i></a>
-                <a href="#" class="text-white/40 hover:text-[#0ea5e9] transition-colors"><i data-lucide="twitter"></i></a>
-                <a href="#" class="text-white/40 hover:text-[#0ea5e9] transition-colors"><i data-lucide="youtube"></i></a>
+            <div class="p-5 bg-black/80 border-t border-white/10 flex gap-3 items-center backdrop-blur-3xl">
+                <input type="text" id="chat-input" placeholder="Comando de entrada..." class="flex-1 bg-black/40 border border-white/10 rounded-xl px-5 py-3 text-sm focus:outline-none focus:border-white/40 text-white placeholder-white/30 transition-all font-light">
+                <button id="send-chat" class="bg-white text-black p-3.5 rounded-xl hover:scale-105 transition-all cursor-pointer flex-shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                    <i data-lucide="arrow-up" class="w-5 h-5"></i>
+                </button>
             </div>
         </div>
-    </footer>
+
+        <button id="chat-fab" class="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center hover:scale-105 transition-transform shadow-[0_15px_40px_rgba(255,255,255,0.25)] cursor-pointer backdrop-blur-xl border border-white/20">
+            <i data-lucide="message-square" class="w-6 h-6"></i>
+        </button>
+    </div>
 
     <script>
-        // Init Lucide Icons
-        function initLucide(){
-            if(window.lucide){
-                lucide.createIcons();
-            } else {
-                setTimeout(initLucide,200);
-            }
-        }
-        initLucide();
+        lucide.createIcons();
 
-        // SCROLL ANIMATION LOGIC
-        const frameCount = 100;
-        const baseUrl = "https://buildix-user-images.s3.us-east-2.amazonaws.com/scroll-animations/temp-1777305572327/f1238ede-861b-4fb2-85a5-2439c250a01d/frame_";
+        const lenis = new Lenis({
+            duration: 1.2, 
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+            smoothTouch: false, 
+            wheelMultiplier: 1.2,
+            orientation: 'vertical',
+            gestureOrientation: 'vertical'
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => preloader.style.display = 'none', 1000);
+            }, 800);
+        });
+
+        if (window.matchMedia("(hover: hover)").matches) {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / card.clientWidth) * 100;
+                    const y = ((e.clientY - rect.top) / card.clientHeight) * 100;
+                    card.style.setProperty('--x', `${x}%`);
+                    card.style.setProperty('--y', `${y}%`);
+                });
+            });
+        }
+
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        const frameCount = 205; // ATUALIZADO: Total de 205 frames
         const images = [];
         let loadedCount = 0;
-
-        const loader = document.getElementById("loader");
-        const progressBar = document.getElementById("progress-bar");
-        const loadingText = document.getElementById("loading-text");
-        const canvas = document.getElementById("hero-canvas");
-        const context = canvas.getContext("2d");
         
-        // Hero Text Elements for Animation
-        const textWrapper = document.getElementById("hero-text-content");
-        const scrollIndicator = document.getElementById("scroll-indicator");
+        const baseUrl = "./"; // ATUALIZADO: Caminho direto (sem prefixo ezgif)
+        
+        let currentFrameIndex = 0;
+        let lastRenderedIndex = -1;
 
-        // 1. Frame Preloading
-        for (let i = 1; i <= frameCount; i++) {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            // Format number to 4 digits (0001, 0002, etc)
-            const frameNumber = String(i).padStart(4, '0');
-            img.src = `${baseUrl}${frameNumber}.jpg`;
+        let metrics = {
+            windowHeight: 0,
+            trackScrollHeight: 1,
+            heroScrollHeight: 1,
+            finaleTop: 0
+        };
+
+        function updateMetrics() {
+            metrics.windowHeight = window.innerHeight;
             
-            img.onload = () => {
-                loadedCount++;
-                const percentage = Math.floor((loadedCount / frameCount) * 100);
-                
-                // Update UI
-                progressBar.style.width = `${percentage}%`;
-                
-                // Thematic loading text
-                if(percentage < 30) loadingText.innerText = `Diagnosticando hardware ${percentage}%...`;
-                else if(percentage < 60) loadingText.innerText = `Calibrando performance ${percentage}%...`;
-                else if(percentage < 90) loadingText.innerText = `Otimizando sistemas ${percentage}%...`;
-                else loadingText.innerText = `Sistemas prontos ${percentage}%!`;
-
-                // Draw first frame immediately to avoid black screen
-                if (loadedCount === 1) {
-                    resizeCanvas();
-                    drawCover(img);
-                }
-
-                // All loaded
-                if (loadedCount === frameCount) {
-                    setTimeout(() => {
-                        loader.style.opacity = "0";
-                        loader.style.visibility = "hidden";
-                        document.body.style.overflowY = "auto";
-                        
-                        // Initial check for text position based on initial scroll
-                        handleScroll(); 
-                    }, 500); // small delay for visual completion
-                }
-            };
-            images.push(img);
+            const track = document.getElementById('animation-track');
+            metrics.trackScrollHeight = Math.max(1, track.offsetHeight - metrics.windowHeight);
+            
+            const hero = document.getElementById('scroll-hero');
+            metrics.heroScrollHeight = Math.max(1, hero.offsetHeight - metrics.windowHeight);
+            
+            const finale = document.getElementById('anim-finale');
+            metrics.finaleTop = finale.offsetTop;
         }
 
-        // 2 & 3. Canvas Resize & Draw Cover Sizing (Otimizado para Alta Fidelidade)
-        function resizeCanvas() {
-            // Detecta a densidade da tela do usuário. Limitamos a 2x para ter nitidez máxima sem fritar a GPU do celular.
+        function preloadImages() {
+            for (let i = 1; i <= frameCount; i++) {
+                const img = new Image();
+                // ATUALIZADO: padStart 4 dígitos e extensão .webp
+                img.src = `${baseUrl}${i.toString().padStart(4, '0')}.webp`;
+                
+                img.decoding = "async";
+                
+                if (i <= 15) img.loading = "eager";
+                img.onload = () => {
+                    loadedCount++;
+                    document.getElementById('load-fill').style.width = `${(loadedCount / frameCount) * 100}%`;
+                    if (loadedCount === 1) renderFrame(0);
+                };
+                images.push(img);
+            }
+        }
+
+        function renderFrame(index) {
+            const safeIndex = Math.max(0, Math.min(frameCount - 1, index));
+            currentFrameIndex = safeIndex; 
+            
+            if (lastRenderedIndex === safeIndex) return;
+            
+            const img = images[safeIndex];
+            if (!img || !img.complete) return;
+
+            const logicalWidth = canvas.width;
+            const logicalHeight = canvas.height;
+
+            const canvasRatio = logicalWidth / logicalHeight;
+            const imgRatio = img.width / img.height;
+            let rw, rh, ox = 0, oy = 0;
+
+            if (canvasRatio > imgRatio) {
+                rw = logicalWidth; 
+                rh = img.height * (logicalWidth / img.width);
+                oy = (logicalHeight - rh) / 2;
+            } else {
+                rh = logicalHeight; 
+                rw = img.width * (logicalHeight / img.height);
+                ox = (logicalWidth - rw) / 2;
+            }
+            
+            ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+            ctx.drawImage(img, ox, oy, rw, rh);
+            
+            lastRenderedIndex = safeIndex;
+        }
+
+        lenis.on('scroll', (e) => {
+            const scrollTop = e.scroll; 
+            
+            const trackFraction = Math.max(0, Math.min(1, scrollTop / metrics.trackScrollHeight));
+            const targetFrame = trackFraction * (frameCount - 1);
+            renderFrame(Math.round(targetFrame));
+
+            const heroFraction = Math.max(0, Math.min(1, scrollTop / metrics.heroScrollHeight));
+
+            const s1 = document.getElementById('step-1');
+            const s2 = document.getElementById('step-2');
+            const s3 = document.getElementById('step-3');
+            s1.classList.remove('active'); s2.classList.remove('active'); s3.classList.remove('active');
+
+            if (heroFraction > 0.05 && heroFraction < 0.3) s1.classList.add('active');
+            else if (heroFraction >= 0.35 && heroFraction < 0.6) s2.classList.add('active');
+            else if (heroFraction >= 0.65 && heroFraction < 0.95) s3.classList.add('active');
+
+            if (trackFraction >= 0.35) {
+                document.querySelectorAll('.card-reveal').forEach(el => el.classList.add('active'));
+            }
+
+            const finaleText = document.getElementById('finale-text');
+            if (scrollTop > metrics.finaleTop - (metrics.windowHeight / 1.5)) {
+                finaleText.classList.remove('opacity-0', 'translate-y-10');
+                finaleText.classList.add('opacity-100', 'translate-y-0');
+            } else {
+                finaleText.classList.add('opacity-0', 'translate-y-10');
+                finaleText.classList.remove('opacity-100', 'translate-y-0');
+            }
+        });
+
+        function resize() {
+            updateMetrics(); 
             const dpr = Math.min(window.devicePixelRatio || 1, 2); 
             
-            // Trava o tamanho físico do elemento na tela
             canvas.style.width = `${window.innerWidth}px`;
             canvas.style.height = `${window.innerHeight}px`;
             
-            // Multiplica a resolução interna do Canvas (O segredo da alta qualidade)
             canvas.width = window.innerWidth * dpr;
             canvas.height = window.innerHeight * dpr;
             
-            // Força a suavização antialiasing nativa do navegador
-            context.imageSmoothingEnabled = true;
-            context.imageSmoothingQuality = 'high';
-            
-            // Redraw current frame if available
-            const heroEl = document.getElementById("scroll-hero");
-            const maxScroll = heroEl.offsetHeight - window.innerHeight;
-            let fraction = window.scrollY / maxScroll;
-            if(isNaN(fraction) || fraction < 0) fraction = 0;
-            if(fraction > 1) fraction = 1;
-            
-            const frameIndex = Math.min(frameCount - 1, Math.ceil(fraction * (frameCount - 1)));
-            if (images[frameIndex] && images[frameIndex].complete) {
-                drawCover(images[frameIndex]);
-            }
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            lastRenderedIndex = -1;
+            renderFrame(currentFrameIndex);
         }
 
-        function drawCover(img) {
-            if (!img || !img.complete || img.naturalWidth === 0) return;
-            
-            const canvasRatio = canvas.width / canvas.height;
-            const imgRatio = img.width / img.height;
-            
-            let renderWidth, renderHeight, offsetX, offsetY;
+        window.addEventListener('resize', resize);
+        resize(); 
+        preloadImages();
 
-            if (canvasRatio > imgRatio) {
-                // Canvas is wider than image
-                renderWidth = canvas.width;
-                renderHeight = img.height * (canvas.width / img.width);
-                offsetX = 0;
-                offsetY = (canvas.height - renderHeight) / 2;
+        // 5. Lógica do Chat Widget
+        const chatFab = document.getElementById('chat-fab');
+        const chatBox = document.getElementById('chat-box');
+        const closeChat = document.getElementById('close-chat');
+        const chatInput = document.getElementById('chat-input');
+        const sendChat = document.getElementById('send-chat');
+        const chatMessages = document.getElementById('chat-messages');
+
+        function toggleChat() {
+            if (chatBox.classList.contains('hidden')) {
+                chatBox.classList.remove('hidden');
+                setTimeout(() => {
+                    chatBox.classList.remove('translate-y-12', 'opacity-0');
+                }, 10);
+                chatInput.focus();
             } else {
-                // Image is wider than canvas
-                renderHeight = canvas.height;
-                renderWidth = img.width * (canvas.height / img.height);
-                offsetY = 0;
-                offsetX = (canvas.width - renderWidth) / 2;
+                chatBox.classList.add('translate-y-12', 'opacity-0');
+                setTimeout(() => {
+                    chatBox.classList.add('hidden');
+                }, 500);
             }
-
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(img, offsetX, offsetY, renderWidth, renderHeight);
         }
 
-        window.addEventListener('resize', resizeCanvas);
+        chatFab.addEventListener('click', toggleChat);
+        closeChat.addEventListener('click', toggleChat);
 
-        // 4 & 5. Scroll Handler & Text Animation
-        function handleScroll() {
-            const heroEl = document.getElementById("scroll-hero");
-            const maxScroll = heroEl.offsetHeight - window.innerHeight;
-            
-            // Prevent division by zero if maxScroll is 0
-            if(maxScroll <= 0) return;
-            
-            const rawFraction = window.scrollY / maxScroll;
-            const fraction = Math.max(0, Math.min(1, rawFraction));
-            
-            // Draw Frame
-            const frameIndex = Math.min(frameCount - 1, Math.ceil(fraction * (frameCount - 1)));
-            if (images[frameIndex] && images[frameIndex].complete) {
-                requestAnimationFrame(() => drawCover(images[frameIndex]));
-            }
+        function handleSendMessage() {
+            const text = chatInput.value.trim();
+            if(!text) return;
 
-            // --- HERO TEXT ANIMATION LOGIC ---
-            // Fade out and move up as user scrolls. Disappears by 40% scroll.
-            const textFadeLimit = 0.4; 
+            const userMsgHTML = `
+                <div class="bg-white text-black rounded-2xl rounded-tr-none p-4 max-w-[85%] self-end font-medium text-sm shadow-md animate-[pulse_0.3s_ease-out]">
+                    <p>${text}</p>
+                </div>
+            `;
+            chatMessages.insertAdjacentHTML('beforeend', userMsgHTML);
+            chatInput.value = '';
             
-            let textOpacity = 1 - (fraction / textFadeLimit);
-            if (textOpacity < 0) textOpacity = 0;
-            if (textOpacity > 1) textOpacity = 1;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-            // Parallax effect: moves up faster than user scrolls
-            let textTranslateY = -(fraction * 300); // Max move 300px up
-            
-            if(textWrapper) {
-                textWrapper.style.opacity = textOpacity;
-                textWrapper.style.transform = `translateY(${textTranslateY}px)`;
+            setTimeout(() => {
+                const loadingHTML = `
+                    <div id="typing-indicator" class="bg-white/5 rounded-2xl rounded-tl-none p-4 max-w-[85%] self-start border border-white/10 text-sm flex gap-1">
+                        <span class="w-2 h-2 bg-white/50 rounded-full animate-bounce"></span>
+                        <span class="w-2 h-2 bg-white/50 rounded-full animate-bounce" style="animation-delay: 0.1s"></span>
+                        <span class="w-2 h-2 bg-white/50 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', loadingHTML);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
                 
-                // Hide completely from DOM if invisible to prevent click blocking
-                if(textOpacity === 0) {
-                    textWrapper.style.pointerEvents = 'none';
-                } else {
-                    textWrapper.style.pointerEvents = 'auto';
-                }
-            }
+                setTimeout(() => {
+                    document.getElementById('typing-indicator').remove();
+                    
+                    const numeroWhatsApp = "5562993362276"; 
+                    const linkWhatsApp = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(text)}`;
+                    window.open(linkWhatsApp, '_blank');
+                    
+                    const finalMsgHTML = `
+                        <div class="bg-white/10 rounded-2xl rounded-tl-none p-5 max-w-[85%] self-start border border-white/20 text-sm shadow-lg backdrop-blur-md">
+                            <p class="mb-2 text-white font-medium flex items-center gap-2 text-xs uppercase tracking-widest">
+                                <i data-lucide="check" class="w-4 h-4"></i> Rota Estabelecida
+                            </p>
+                            <p class="text-white/70 font-light">Sua requisição foi processada. Estou transferindo o contexto do seu workflow para nosso especialista fechar os detalhes no WhatsApp.</p>
+                        </div>
+                    `;
+                    chatMessages.insertAdjacentHTML('beforeend', finalMsgHTML);
+                    lucide.createIcons(); 
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1400);
 
-            // Scroll indicator fades out very fast (by 10% scroll)
-            if(scrollIndicator) {
-                let indOpacity = 0.6 - (fraction / 0.1);
-                if(indOpacity < 0) indOpacity = 0;
-                scrollIndicator.style.opacity = indOpacity;
-            }
-
-            // Navbar styling on scroll
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('bg-tech-950/90');
-                nav.classList.remove('border-transparent');
-                nav.classList.add('border-white/10');
-            } else {
-                nav.classList.remove('bg-tech-950/90');
-                nav.classList.remove('border-white/10');
-            }
+            }, 500);
         }
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        sendChat.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSendMessage();
+        });
 
     </script>
 </body>
