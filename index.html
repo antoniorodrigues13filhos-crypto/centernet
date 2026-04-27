@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Center Net Informática | Engenharia de Performance</title>
+    <title>InovaTech | Assistência & Produtos Exclusivos</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -571,12 +571,13 @@
         }
 
         const canvas = document.getElementById('hero-canvas');
-        const ctx = canvas.getContext('2d');
-        const frameCount = 205; // ATUALIZADO: Total de 205 frames
+        const ctx = canvas.getContext('2d', { alpha: false, desynchronized: true });
+        
+        const frameCount = 205;
         const images = [];
         let loadedCount = 0;
         
-        const baseUrl = "./"; // ATUALIZADO: Caminho direto (sem prefixo ezgif)
+        const baseUrl = "./"; 
         
         let currentFrameIndex = 0;
         let lastRenderedIndex = -1;
@@ -604,7 +605,6 @@
         function preloadImages() {
             for (let i = 1; i <= frameCount; i++) {
                 const img = new Image();
-                // ATUALIZADO: padStart 4 dígitos e extensão .webp
                 img.src = `${baseUrl}${i.toString().padStart(4, '0')}.webp`;
                 
                 img.decoding = "async";
@@ -645,7 +645,8 @@
                 ox = (logicalWidth - rw) / 2;
             }
             
-            ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+            ctx.fillStyle = "#020617"; 
+            ctx.fillRect(0, 0, logicalWidth, logicalHeight);
             ctx.drawImage(img, ox, oy, rw, rh);
             
             lastRenderedIndex = safeIndex;
@@ -685,7 +686,7 @@
 
         function resize() {
             updateMetrics(); 
-            const dpr = Math.min(window.devicePixelRatio || 1, 2); 
+            const dpr = Math.min(window.devicePixelRatio || 1, 3); 
             
             canvas.style.width = `${window.innerWidth}px`;
             canvas.style.height = `${window.innerHeight}px`;
@@ -704,7 +705,6 @@
         resize(); 
         preloadImages();
 
-        // 5. Lógica do Chat Widget
         const chatFab = document.getElementById('chat-fab');
         const chatBox = document.getElementById('chat-box');
         const closeChat = document.getElementById('close-chat');
