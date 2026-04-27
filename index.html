@@ -196,8 +196,10 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            /* AJUSTE: Removido filtro grayscale e brightness baixo para mostrar cores originais */
+            /* AJUSTE CSS: object-fit fill garante que o buffer do canvas 
+               (que agora está em alta resolução) preencha o elemento CSS perfeitamente */
+            object-fit: fill;
+            /* Mantendo os filtros anteriores apenas para contraste sutil */
             filter: contrast(1.05) brightness(1.0);
         }
 
@@ -205,9 +207,6 @@
             position: absolute;
             inset: 0;
             z-index: 5;
-            /* AJUSTE: Removido o gradiente preto de fundo. 
-               Adicionado um blur sutil apenas para garantir legibilidade do texto 
-               caso a imagem seja muito clara em alguns pontos. */
             background: transparent;
             backdrop-filter: blur(1px); 
         }
@@ -251,7 +250,7 @@
                     <h2 class="headline-main">Renderize sem <br><span class="text-highlight">limites.</span></h2>
                     <p class="subheadline-main">Estabilidade absoluta. Montagem cirúrgica. Desenvolvido para profissionais que não têm tempo a perder com máquinas lentas.</p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="#produtos" class="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-[11px] font-medium uppercase tracking-widest bg-white text-black hover:bg-transparent hover:text-white transition-all rounded-full">
+                        <a href="#produtos" class="inline-flex items-center justify-center border border-white/20 px-8 py-4 text-[11px] font-medium uppercase trackingest bg-white text-black hover:bg-transparent hover:text-white transition-all rounded-full">
                             Ver Configurações
                         </a>
                     </div>
@@ -604,24 +603,28 @@
             const img = images[safeIndex];
             if (!img || !img.complete) return;
 
-            const w = window.innerWidth;
-            const h = window.innerHeight;
+            // AJUSTE DE NITIDEZ: Usamos as dimensões internas do buffer do canvas 
+            // (que já foram ajustadas pelo DPR na função resize)
+            const logicalWidth = canvas.width;
+            const logicalHeight = canvas.height;
 
-            const canvasRatio = w / h;
+            const canvasRatio = logicalWidth / logicalHeight;
             const imgRatio = img.width / img.height;
             let rw, rh, ox = 0, oy = 0;
 
+            // Lógica de "Cover" (preencher mantendo proporção) calculada sobre os pixels lógicos
             if (canvasRatio > imgRatio) {
-                rw = w; 
-                rh = img.height * (w / img.width);
-                oy = (h - rh) / 2;
+                rw = logicalWidth; 
+                rh = img.height * (logicalWidth / img.width);
+                oy = (logicalHeight - rh) / 2;
             } else {
-                rh = h; 
-                rw = img.width * (h / img.height);
-                ox = (w - rw) / 2;
+                rh = logicalHeight; 
+                rw = img.width * (logicalHeight / img.height);
+                ox = (logicalWidth - rw) / 2;
             }
             
-            ctx.clearRect(0, 0, w, h);
+            // Desenha diretamente no tamanho total do buffer sem escalas contextuais externas
+            ctx.clearRect(0, 0, logicalWidth, logicalHeight);
             ctx.drawImage(img, ox, oy, rw, rh);
             
             lastRenderedIndex = safeIndex;
@@ -651,18 +654,23 @@
         });
 
         function resize() {
+            // AJUSTE DE NITIDEZ: Detecta a densidade de pixels da tela (ex: Retina = 2)
             const dpr = window.devicePixelRatio || 1;
             
+            // Define o tamanho de exibição CSS (o tamanho que ocupa na janela)
             canvas.style.width = `${window.innerWidth}px`;
             canvas.style.height = `${window.innerHeight}px`;
             
+            // AJUSTE DE NITIDEZ: Define o tamanho interno do buffer de desenho multiplicando pelo DPR.
+            // Se a janela tem 1000px e o DPR é 2, o canvas terá 2000px internos de resolução.
             canvas.width = window.innerWidth * dpr;
             canvas.height = window.innerHeight * dpr;
             
-            ctx.scale(dpr, dpr);
+            // Configurações de suavização de alta qualidade
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
 
+            // Reseta o cache de renderização e desenha o frame atual na nova resolução
             lastRenderedIndex = -1;
             renderFrame(currentFrameIndex);
         }
