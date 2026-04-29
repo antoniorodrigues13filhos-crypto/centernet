@@ -68,13 +68,42 @@ nav .cta-pill {
 nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 
 /* ── HERO SCROLL-TELLING EXPERIENCE ── */
-#hero-track { height: 600vh; position: relative; width: 100%; }
-.hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; }
-#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); z-index: 0; will-change: transform; }
-.hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 20%, var(--black) 100%); z-index: 5; }
+#hero-track { 
+  height: 600vh; 
+  position: relative; 
+  width: 100%; 
+}
+.hero-sticky { 
+  position: sticky; 
+  top: 0; 
+  width: 100%; 
+  height: 100vh; 
+  overflow: hidden; 
+}
+#hero-canvas { 
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  filter: brightness(0.6); 
+  z-index: 0;
+  will-change: transform;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 20%, var(--black) 100%);
+  z-index: 5;
+}
 
 /* BORDA MINIMALISTA RESTRITA AO HERO */
-.frame-border { position: absolute; inset: 15px; border: 1px solid var(--border-color); pointer-events: none; z-index: 15; }
+.frame-border {
+  position: absolute;
+  inset: 15px; 
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+  z-index: 15;
+}
 .frame-line { position: absolute; background: var(--orange); box-shadow: 0 0 10px var(--orange); }
 .line-top { top: -1px; left: 0; height: 1px; width: 0; animation: lineH 4s infinite; }
 .line-right { top: 0; right: -1px; width: 1px; height: 0; animation: lineV 4s infinite 1s; }
@@ -83,20 +112,58 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
+/* Cenas Animadas (JS Control) */
 .hero-content {
-  position: relative; z-index: 10; height: 100vh;
-  display: flex; align-items: center; justify-content: flex-start;
+  position: relative; 
+  z-index: 10;
+  height: 100vh;
+  display: flex; 
+  align-items: center; 
+  justify-content: flex-start;
   padding: 0 clamp(20px, 5vw, 10%);
 }
-.scroll-scene { position: absolute; left: clamp(20px, 5vw, 10%); right: clamp(20px, 5vw, 10%); opacity: 0; pointer-events: none; will-change: transform, opacity, filter; }
+.scroll-scene {
+  position: absolute;
+  left: clamp(20px, 5vw, 10%);
+  right: clamp(20px, 5vw, 10%);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
 
-.hero-headline { font-family: var(--font-display); font-size: clamp(50px, 9vw, 140px); line-height: 0.85; margin-bottom: 20px; color: var(--white); text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(50px, 9vw, 140px);
+  line-height: 0.85;
+  margin-bottom: 20px;
+  color: var(--white);
+  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
 
-.hero-sub { font-size: clamp(16px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); }
+.hero-sub {
+  font-size: clamp(16px, 2vw, 22px);
+  max-width: 600px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.8);
+}
 
-.hero-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
+.hero-actions {
+  margin-top: 40px;
+  display: flex; gap: 20px; flex-wrap: wrap;
+}
 
-.btn-premium { padding: 16px 36px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.1em; cursor: pointer; transition: all 0.4s; border: none; }
+.btn-premium {
+  padding: 16px 36px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.4s;
+  border: none;
+}
 .btn-orange { background: var(--orange); color: white; box-shadow: 0 0 20px var(--orange-glow); }
 .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--orange-glow); }
 
@@ -114,8 +181,37 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
 .section-title .dim { color: var(--grey); }
 
+/* ── PRODUTOS ── */
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); }
+.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.product-card { background: var(--surface2); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s; position: relative; }
+.product-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+.product-card.featured { border-color: rgba(255,77,0,0.4); background: linear-gradient(160deg, rgba(255,77,0,0.04) 0%, var(--surface2) 50%); }
+.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; }
+.badge-default { background: var(--black); color: var(--grey); border: 1px solid var(--border-color); }
+.badge-hot { background: var(--orange); color: #fff; }
+.badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
+
+.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--black); border-bottom: 1px solid var(--border-color); }
+.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); transition: transform 0.4s; }
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+.product-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+.product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
+.product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
+.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+.spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
+
+.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; }
+.cta-filled { background: var(--orange); color: #fff; }
+.cta-filled:hover { background: var(--orange-dim); }
+.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
+.cta-outline:hover { border-color: var(--white) !important; color: var(--white); }
+
 /* ── PROBLEMA ── */
-#problema { background: var(--surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+#problema { background: var(--black); border-bottom: 1px solid var(--border-color); }
 .problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
 .problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
 .problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
@@ -123,118 +219,21 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .problema-icon svg { width: 16px; height: 16px; }
 .problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
 .problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
-.solucao-box { background: var(--surface2); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
+.solucao-box { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
 .solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
 .solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
 .solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
 .solucao-point strong { color: var(--white); font-weight: 500; }
 
-/* ── PRODUTOS (COM BG MOVIMENTO E CARDS CORRIGIDOS) ── */
-#produtos {
-  max-width: 1400px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-
-/* Fundo Minimalista em Movimento */
-#produtos::before {
-  content: '';
-  position: absolute;
-  inset: -20px;
-  z-index: 0;
-  /* Média de pontos e linhas minimalistas */
-  background-image: 
-    radial-gradient(var(--orange-glow) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,0.01) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: 0 0;
-  opacity: 0.3;
-  animation: moveBGProdutos 15s linear infinite;
-}
-
-@keyframes moveBGProdutos {
-  to { background-position: 50px 50px; }
-}
-
-.produtos-header {
-  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px;
-  position: relative; z-index: 10;
-}
-.products-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-  position: relative; z-index: 10;
-}
-
-.product-card {
-  background: rgba(10,10,10,0.8);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(5px); /* Efeito Premium Acessível */
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex; flex-direction: column;
-  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  position: relative;
-}
-/* Hover Premium Sutil */
-.product-card:hover {
-  border-color: rgba(255,77,0,0.3);
-  transform: translateY(-8px);
-  background: rgba(17,17,17,0.9);
-}
-
-/* Destaque Neon no card Featured */
-.product-card.featured {
-  border-color: var(--orange-glow);
-  box-shadow: 0 0 15px var(--orange-glow);
-  background: linear-gradient(160deg, rgba(255,77,0,0.05) 0%, rgba(10,10,10,0.9) 60%);
-}
-.product-card.featured:hover {
-  border-color: var(--orange);
-  box-shadow: 0 10px 40px var(--orange-glow);
-}
-
-.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; z-index: 5;}
-.badge-default { background: var(--black); color: var(--grey); border: 1px solid var(--border-color); }
-.badge-hot { background: var(--orange); color: #fff; }
-.badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
-
-.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: rgba(0,0,0,0.4); border-bottom: 1px solid var(--border-color); }
-.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); transition: transform 0.6s ease-out; }
-.product-card:hover .product-img-wrap img { transform: scale(1.04); }
-
-.product-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
-.product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
-.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1.05; margin-bottom: 20px; color: var(--white); }
-.product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
-.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
-.spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
-
-.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; text-align: center;}
-.cta-filled { background: var(--orange); color: #fff; }
-.cta-filled:hover { background: var(--orange-dim); }
-.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
-.cta-outline:hover { border-color: var(--white) !important; color: var(--white); }
-
-/* ── PROVAS SOCIAIS ── */
-#provas { max-width: 1200px; margin: 0 auto; }
-.provas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.prova-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 14px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
-.stars { display: flex; gap: 3px; }
-.star { width: 14px; height: 14px; color: var(--orange); fill: var(--orange); }
-.prova-text { font-size: 14px; line-height: 1.75; color: var(--grey-light); font-style: italic; }
-.prova-author { display: flex; align-items: center; gap: 12px; }
-.prova-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--orange); }
-
-/* ── FAQ ── */
-#faq { background: var(--surface); border-top: 1px solid var(--border-color); }
-.faq-inner { max-width: 760px; margin: 0 auto; }
-details.faq-item { border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 8px; background: var(--black); cursor: pointer; }
-details.faq-item summary { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; font-size: 15px; font-weight: 500; color: var(--white); list-style: none; outline: none; }
-.faq-body { padding: 0 24px 22px; font-size: 14px; line-height: 1.8; color: var(--grey-light); }
-
-/* ── CTA FINAL ── */
-#cta-final { background: var(--black); border-top: 1px solid var(--border-color); text-align: center; padding: 100px 20px; }
-.cta-title { font-family: var(--font-display); font-size: clamp(52px, 10vw, 120px); line-height: 0.88; margin-bottom: 28px; }
+/* ── SERVIÇOS ── */
+#servicos { background: var(--surface); border-bottom: 1px solid var(--border-color); }
+.servicos-inner { max-width: 1200px; margin: 0 auto; }
+.servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border-color); }
+.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
+.servico-item:hover { background: var(--surface2); }
+.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
+.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
+.servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
 
 /* ── FOOTER ── */
 footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
@@ -389,6 +388,38 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
         <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276?text=Interesse na RTX 3060 OC')">Consultar Valor</button>
       </div>
     </div>
+
+    <div class="product-card reveal reveal-d1">
+      <span class="product-badge badge-default">Conforto</span>
+      <div class="product-img-wrap">
+        <img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright">
+      </div>
+      <div class="product-body">
+        <div class="product-sku">SKU: CADEIRA-BRIGHT</div>
+        <div class="product-name">Cadeira Gamer<br>Bright</div>
+        <div class="product-specs">
+          <div><div class="spec-label">Suporte</div><div class="spec-value">Até 120Kg</div></div>
+          <div><div class="spec-label">Tipo</div><div class="spec-value">Reclinável</div></div>
+        </div>
+        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276?text=Interesse na Cadeira Gamer Bright')">Verificar Estoque</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d2">
+      <span class="product-badge badge-new">Imersão</span>
+      <div class="product-img-wrap">
+        <img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer 27 Curvo Acer">
+      </div>
+      <div class="product-body">
+        <div class="product-sku">SKU: ACER-ED273</div>
+        <div class="product-name">Monitor Acer 27"<br>Curvo 144Hz</div>
+        <div class="product-specs">
+          <div><div class="spec-label">Resolução</div><div class="spec-value">Full HD</div></div>
+          <div><div class="spec-label">Resposta</div><div class="spec-value">1ms</div></div>
+        </div>
+        <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276?text=Interesse no Monitor Acer 27')">Consultar Valor</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -453,66 +484,23 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </section>
 
-<section id="provas">
-  <div class="provas-header">
-    <div class="section-tag reveal">Depoimentos</div>
-    <h2 class="section-title reveal reveal-d1">Resultados <span class="dim">reais.</span></h2>
-  </div>
-  <div class="provas-grid">
-    <div class="prova-card reveal">
-      <div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-      <p class="prova-text">Meu notebook voltou a voar. Manutenção cirúrgica!</p>
-      <div class="prova-author"><div class="prova-avatar">L</div><div class="prova-name">Lucas F.</div></div>
-    </div>
-    <div class="prova-card reveal">
-      <div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-      <p class="prova-text">Câmeras instaladas com perfeição. Me sinto seguro.</p>
-      <div class="prova-author"><div class="prova-avatar">R</div><div class="prova-name">Rafael M.</div></div>
-    </div>
-    <div class="prova-card reveal">
-      <div class="stars"><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-      <p class="prova-text">Setup gamer dos sonhos. A CenterNet é fera!</p>
-      <div class="prova-author"><div class="prova-avatar">C</div><div class="prova-name">Carla S.</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="faq-inner">
-    <div class="section-tag reveal">FAQ</div>
-    <h2 class="section-title reveal reveal-d1">Dúvidas <span class="dim">frequentes.</span></h2>
-    <div class="faq-list">
-      <details class="faq-item"><summary>Fazem orçamento online?</summary><div class="faq-body">Sim, via WhatsApp podemos fazer uma prévia do diagnóstico.</div></details>
-      <details class="faq-item"><summary>Atendem só em Anápolis?</summary><div class="faq-body">Sim, nossa loja física é em Anápolis, mas enviamos hardware para todo o Brasil.</div></details>
-      <details class="faq-item"><summary>A garantia é real?</summary><div class="faq-body">Sim, garantia direta de balcão para reparos e garantia oficial dos fabricantes de hardware.</div></details>
-    </div>
-  </div>
-</section>
-
-<section id="cta-final">
-  <div class="cta-final-inner">
-    <h2 class="cta-title">Chega de <span class="line-orange">perder</span> tempo.</h2>
-    <button class="btn-primary" style="margin: 0 auto" onclick="window.open('https://wa.me/5562993362276?text=Quero um diagnóstico grátis')">Diagnóstico via WhatsApp</button>
-  </div>
-</section>
-
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">Center<span>Net</span></div>
-      <p>Performance, segurança e tecnologia de ponta em Anápolis.</p>
+      <p>A melhor assistência técnica, montagem de infraestrutura e venda de hardware de Anápolis.</p>
     </div>
     <div>
       <div class="section-tag" style="margin-bottom:12px">Base Operacional</div>
       <address class="footer-address">
         <strong>Rua 15 de Dezembro, 98 sl A lj 26/27</strong><br>
-        Centro — Anápolis, Brazil 75024070
+        Anápolis, Brazil 75024070
       </address>
     </div>
   </div>
   <div class="footer-bottom">
     <span>© 2026 Center Net Informática.</span>
-    <span>Instagram: @centernetinfo</span>
+    <span>Siga no Instagram: @centernetinfo</span>
   </div>
 </footer>
 
