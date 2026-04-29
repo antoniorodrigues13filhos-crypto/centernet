@@ -27,7 +27,6 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -57,97 +56,35 @@ body {
 
 /* ── NAV ── */
 nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 0 clamp(20px, 5vw, 80px);
   border-bottom: 1px solid var(--border);
-  background: rgba(5,5,5,0.4);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(5,5,5,0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
-.logo {
-  font-family: var(--font-display);
-  font-size: 24px;
-  letter-spacing: 0.05em;
-  color: var(--white);
-}
+.logo { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.05em; color: var(--white); }
 .logo span { color: var(--orange); }
+
 nav .cta-pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--orange);
-  color: #fff;
-  padding: 10px 22px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  cursor: pointer;
-  border: none;
-  transition: background 0.2s, transform 0.2s;
-  font-family: var(--font-body);
+  display: flex; align-items: center; gap: 8px; background: var(--orange); color: #fff;
+  padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
+  transition: background 0.2s, transform 0.2s; font-family: var(--font-body);
 }
 nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
-nav .cta-pill svg { width: 14px; height: 14px; }
 
-/* ── HERO TRACK (CANVAS ANIMATION) ── */
-#hero-track {
-  height: 400vh;
-  position: relative;
-  width: 100%;
-}
-.hero-sticky {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-#hero-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-  filter: contrast(1.1) brightness(0.7);
-}
-.hero-overlay-vignette {
-  position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(circle at center, transparent 30%, var(--black) 120%);
-  pointer-events: none;
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: clamp(80px, 10vh, 140px) clamp(20px, 5vw, 80px) clamp(40px, 6vh, 80px);
-  width: 100%;
-  transform: translateY(0);
-  transition: opacity 0.3s;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 8px; background: rgba(255,77,0,0.12);
-  border: 1px solid rgba(255,77,0,0.3); color: var(--orange); font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 0.12em; padding: 6px 14px; border-radius: 4px; margin-bottom: 28px;
-}
+/* ── HERO TRACK ── */
+#hero-track { height: 400vh; position: relative; width: 100%; }
+.hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: contrast(1.1) brightness(0.7); }
+.hero-overlay-vignette { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at center, transparent 30%, var(--black) 120%); pointer-events: none; }
+.hero-content { position: relative; z-index: 2; padding: clamp(80px, 10vh, 140px) clamp(20px, 5vw, 80px) clamp(40px, 6vh, 80px); width: 100%; transition: opacity 0.3s; }
+
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.3); color: var(--orange); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; padding: 6px 14px; border-radius: 4px; margin-bottom: 28px; }
 .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 1.4s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.hero-headline {
-  font-family: var(--font-display); font-size: clamp(64px, 10vw, 160px);
-  line-height: 0.88; letter-spacing: 0.01em; color: var(--white); margin-bottom: 20px;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-}
+.hero-headline { font-family: var(--font-display); font-size: clamp(64px, 10vw, 160px); line-height: 0.88; letter-spacing: 0.01em; color: var(--white); margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
 .hero-headline .line-orange { color: var(--orange); }
 
 .hero-bottom { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px; }
@@ -166,11 +103,11 @@ nav .cta-pill svg { width: 14px; height: 14px; }
 .ticker-item::after { content: '✦'; margin-left: 40px; opacity: 0.5; }
 @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* ── SECTION SHARED ── */
+/* ── SECTIONS ── */
 section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 80px); position: relative; z-index: 10; background: var(--black); }
 .section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
 .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
-.section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; letter-spacing: 0.01em; margin-bottom: 20px; }
+.section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
 .section-title .dim { color: var(--grey); }
 
 /* ── PROBLEMA/SOLUÇÃO ── */
@@ -202,190 +139,99 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 80px); position: re
 .badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
 
 .product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--surface2); border-bottom: 1px solid var(--border); }
-.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.4s; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); }
-.product-card:hover .product-img-wrap img { transform: scale(1.05); }
+.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); }
 
 .product-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
 .product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
 .product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
 .product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-.spec-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
 .spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
 
-.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .cta-filled { background: var(--orange); color: #fff; }
-.cta-filled:hover { background: var(--orange-dim); box-shadow: 0 8px 24px rgba(255,77,0,0.3); }
-.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; border: none; }
-.cta-outline:hover { border-color: var(--white) !important; color: var(--white); }
+.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
 
 /* ── SERVIÇOS ── */
 #servicos { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .servicos-inner { max-width: 1200px; margin: 0 auto; }
 .servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border); }
-.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; border: none; }
+.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
 .servico-item:hover { background: var(--surface2); }
-.servico-num { font-family: var(--font-display); font-size: 56px; line-height: 1; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
-.servico-title { font-family: var(--font-display); font-size: 26px; letter-spacing: 0.02em; margin-bottom: 14px; color: var(--white); }
+.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
+.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
 .servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
-.servico-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); cursor: pointer; transition: gap 0.2s; }
-.servico-link:hover { gap: 10px; }
 
 /* ── PROVAS SOCIAIS ── */
 #provas { max-width: 1200px; margin: 0 auto; }
-.provas-header { margin-bottom: 56px; }
 .provas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.prova-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px; display: flex; flex-direction: column; gap: 20px; transition: border-color 0.3s; }
-.prova-card:hover { border-color: var(--border-strong); }
+.prova-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
 .stars { display: flex; gap: 3px; }
 .star { width: 14px; height: 14px; color: var(--orange); fill: var(--orange); }
-.prova-text { font-size: 14px; line-height: 1.75; color: var(--grey-light); font-style: italic; flex: 1; }
-.prova-text::before, .prova-text::after { content: '"'; }
+.prova-text { font-size: 14px; line-height: 1.75; color: var(--grey-light); font-style: italic; }
 .prova-author { display: flex; align-items: center; gap: 12px; }
-.prova-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--orange); flex-shrink: 0; }
-.prova-name { font-weight: 500; font-size: 14px; color: var(--white); }
-.prova-role { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+.prova-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--orange); }
 
 /* ── FAQ ── */
 #faq { background: var(--surface); border-top: 1px solid var(--border); }
 .faq-inner { max-width: 760px; margin: 0 auto; }
-.faq-list { margin-top: 48px; display: flex; flex-direction: column; gap: 8px; }
-details.faq-item { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--black); cursor: pointer; transition: border-color 0.2s; }
-details.faq-item[open] { border-color: var(--border-strong); }
-details.faq-item summary { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; font-size: 15px; font-weight: 500; color: var(--white); list-style: none; outline: none; user-select: none; }
-details.faq-item summary::-webkit-details-marker { display: none; }
-.faq-icon { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s, border-color 0.2s; }
-details.faq-item[open] .faq-icon { background: var(--orange); border-color: var(--orange); }
-.faq-icon svg { width: 12px; height: 12px; transition: transform 0.3s; }
-details.faq-item[open] .faq-icon svg { transform: rotate(45deg); }
+details.faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--black); cursor: pointer; }
+details.faq-item summary { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; font-size: 15px; font-weight: 500; color: var(--white); list-style: none; outline: none; }
 .faq-body { padding: 0 24px 22px; font-size: 14px; line-height: 1.8; color: var(--grey-light); }
 
 /* ── CTA FINAL ── */
-#cta-final { background: var(--black); border-top: 1px solid var(--border); text-align: center; padding: clamp(80px, 12vh, 140px) clamp(20px, 5vw, 80px); }
-.cta-final-inner { max-width: 860px; margin: 0 auto; }
-.cta-kicker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 24px; }
+#cta-final { background: var(--black); border-top: 1px solid var(--border); text-align: center; padding: 100px 20px; }
 .cta-title { font-family: var(--font-display); font-size: clamp(52px, 10vw, 120px); line-height: 0.88; margin-bottom: 28px; }
-.cta-title .dim { color: var(--grey); }
-.cta-subtitle { font-size: clamp(15px, 1.8vw, 18px); line-height: 1.75; color: var(--grey-light); max-width: 520px; margin: 0 auto 48px; }
-.cta-buttons { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-.cta-guarantee { margin-top: 32px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); display: flex; align-items: center; justify-content: center; gap: 8px; }
-.cta-guarantee svg { width: 14px; height: 14px; color: var(--orange); }
 
 /* ── FOOTER ── */
 footer { background: var(--surface); border-top: 1px solid var(--border); padding: 48px clamp(20px, 5vw, 80px) 32px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; align-items: flex-start; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-.footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 260px; margin-top: 12px; }
-.footer-address { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--grey); line-height: 2; margin-top: 8px; }
-.footer-address strong { color: var(--grey-light); font-weight: 400; }
-.footer-bottom { max-width: 1200px; margin: 24px auto 0; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
-.footer-socials { display: flex; gap: 16px; }
-.footer-socials a { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--grey); text-decoration: none; transition: border-color 0.2s, color 0.2s; }
-.footer-socials a:hover { border-color: var(--white); color: var(--white); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 260px; }
+.footer-address { font-family: var(--font-mono); font-size: 11px; color: var(--grey); line-height: 2; margin-top: 8px; }
+.footer-bottom { max-width: 1200px; margin: 24px auto 0; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--grey); text-transform: uppercase; }
 
-/* ── CHAT FAB ── */
+/* ── CHAT ── */
 #chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 200; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-#chat-box { width: 360px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.8); transform-origin: bottom right; animation: chatPop 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-@keyframes chatPop { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
+#chat-box { width: 360px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.8); }
 .chat-head { background: var(--black); border-bottom: 1px solid var(--border); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
-.chat-agent { display: flex; align-items: center; gap: 12px; }
-.chat-avatar { width: 38px; height: 38px; border-radius: 10px; background: var(--orange); display: flex; align-items: center; justify-content: center; position: relative; }
-.chat-avatar svg { width: 18px; height: 18px; color: #fff; }
-.chat-avatar::after { content: ''; position: absolute; bottom: -2px; right: -2px; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 2px solid var(--black); }
-.chat-agent-name { font-weight: 600; font-size: 14px; color: var(--white); }
-.chat-agent-status { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #22c55e; }
-#close-chat-btn { background: none; border: none; color: var(--grey); cursor: pointer; padding: 4px; transition: color 0.2s; }
-#close-chat-btn:hover { color: var(--white); }
-#close-chat-btn svg { width: 18px; height: 18px; }
+#chat-messages { flex: 1; height: 340px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+.msg-bot, .msg-user { max-width: 82%; padding: 12px 16px; border-radius: 12px; font-size: 13px; }
+.msg-bot { background: var(--surface2); color: var(--grey-light); align-self: flex-start; }
+.msg-user { background: var(--orange); color: #fff; align-self: flex-end; }
+.chat-input-area { padding: 14px 16px; background: var(--black); border-top: 1px solid var(--border); display: flex; gap: 10px; }
+#chat-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--white); outline: none; }
+#send-btn, #chat-fab { background: var(--orange); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+#chat-fab { width: 58px; height: 58px; border-radius: 50%; box-shadow: 0 8px 32px rgba(255,77,0,0.5); }
 
-#chat-messages { flex: 1; height: 340px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; scrollbar-width: thin; scrollbar-color: rgba(255,77,0,0.3) transparent; }
-.msg-bot, .msg-user { max-width: 82%; padding: 12px 16px; border-radius: 12px; font-size: 13px; line-height: 1.65; }
-.msg-bot { background: var(--surface2); border: 1px solid var(--border); color: var(--grey-light); align-self: flex-start; border-radius: 12px 12px 12px 4px; }
-.msg-user { background: var(--orange); color: #fff; align-self: flex-end; border-radius: 12px 12px 4px 12px; }
-.msg-bot strong { color: var(--white); }
-.typing { display: flex; gap: 4px; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px 12px 12px 4px; align-self: flex-start; width: fit-content; }
-.dot { width: 6px; height: 6px; background: var(--grey); border-radius: 50%; animation: dotbounce 1.2s infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-
-.chat-input-area { padding: 14px 16px; background: var(--black); border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center; }
-#chat-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--white); font-family: var(--font-body); outline: none; transition: border-color 0.2s; }
-#chat-input::placeholder { color: var(--grey); }
-#chat-input:focus { border-color: var(--orange); }
-#send-btn { width: 38px; height: 38px; background: var(--orange); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
-#send-btn:hover { background: var(--orange-dim); }
-#send-btn svg { width: 16px; height: 16px; color: #fff; }
-
-#chat-fab { width: 58px; height: 58px; background: var(--orange); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(255,77,0,0.5); transition: transform 0.25s, box-shadow 0.25s; position: relative; }
-#chat-fab:hover { transform: scale(1.08); box-shadow: 0 12px 40px rgba(255,77,0,0.6); }
-#chat-fab svg { width: 24px; height: 24px; color: #fff; }
-.fab-badge { position: absolute; top: -4px; right: -4px; width: 18px; height: 18px; background: #22c55e; border-radius: 50%; border: 2px solid var(--black); font-family: var(--font-mono); font-size: 9px; color: #fff; display: flex; align-items: center; justify-content: center; }
-
-/* ── REVEAL ANIMATIONS ── */
+/* ANIMATIONS */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.1s; }
-.reveal-d2 { transition-delay: 0.2s; }
-.reveal-d3 { transition-delay: 0.3s; }
-.reveal-d4 { transition-delay: 0.4s; }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  .problema-grid { grid-template-columns: 1fr; gap: 40px; }
-  .products-grid { grid-template-columns: 1fr; }
-  .servicos-grid { grid-template-columns: 1fr; gap: 0; }
-  .provas-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 640px) {
-  .hero-headline { font-size: clamp(52px, 16vw, 80px); }
-  .hero-bottom { flex-direction: column; align-items: flex-start; }
-  #chat-box { width: calc(100vw - 40px); }
-  .produtos-header { flex-direction: column; align-items: flex-start; }
-  .section-title { font-size: clamp(40px, 11vw, 72px); }
-}
 </style>
 </head>
 <body>
 
 <div id="preloader">
   <div class="load-text">Iniciando Hardware...</div>
-  <div class="load-bar">
-    <div id="load-progress"></div>
-  </div>
+  <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
 <nav>
   <div class="logo">Center<span>Net</span></div>
-  <button class="cta-pill" onclick="openChat()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-    Falar com Especialista
-  </button>
+  <button class="cta-pill" onclick="openChat()">Falar com Especialista</button>
 </nav>
 
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay-vignette"></div>
-    
     <div class="hero-content" id="hero-text-content">
       <div class="hero-tag">Center Net Informática ⚡</div>
-      <h1 class="hero-headline">
-        Máquinas<br>
-        <span class="line-orange">Que Não</span><br>
-        Travam.
-      </h1>
+      <h1 class="hero-headline">Máquinas<br><span class="line-orange">Que Não</span><br>Travam.</h1>
       <div class="hero-bottom">
-        <p class="hero-desc">
-          Especialistas em performance e manutenção. De PCs Gamers e Workstations a Sistemas de Segurança e Smartphones. Nós destravamos a sua tecnologia.
-        </p>
+        <p class="hero-desc">Especialistas em performance e manutenção. De PCs Gamers e Workstations a Sistemas de Segurança e Smartphones. Nós destravamos a sua tecnologia.</p>
         <div class="hero-actions">
-          <button class="btn-primary" onclick="openChat()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            Diagnóstico Grátis
-          </button>
-          <button class="btn-secondary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">
-            Ver Configurações
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
+          <button class="btn-primary" onclick="openChat()">Diagnóstico Grátis</button>
+          <button class="btn-secondary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Configurações</button>
         </div>
       </div>
     </div>
@@ -396,16 +242,10 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="ticker-inner">
     <span class="ticker-item">🖥️ PCs e Notebooks</span>
     <span class="ticker-item">🪛 Montagem e Manutenção</span>
-    <span class="ticker-item">⌨️ Periféricos de Alta Performance</span>
+    <span class="ticker-item">⌨️ Periféricos de Performance</span>
     <span class="ticker-item">📹 Sistemas de Segurança</span>
-    <span class="ticker-item">📱 Assistência em Smartphones</span>
-    <span class="ticker-item">⚡ Upgrades de Hardware</span>
-    <span class="ticker-item">🖥️ PCs e Notebooks</span>
-    <span class="ticker-item">🪛 Montagem e Manutenção</span>
-    <span class="ticker-item">⌨️ Periféricos de Alta Performance</span>
-    <span class="ticker-item">📹 Sistemas de Segurança</span>
-    <span class="ticker-item">📱 Assistência em Smartphones</span>
-    <span class="ticker-item">⚡ Upgrades de Hardware</span>
+    <span class="ticker-item">📱 Smartphones</span>
+    <span class="ticker-item">⚡ Upgrades</span>
   </div>
 </div>
 
@@ -413,53 +253,34 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="problema-grid">
     <div>
       <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal reveal-d1">Gargalos <span class="dim">custam dinheiro.</span></h2>
+      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
       <ul class="problema-list">
         <li class="problema-item reveal reveal-d1">
-          <div class="problema-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          </div>
-          <div class="problema-item-text">
-            <strong>Renders que levam horas</strong>
-            Produtividade travada enquanto o processador engasga. Prazo perdido, cliente insatisfeito.
-          </div>
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
         </li>
         <li class="problema-item reveal reveal-d2">
-          <div class="problema-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
-          </div>
-          <div class="problema-item-text">
-            <strong>Superaquecimento constante</strong>
-            Pasta térmica seca, cooler entupido de pó. A máquina throttla e você perde performance sem saber.
-          </div>
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
         </li>
         <li class="problema-item reveal reveal-d3">
-          <div class="problema-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          </div>
-          <div class="problema-item-text">
-            <strong>Hardware incompatível com o workflow</strong>
-            Setup genérico que não foi pensado para Blender, After Effects ou ambientes de desenvolvimento.
-          </div>
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
+          <div class="problema-item-text"><strong>Aquecimento e falhas</strong>A máquina faz barulho de turbina e esquenta demais. Suas câmeras ou rede falham quando você mais precisa.</div>
         </li>
       </ul>
     </div>
-
     <div class="reveal reveal-d2">
       <div class="section-tag">A Solução</div>
-      <h2 class="section-title">Setup <span class="dim">feito para você.</span></h2>
+      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
       <div class="solucao-box">
-        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Não vendemos hardware. Vendemos o resultado: <strong style="color:var(--white)">uma máquina que entrega o que você precisa</strong>, configurada com base no seu uso real.</p>
+        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
         <ul class="solucao-points">
-          <li class="solucao-point"><strong>Diagnóstico gratuito</strong> — identificamos exatamente onde está o gargalo</li>
-          <li class="solucao-point"><strong>Componentes selecionados</strong> — só o que faz diferença no seu caso</li>
-          <li class="solucao-point"><strong>Configuração cirúrgica</strong> — BIOS, drivers, OC e gestão térmica otimizados</li>
-          <li class="solucao-point"><strong>Suporte pós-entrega</strong> — acompanhamento real, não sumimos depois da venda</li>
+          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
+          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
+          <li class="solucao-point"><strong>Reparo cirúrgico</strong> — da pasta térmica à instalação de CFTV.</li>
+          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
         </ul>
-        <button class="btn-primary" style="margin-top:28px" onclick="openChat()">
-          Quero meu diagnóstico grátis
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        <button class="btn-primary" style="margin-top:28px" onclick="openChatWith('Gostaria de um diagnóstico para o meu aparelho.')">Falar com um técnico agora</button>
       </div>
     </div>
   </div>
@@ -469,109 +290,49 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div style="max-width:1200px;margin:0 auto">
     <div class="produtos-header">
       <div>
-        <div class="section-tag reveal">Configurações Disponíveis</div>
-        <h2 class="section-title reveal reveal-d1">Arquitetura <span class="dim">Premium.</span></h2>
+        <div class="section-tag reveal">Vitrine</div>
+        <h2 class="section-title reveal reveal-d1">Hardware <span class="dim">Premium.</span></h2>
       </div>
-      <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Cada setup é testado e otimizado antes de sair. Zero improviso.</p>
+      <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;">Setups testados e otimizados um a um.</p>
     </div>
-
     <div class="products-grid">
       <div class="product-card reveal reveal-d1">
         <span class="product-badge badge-default">Workstation V1</span>
-        <div class="product-img-wrap">
-          <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-family:var(--font-display);font-size:40px;color:var(--grey)\'>AMD</div>'">
-        </div>
+        <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="AMD Ryzen 5"></div>
         <div class="product-body">
           <div class="product-sku">SKU: AMD-5600</div>
-          <div class="product-name">AMD Ryzen 5<br>5600GT</div>
+          <div class="product-name">AMD Ryzen 5 5600GT</div>
           <div class="product-specs">
-            <div class="spec-item">
-              <div class="spec-label">Processamento</div>
-              <div class="spec-value">6C / 12T</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Gráficos</div>
-              <div class="spec-value">Radeon™ iGPU</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Ideal para</div>
-              <div class="spec-value">Desenvolvimento</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Nível</div>
-              <div class="spec-value">Entrada Pro</div>
-            </div>
+            <div class="spec-item"><div class="spec-label">CPU</div><div class="spec-value">6C / 12T</div></div>
+            <div class="spec-item"><div class="spec-label">Nível</div><div class="spec-value">Pro</div></div>
           </div>
-          <button class="card-cta cta-filled" onclick="openChatWith('Tenho interesse na Workstation V1 — Ryzen 5 5600GT')">
-            Solicitar Cotação
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </button>
+          <button class="card-cta cta-filled" onclick="openChatWith('Interesse na Workstation V1')">Cotação</button>
         </div>
       </div>
-
       <div class="product-card featured reveal reveal-d2">
-        <span class="product-badge badge-hot">🔥 Mais Vendido</span>
-        <div class="product-img-wrap">
-          <img src="produtos/nitrov5.png" alt="Acer Nitro V" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-family:var(--font-display);font-size:40px;color:var(--grey)\'>NITRO</div>'">
-        </div>
+        <span class="product-badge badge-hot">🔥 Destaque</span>
+        <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Acer Nitro V"></div>
         <div class="product-body">
           <div class="product-sku">SKU: NITRO-V</div>
-          <div class="product-name">Acer Nitro V<br>Intel + RTX</div>
+          <div class="product-name">Acer Nitro V</div>
           <div class="product-specs">
-            <div class="spec-item">
-              <div class="spec-label">Display</div>
-              <div class="spec-value">144Hz IPS</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">GPU</div>
-              <div class="spec-value">NVIDIA RTX</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Ideal para</div>
-              <div class="spec-value">Design + 3D</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Nível</div>
-              <div class="spec-value">Profissional</div>
-            </div>
+            <div class="spec-item"><div class="spec-label">Tela</div><div class="spec-value">144Hz IPS</div></div>
+            <div class="spec-item"><div class="spec-label">GPU</div><div class="spec-value">RTX Series</div></div>
           </div>
-          <button class="card-cta cta-filled" onclick="openChatWith('Quero verificar disponibilidade do Acer Nitro V Intel Core RTX')">
-            Verificar Estoque
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </button>
+          <button class="card-cta cta-filled" onclick="openChatWith('Interesse no Nitro V')">Ver Estoque</button>
         </div>
       </div>
-
       <div class="product-card reveal reveal-d3">
-        <span class="product-badge badge-new">Upgrade GPU</span>
-        <div class="product-img-wrap">
-          <img src="produtos/rtx3090.png" alt="RTX 3060 OC" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-family:var(--font-display);font-size:40px;color:var(--grey)\'>RTX</div>'">
-        </div>
+        <span class="product-badge badge-new">GPU</span>
+        <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX 3060"></div>
         <div class="product-body">
           <div class="product-sku">SKU: RTX-3060</div>
-          <div class="product-name">GeForce RTX<br>3060 OC</div>
+          <div class="product-name">GeForce RTX 3060</div>
           <div class="product-specs">
-            <div class="spec-item">
-              <div class="spec-label">VRAM</div>
-              <div class="spec-value">12GB GDDR6</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Arq.</div>
-              <div class="spec-value">Ampere</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Ideal para</div>
-              <div class="spec-value">Render + IA</div>
-            </div>
-            <div class="spec-item">
-              <div class="spec-label">Nível</div>
-              <div class="spec-value">Upgrade Cirúrgico</div>
-            </div>
+            <div class="spec-item"><div class="spec-label">VRAM</div><div class="spec-value">12GB</div></div>
+            <div class="spec-item"><div class="spec-label">Arq</div><div class="spec-value">Ampere</div></div>
           </div>
-          <button class="card-cta cta-outline" onclick="openChatWith('Preciso de valores para a RTX 3060 OC — 12GB')">
-            Consultar Valor
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:14px;height:14px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-          </button>
+          <button class="card-cta cta-outline" onclick="openChatWith('Interesse na RTX 3060')">Consultar</button>
         </div>
       </div>
     </div>
@@ -580,436 +341,163 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 
 <section id="servicos">
   <div class="servicos-inner">
-    <div class="section-tag reveal">Nossa Expertise</div>
-    <h2 class="section-title reveal reveal-d1">Além do <span class="dim">básico.</span></h2>
-    <p class="reveal reveal-d2" style="max-width:500px;font-size:15px;line-height:1.8;color:var(--grey-light);margin-top:12px;">
-      Resolvemos problemas que outros condenam. Hardware limpo, sistema rápido, segurança garantida.
-    </p>
-
+    <div class="section-tag reveal">Serviços</div>
+    <h2 class="section-title reveal reveal-d1">O que <span class="dim">fazemos.</span></h2>
     <div class="servicos-grid">
       <div class="servico-item reveal reveal-d1">
         <div class="servico-num">01</div>
         <div class="servico-title">PCs & Notebooks</div>
-        <p class="servico-desc">Montagem de setups gamers e workstations. Manutenção preventiva (limpeza, pasta térmica) e corretiva em placas, dobradiças e telas.</p>
-        <div class="servico-link" onclick="openChatWith('Preciso de manutenção no meu PC/Notebook')">
-          Solicitar
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <p class="servico-desc">Montagem gamer, limpeza técnica e reparos em geral.</p>
       </div>
       <div class="servico-item reveal reveal-d2">
         <div class="servico-num">02</div>
         <div class="servico-title">Segurança & Redes</div>
-        <p class="servico-desc">Instalação e configuração de CFTV (câmeras de segurança) e infraestrutura de redes para empresas e residências.</p>
-        <div class="servico-link" onclick="openChatWith('Quero um orçamento para Sistemas de Segurança')">
-          Agendar
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <p class="servico-desc">Instalação de CFTV e infraestrutura de rede robusta.</p>
       </div>
       <div class="servico-item reveal reveal-d3">
         <div class="servico-num">03</div>
         <div class="servico-title">Smartphones</div>
-        <p class="servico-desc">Reparos complexos, troca de tela, baterias e recuperação de sistemas em celulares Android e iOS.</p>
-        <div class="servico-link" onclick="openChatWith('Preciso de assistência no meu Smartphone')">
-          Diagnosticar
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <p class="servico-desc">Troca de tela, bateria e reparos de sistema.</p>
       </div>
       <div class="servico-item reveal reveal-d4">
         <div class="servico-num">04</div>
-        <div class="servico-title">Periféricos & Peças</div>
-        <p class="servico-desc">Venda de memórias RAM, SSDs NVMe, placas de vídeo, teclados mecânicos e mouses voltados para performance extrema.</p>
-        <div class="servico-link" onclick="openChatWith('Quero fazer um upgrade de peças/periféricos')">
-          Ver Peças
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </div>
+        <div class="servico-title">Peças</div>
+        <p class="servico-desc">Periféricos e componentes de primeira linha.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section id="provas">
-  <div class="provas-header">
-    <div class="section-tag reveal">Resultados Reais</div>
-    <h2 class="section-title reveal reveal-d1">Quem já <span class="dim">acelerou.</span></h2>
-  </div>
   <div class="provas-grid">
-    <div class="prova-card reveal reveal-d1">
-      <div class="stars">
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
-      <p class="prova-text">A estabilidade do workflow mudou drasticamente. Zero gargalos no After Effects. A equipe entendeu exatamente o que eu precisava antes de recomendar qualquer coisa.</p>
-      <div class="prova-author">
-        <div class="prova-avatar">L</div>
-        <div>
-          <div class="prova-name">Lucas F.</div>
-          <div class="prova-role">Motion Designer · Audiovisual</div>
-        </div>
-      </div>
+    <div class="prova-card reveal">
+      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
+      <p class="prova-text">Meu notebook voltou a ser rápido como novo. Atendimento excelente.</p>
+      <div class="prova-author"><div class="prova-avatar">L</div><div class="prova-name">Lucas F.</div></div>
     </div>
-    <div class="prova-card reveal reveal-d2">
-      <div class="stars">
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
-      <p class="prova-text">Manutenção preventiva impecável. Temperatura da CPU caiu 20 graus sob stress total. O setup voltou a operar como produto novo. Recomendo sem hesitar.</p>
-      <div class="prova-author">
-        <div class="prova-avatar">R</div>
-        <div>
-          <div class="prova-name">Rafael M.</div>
-          <div class="prova-role">Técnico · Broadcasting</div>
-        </div>
-      </div>
+    <div class="prova-card reveal">
+      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
+      <p class="prova-text">Câmeras instaladas com perfeição. Recomendo muito.</p>
+      <div class="prova-author"><div class="prova-avatar">R</div><div class="prova-name">Rafael M.</div></div>
     </div>
-    <div class="prova-card reveal reveal-d3">
-      <div class="stars">
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      </div>
-      <p class="prova-text">Setup inteiro estruturado pela CenterNet. A consultoria é focada na necessidade real, não em empurrar o produto mais caro. Resultado perfeito para Blender e Figma.</p>
-      <div class="prova-author">
-        <div class="prova-avatar">C</div>
-        <div>
-          <div class="prova-name">Carla S.</div>
-          <div class="prova-role">Designer 3D · Arquitetura</div>
-        </div>
-      </div>
+    <div class="prova-card reveal">
+      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
+      <p class="prova-text">Configuraram meu PC gamer do zero. Performance incrível.</p>
+      <div class="prova-author"><div class="prova-avatar">C</div><div class="prova-name">Carla S.</div></div>
     </div>
   </div>
 </section>
 
 <section id="faq">
   <div class="faq-inner">
-    <div class="section-tag reveal">Dúvidas Frequentes</div>
-    <h2 class="section-title reveal reveal-d1">Perguntas <span class="dim">diretas.</span></h2>
-
+    <h2 class="section-title reveal">Perguntas <span class="dim">Frequentes.</span></h2>
     <div class="faq-list">
-      <details class="faq-item reveal reveal-d1">
-        <summary>
-          Vocês fazem setups personalizados para o meu software?
-          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </summary>
-        <div class="faq-body">Sim. Projetamos a arquitetura focada no software que você usa: Blender, Cinema 4D, After Effects, Figma, ambientes de desenvolvimento, IA local. Diagnosticamos antes de recomendar qualquer componente.</div>
-      </details>
-      <details class="faq-item reveal reveal-d2">
-        <summary>
-          Atendem só em Anápolis ou fazem envio?
-          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </summary>
-        <div class="faq-body">Atendimento presencial em Anápolis, GO. Também realizamos envio de componentes e workstations para todo o Brasil, com embalagem de proteção e rastreamento completo.</div>
-      </details>
-      <details class="faq-item reveal reveal-d3">
-        <summary>
-          Qual a garantia dos componentes?
-          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </summary>
-        <div class="faq-body">Trabalhamos apenas com hardware de fabricantes homologados. Garantia direta do fabricante + suporte técnico da CenterNet para qualquer problema pós-venda. Você não fica sozinho.</div>
-      </details>
-      <details class="faq-item reveal reveal-d1">
-        <summary>
-          Quanto tempo leva uma manutenção completa?
-          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </summary>
-        <div class="faq-body">Na maioria dos casos, a manutenção preventiva é realizada no mesmo dia. Para reparos mais complexos (substituição de componentes, reparo em placa), o prazo médio é de 24 a 48 horas.</div>
-      </details>
-      <details class="faq-item reveal reveal-d2">
-        <summary>
-          O diagnóstico realmente é gratuito?
-          <div class="faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-        </summary>
-        <div class="faq-body">Sim. Fazemos uma análise inicial do seu setup ou da sua demanda sem custo. Só depois de entender exatamente o que você precisa é que apresentamos uma proposta — sem pressão, sem surpresas.</div>
-      </details>
+      <details class="faq-item"><summary>Fazem orçamento online?</summary><div class="faq-body">Sim, via WhatsApp podemos fazer uma prévia do diagnóstico.</div></details>
+      <details class="faq-item"><summary>Qual o prazo de reparo?</summary><div class="faq-body">Muitos serviços são feitos no mesmo dia ou em até 48h.</div></details>
     </div>
   </div>
 </section>
 
 <section id="cta-final">
   <div class="cta-final-inner">
-    <p class="cta-kicker reveal">Pronto para acelerar?</p>
-    <h2 class="cta-title reveal reveal-d1">
-      Pare de <span class="line-orange">perder</span><br>
-      <span class="dim">tempo.</span>
-    </h2>
-    <p class="cta-subtitle reveal reveal-d2">
-      Cada render travado, cada deadline perdido, cada travamento no meio do trabalho — é dinheiro que vai embora. Resolva agora com quem entende do assunto.
-    </p>
-    <div class="cta-buttons reveal reveal-d3">
-      <button class="btn-primary" style="font-size:14px;padding:18px 40px" onclick="openChat()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width:16px;height:16px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.5 19.79 19.79 0 01.55 4.48 2 2 0 012.54 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.5a16 16 0 006.6 6.6l.91-.91a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-        Diagnóstico Grátis via WhatsApp
-      </button>
-    </div>
-    <div class="cta-guarantee reveal reveal-d4">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Sem compromisso · Resposta em até 1h · Suporte pós-venda garantido
-    </div>
+    <h2 class="cta-title">Pare de <span class="line-orange">perder</span> tempo.</h2>
+    <button class="btn-primary" style="margin: 0 auto" onclick="openChat()">Diagnóstico via WhatsApp</button>
   </div>
 </section>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="logo" style="font-size:28px">Center<span style="color:var(--orange)">Net</span></div>
-      <p>A melhor assistência técnica, montagem de infraestrutura e venda de hardware para você e sua empresa.</p>
+      <div class="logo">Center<span>Net</span></div>
+      <p>Performance, segurança e tecnologia em Anápolis.</p>
     </div>
     <div>
-      <div class="section-tag" style="margin-bottom:12px">Base Operacional</div>
+      <div class="section-tag">Base Operacional</div>
       <address class="footer-address">
-        <strong>Av Sumerviller, Loja 2</strong><br>
-        Anápolis, GO<br>
+        <strong>Rua 15 de Dezembro, 98 sl A lj 26/27</strong><br>
+        Centro — Anápolis, Brazil 75024070
       </address>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 Center Net Informática. Todos os direitos reservados.</span>
-    <div class="footer-socials">
-      <a href="https://instagram.com/centernetinfo" target="_blank" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      </a>
-      <a href="#" aria-label="Facebook">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-      </a>
-    </div>
+    <span>© 2026 Center Net Informática.</span>
+    <span>Instagram: @centernetinfo</span>
   </div>
 </footer>
 
 <div id="chat-fab-wrap">
   <div id="chat-box">
-    <div class="chat-head">
-      <div class="chat-agent">
-        <div class="chat-avatar">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
-        </div>
-        <div>
-          <div class="chat-agent-name">Center Net</div>
-          <div class="chat-agent-status">● Online agora</div>
-        </div>
-      </div>
-      <button id="close-chat-btn" onclick="closeChat()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div id="chat-messages">
-      <div class="msg-bot">
-        <strong>Olá! 👋</strong><br>
-        Bem-vindo à Center Net Informática. Posso ajudar com cotações de peças, diagnósticos, manutenção de PCs ou CFTV.<br><br>
-        O que você precisa hoje?
-      </div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-      <button id="send-btn" onclick="sendMessage()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
-    </div>
+    <div class="chat-head"><strong>Center Net</strong><button onclick="closeChat()">✕</button></div>
+    <div id="chat-messages"><div class="msg-bot">Olá! 👋 Como podemos ajudar com seu aparelho hoje?</div></div>
+    <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Mensagem..."><button id="send-btn" onclick="sendMessage()">➤</button></div>
   </div>
-
-  <button id="chat-fab" onclick="toggleChat()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    <span class="fab-badge">1</span>
-  </button>
+  <button id="chat-fab" onclick="toggleChat()">💬</button>
 </div>
 
 <script>
-// ==========================================
-// 1. LÓGICA DO CANVAS ANIMADO NO SCROLL
-// ==========================================
+// CANVAS LOGIC
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
 const frameCount = 205; 
 const images = [];
 let loadedImages = 0;
-
-// Pasta base onde estão as 205 imagens webp
-const baseUrl = "./"; 
-
-const preloader = document.getElementById('preloader');
 const loadProgress = document.getElementById('load-progress');
 
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
-  img.src = `${baseUrl}${i.toString().padStart(4, '0')}.webp`;
-  
+  img.src = `./${i.toString().padStart(4, '0')}.webp`;
   img.onload = () => {
     loadedImages++;
     loadProgress.style.width = `${(loadedImages / frameCount) * 100}%`;
-    
     if (loadedImages === 1) renderFrame(0);
-    
     if (loadedImages === frameCount) {
-      setTimeout(() => {
-        preloader.style.opacity = "0";
-        setTimeout(() => preloader.style.display = "none", 800);
-      }, 500);
+      setTimeout(() => { document.getElementById('preloader').style.opacity = "0"; setTimeout(() => document.getElementById('preloader').style.display = "none", 800); }, 500);
     }
   };
   images.push(img);
 }
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  renderFrame(currentFrameIndex);
-}
-window.addEventListener('resize', resizeCanvas);
-
-let currentFrameIndex = 0;
-
 function renderFrame(index) {
-  if (images[index] && images[index].complete) {
+  if (images[index]?.complete) {
     const img = images[index];
-    const cw = canvas.width;
-    const ch = canvas.height;
-    const canvasRatio = cw / ch;
-    const imgRatio = img.width / img.height;
-    
-    let rw, rh, ox = 0, oy = 0;
-
-    if (canvasRatio > imgRatio) {
-      rw = cw;
-      rh = img.height * (cw / img.width);
-      oy = (ch - rh) / 2;
-    } else {
-      rh = ch;
-      rw = img.width * (ch / img.height);
-      ox = (cw - rw) / 2;
-    }
-
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, ox, oy, rw, rh);
-    currentFrameIndex = index;
+    const cw = canvas.width = window.innerWidth;
+    const ch = canvas.height = window.innerHeight;
+    const r = Math.max(cw / img.width, ch / img.height);
+    ctx.drawImage(img, (cw - img.width * r) / 2, (ch - img.height * r) / 2, img.width * r, img.height * r);
   }
 }
 
-// ==========================================
-// 2. LERP: SUAVIZAÇÃO DA ROLAGEM
-// ==========================================
-let targetFrame = 0;
-let smoothFrame = 0;
-const LERP_SPEED = 0.08;
-
-function animate() {
-  smoothFrame += (targetFrame - smoothFrame) * LERP_SPEED;
-  
-  if (Math.abs(targetFrame - smoothFrame) > 0.05) {
-    renderFrame(Math.round(smoothFrame));
-  }
-  
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-
+let targetFrame = 0, smoothFrame = 0;
 window.addEventListener('scroll', () => {
   const track = document.getElementById('hero-track');
-  const maxScroll = track.offsetHeight - window.innerHeight;
-  const scrollFraction = Math.max(0, Math.min(1, window.scrollY / maxScroll));
-  
-  targetFrame = scrollFraction * (frameCount - 1);
-  
-  const heroText = document.getElementById('hero-text-content');
-  if(scrollFraction > 0.4) {
-      heroText.style.opacity = Math.max(0, 1 - ((scrollFraction - 0.4) * 3));
-      heroText.style.pointerEvents = 'none';
-  } else {
-      heroText.style.opacity = 1;
-      heroText.style.pointerEvents = 'auto';
-  }
+  const scrollFraction = window.scrollY / (track.offsetHeight - window.innerHeight);
+  targetFrame = Math.max(0, Math.min(frameCount - 1, scrollFraction * (frameCount - 1)));
+  document.getElementById('hero-text-content').style.opacity = scrollFraction > 0.4 ? 0 : 1;
 });
 
-resizeCanvas();
-
-// ==========================================
-// 3. ANIMAÇÃO DE REVELAÇÃO DOS TEXTOS
-// ==========================================
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// ==========================================
-// 4. LÓGICA DO CHAT CONCIERGE
-// ==========================================
-let chatOpen = false;
-
-function openChat() {
-  const box = document.getElementById('chat-box');
-  box.style.display = 'flex';
-  chatOpen = true;
-  document.getElementById('chat-fab').querySelector('.fab-badge').style.display = 'none';
-  setTimeout(() => document.getElementById('chat-input').focus(), 100);
+function animate() {
+  smoothFrame += (targetFrame - smoothFrame) * 0.08;
+  renderFrame(Math.round(smoothFrame));
+  requestAnimationFrame(animate);
 }
+animate();
 
-function closeChat() {
-  document.getElementById('chat-box').style.display = 'none';
-  chatOpen = false;
-}
-
-function toggleChat() {
-  chatOpen ? closeChat() : openChat();
-}
-
-function openChatWith(msg) {
-  openChat();
-  setTimeout(() => {
-    document.getElementById('chat-input').value = msg;
-    sendMessage();
-  }, 300);
-}
-
+// CHAT LOGIC
+function toggleChat() { const b = document.getElementById('chat-box'); b.style.display = b.style.display === 'flex' ? 'none' : 'flex'; }
+function closeChat() { document.getElementById('chat-box').style.display = 'none'; }
+function openChat() { document.getElementById('chat-box').style.display = 'flex'; }
+function openChatWith(m) { openChat(); document.getElementById('chat-input').value = m; sendMessage(); }
 function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-
-  const messages = document.getElementById('chat-messages');
-
-  const userDiv = document.createElement('div');
-  userDiv.className = 'msg-user';
-  userDiv.textContent = text;
-  messages.appendChild(userDiv);
-  input.value = '';
-  messages.scrollTop = messages.scrollHeight;
-
-  setTimeout(() => {
-    const typing = document.createElement('div');
-    typing.className = 'typing';
-    typing.id = 'typing';
-    typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    messages.appendChild(typing);
-    messages.scrollTop = messages.scrollHeight;
-
-    setTimeout(() => {
-      document.getElementById('typing')?.remove();
-      const botDiv = document.createElement('div');
-      botDiv.className = 'msg-bot';
-      botDiv.innerHTML = `✅ <strong>Mensagem recebida!</strong><br>Estou te redirecionando para nosso especialista no WhatsApp agora mesmo.`;
-      messages.appendChild(botDiv);
-      messages.scrollTop = messages.scrollHeight;
-
-      const numero = '5562993362276';
-      const link = `https://wa.me/${numero}?text=${encodeURIComponent(text)}`;
-      window.open(link, '_blank');
-    }, 1400);
-  }, 500);
+  const i = document.getElementById('chat-input'), t = i.value.trim();
+  if (!t) return;
+  const m = document.getElementById('chat-messages'), d = document.createElement('div');
+  d.className = 'msg-user'; d.textContent = t; m.appendChild(d); i.value = '';
+  setTimeout(() => { window.open(`https://wa.me/5562993362276?text=${encodeURIComponent(t)}`, '_blank'); }, 1000);
 }
 
-document.getElementById('chat-input').addEventListener('keypress', e => {
-  if (e.key === 'Enter') sendMessage();
-});
+// REVEAL
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
 </script>
 </body>
 </html>
