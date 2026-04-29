@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,11 +84,15 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 1.4s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.hero-headline { font-family: var(--font-display); font-size: clamp(64px, 10vw, 160px); line-height: 0.88; letter-spacing: 0.01em; color: var(--white); margin-bottom: 20px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+.hero-headline { font-family: var(--font-display); font-size: clamp(52px, 9vw, 140px); line-height: 0.95; letter-spacing: 0.01em; color: var(--white); margin-bottom: 12px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
 .hero-headline .line-orange { color: var(--orange); }
 
+/* Animação do Texto Dinâmico */
+.dynamic-phrase-box { min-height: clamp(36px, 6vw, 70px); margin-bottom: 24px; }
+#dynamic-phrase { font-family: var(--font-display); font-size: clamp(32px, 5vw, 64px); color: var(--orange); transition: opacity 0.3s ease; text-shadow: 0 4px 15px rgba(255,77,0,0.3); letter-spacing: 0.02em; }
+
 .hero-bottom { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px; }
-.hero-desc { max-width: 440px; font-size: clamp(14px, 1.6vw, 16px); line-height: 1.75; color: var(--white); font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.hero-desc { max-width: 460px; font-size: clamp(14px, 1.6vw, 16px); line-height: 1.75; color: var(--white); font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 24px; }
 .btn-primary { display: flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; padding: 16px 32px; border-radius: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: background 0.2s, transform 0.2s; }
@@ -211,7 +215,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 <body>
 
 <div id="preloader">
-  <div class="load-text">Iniciando Hardware...</div>
+  <div class="load-text">A INICIAR HARDWARE...</div>
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
@@ -226,11 +230,17 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
     <div class="hero-overlay-vignette"></div>
     <div class="hero-content" id="hero-text-content">
       <div class="hero-tag">Center Net Informática ⚡</div>
-      <h1 class="hero-headline">Máquinas<br><span class="line-orange">Que Não</span><br>Travam.</h1>
+      
+      <h1 class="hero-headline">O seu tempo vale mais<br>que um PC <span class="line-orange">lento.</span></h1>
+      
+      <div class="dynamic-phrase-box">
+        <span id="dynamic-phrase">O PC encravou de novo?</span>
+      </div>
+
       <div class="hero-bottom">
-        <p class="hero-desc">Especialistas em performance e manutenção. De PCs Gamers e Workstations a Sistemas de Segurança e Smartphones. Nós destravamos a sua tecnologia.</p>
+        <p class="hero-desc">Do telemóvel com o ecrã partido ao portátil que demora uma vida a ligar. A Center Net conserta, acelera e protege a sua tecnologia. Diagnóstico transparente e peças de alta performance. Deixe a tecnologia trabalhar para si.</p>
         <div class="hero-actions">
-          <button class="btn-primary" onclick="openChat()">Diagnóstico Grátis</button>
+          <button class="btn-primary" onclick="openChat()">Falar com um Técnico Agora</button>
           <button class="btn-secondary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Configurações</button>
         </div>
       </div>
@@ -240,11 +250,11 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 
 <div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-inner">
-    <span class="ticker-item">🖥️ PCs e Notebooks</span>
+    <span class="ticker-item">🖥️ PCs e Portáteis</span>
     <span class="ticker-item">🪛 Montagem e Manutenção</span>
     <span class="ticker-item">⌨️ Periféricos de Performance</span>
     <span class="ticker-item">📹 Sistemas de Segurança</span>
-    <span class="ticker-item">📱 Smartphones</span>
+    <span class="ticker-item">📱 Telemóveis</span>
     <span class="ticker-item">⚡ Upgrades</span>
   </div>
 </div>
@@ -253,19 +263,19 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="problema-grid">
     <div>
       <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
+      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa a sua paz.</span></h2>
       <ul class="problema-list">
         <li class="problema-item reveal reveal-d1">
           <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
+          <div class="problema-item-text"><strong>Lentidão e problemas diários</strong>O seu PC ou portátil demora uma eternidade para iniciar e encrava logo quando mais precisa.</div>
         </li>
         <li class="problema-item reveal reveal-d2">
           <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
+          <div class="problema-item-text"><strong>Telemóvel partido ou bateria viciada</strong>O ecrã partiu, a bateria não dura nada ou o aparelho simplesmente desligou.</div>
         </li>
         <li class="problema-item reveal reveal-d3">
           <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
-          <div class="problema-item-text"><strong>Aquecimento e falhas</strong>A máquina faz barulho de turbina e esquenta demais. Suas câmeras ou rede falham quando você mais precisa.</div>
+          <div class="problema-item-text"><strong>Aquecimento e falhas</strong>A máquina faz barulho de turbina e aquece demasiado. As suas câmaras ou rede falham quando mais precisa.</div>
         </li>
       </ul>
     </div>
@@ -273,12 +283,12 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
       <div class="section-tag">A Solução</div>
       <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
       <div class="solucao-box">
-        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
+        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, portátil ou telemóvel</strong> para voltarem a funcionar como novos.</p>
         <ul class="solucao-points">
-          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
+          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem complicações ou taxas ocultas.</li>
           <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
-          <li class="solucao-point"><strong>Reparo cirúrgico</strong> — da pasta térmica à instalação de CFTV.</li>
-          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
+          <li class="solucao-point"><strong>Reparação cirúrgica</strong> — da pasta térmica à instalação de CFTV.</li>
+          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que precisar.</li>
         </ul>
         <button class="btn-primary" style="margin-top:28px" onclick="openChatWith('Gostaria de um diagnóstico para o meu aparelho.')">Falar com um técnico agora</button>
       </div>
@@ -290,7 +300,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div style="max-width:1200px;margin:0 auto">
     <div class="produtos-header">
       <div>
-        <div class="section-tag reveal">Vitrine</div>
+        <div class="section-tag reveal">Montra</div>
         <h2 class="section-title reveal reveal-d1">Hardware <span class="dim">Premium.</span></h2>
       </div>
       <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;">Setups testados e otimizados um a um.</p>
@@ -306,7 +316,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
             <div class="spec-item"><div class="spec-label">CPU</div><div class="spec-value">6C / 12T</div></div>
             <div class="spec-item"><div class="spec-label">Nível</div><div class="spec-value">Pro</div></div>
           </div>
-          <button class="card-cta cta-filled" onclick="openChatWith('Interesse na Workstation V1')">Cotação</button>
+          <button class="card-cta cta-filled" onclick="openChatWith('Interesse na Workstation V1')">Orçamento</button>
         </div>
       </div>
       <div class="product-card featured reveal reveal-d2">
@@ -316,7 +326,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
           <div class="product-sku">SKU: NITRO-V</div>
           <div class="product-name">Acer Nitro V</div>
           <div class="product-specs">
-            <div class="spec-item"><div class="spec-label">Tela</div><div class="spec-value">144Hz IPS</div></div>
+            <div class="spec-item"><div class="spec-label">Ecrã</div><div class="spec-value">144Hz IPS</div></div>
             <div class="spec-item"><div class="spec-label">GPU</div><div class="spec-value">RTX Series</div></div>
           </div>
           <button class="card-cta cta-filled" onclick="openChatWith('Interesse no Nitro V')">Ver Estoque</button>
@@ -346,8 +356,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
     <div class="servicos-grid">
       <div class="servico-item reveal reveal-d1">
         <div class="servico-num">01</div>
-        <div class="servico-title">PCs & Notebooks</div>
-        <p class="servico-desc">Montagem gamer, limpeza técnica e reparos em geral.</p>
+        <div class="servico-title">PCs & Portáteis</div>
+        <p class="servico-desc">Montagem gamer, limpeza técnica e reparações em geral.</p>
       </div>
       <div class="servico-item reveal reveal-d2">
         <div class="servico-num">02</div>
@@ -356,8 +366,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
       </div>
       <div class="servico-item reveal reveal-d3">
         <div class="servico-num">03</div>
-        <div class="servico-title">Smartphones</div>
-        <p class="servico-desc">Troca de tela, bateria e reparos de sistema.</p>
+        <div class="servico-title">Telemóveis</div>
+        <p class="servico-desc">Troca de ecrã, bateria e reparações de sistema.</p>
       </div>
       <div class="servico-item reveal reveal-d4">
         <div class="servico-num">04</div>
@@ -372,17 +382,17 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="provas-grid">
     <div class="prova-card reveal">
       <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">Meu notebook voltou a ser rápido como novo. Atendimento excelente.</p>
+      <p class="prova-text">O meu portátil voltou a ser rápido como novo. Atendimento excelente.</p>
       <div class="prova-author"><div class="prova-avatar">L</div><div class="prova-name">Lucas F.</div></div>
     </div>
     <div class="prova-card reveal">
       <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">Câmeras instaladas com perfeição. Recomendo muito.</p>
+      <p class="prova-text">Câmaras instaladas com perfeição. Recomendo muito.</p>
       <div class="prova-author"><div class="prova-avatar">R</div><div class="prova-name">Rafael M.</div></div>
     </div>
     <div class="prova-card reveal">
       <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">Configuraram meu PC gamer do zero. Performance incrível.</p>
+      <p class="prova-text">Configuraram o meu PC gamer do zero. Performance incrível.</p>
       <div class="prova-author"><div class="prova-avatar">C</div><div class="prova-name">Carla S.</div></div>
     </div>
   </div>
@@ -392,15 +402,15 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="faq-inner">
     <h2 class="section-title reveal">Perguntas <span class="dim">Frequentes.</span></h2>
     <div class="faq-list">
-      <details class="faq-item"><summary>Fazem orçamento online?</summary><div class="faq-body">Sim, via WhatsApp podemos fazer uma prévia do diagnóstico.</div></details>
-      <details class="faq-item"><summary>Qual o prazo de reparo?</summary><div class="faq-body">Muitos serviços são feitos no mesmo dia ou em até 48h.</div></details>
+      <details class="faq-item"><summary>Fazem orçamentos online?</summary><div class="faq-body">Sim, via WhatsApp podemos fazer uma prévia do diagnóstico.</div></details>
+      <details class="faq-item"><summary>Qual o prazo da reparação?</summary><div class="faq-body">Muitos serviços são feitos no próprio dia ou em até 48h.</div></details>
     </div>
   </div>
 </section>
 
 <section id="cta-final">
   <div class="cta-final-inner">
-    <h2 class="cta-title">Pare de <span class="line-orange">perder</span> tempo.</h2>
+    <h2 class="cta-title">Chega de <span class="line-orange">perder</span> tempo.</h2>
     <button class="btn-primary" style="margin: 0 auto" onclick="openChat()">Diagnóstico via WhatsApp</button>
   </div>
 </section>
@@ -409,7 +419,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">Center<span>Net</span></div>
-      <p>Performance, segurança e tecnologia em Anápolis.</p>
+      <p>Performance, segurança e tecnologia de ponta.</p>
     </div>
     <div>
       <div class="section-tag">Base Operacional</div>
@@ -428,13 +438,32 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 <div id="chat-fab-wrap">
   <div id="chat-box">
     <div class="chat-head"><strong>Center Net</strong><button onclick="closeChat()">✕</button></div>
-    <div id="chat-messages"><div class="msg-bot">Olá! 👋 Como podemos ajudar com seu aparelho hoje?</div></div>
+    <div id="chat-messages"><div class="msg-bot">Olá! 👋 Como podemos ajudar com o seu equipamento hoje?</div></div>
     <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Mensagem..."><button id="send-btn" onclick="sendMessage()">➤</button></div>
   </div>
   <button id="chat-fab" onclick="toggleChat()">💬</button>
 </div>
 
 <script>
+// LÓGICA DAS FRASES DINÂMICAS NO HERO
+const phrases = [
+  "O PC encravou de novo?", "Nós destravamos.",
+  "O ecrã do telemóvel partiu?", "Trocamos rápido.",
+  "O portátil está a ferver?", "Nós resolvemos.",
+  "Precisa de câmaras?", "Nós instalamos.",
+  "Fim do stress.", "Simples assim."
+];
+let phraseIndex = 0;
+const dynamicPhraseEl = document.getElementById('dynamic-phrase');
+setInterval(() => {
+  dynamicPhraseEl.style.opacity = 0;
+  setTimeout(() => {
+    phraseIndex = (phraseIndex + 1) % phrases.length;
+    dynamicPhraseEl.innerText = phrases[phraseIndex];
+    dynamicPhraseEl.style.opacity = 1;
+  }, 300);
+}, 2500);
+
 // CANVAS LOGIC
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
