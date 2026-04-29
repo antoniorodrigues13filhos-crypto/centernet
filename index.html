@@ -134,7 +134,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 .hero-headline {
   font-family: var(--font-display);
   font-size: clamp(50px, 9vw, 140px);
-  line-height: 0.85;
+  line-height: 0.95; /* Corrigido de 0.85 para 0.95 para evitar colisão de acentos */
   margin-bottom: 20px;
   color: var(--white);
   text-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -181,13 +181,8 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
 .section-title .dim { color: var(--grey); }
 
-/* ── PRODUTOS (LAYOUT ANCORADO E PREMIUM) ── */
-#produtos { 
-  max-width: 1400px; 
-  margin: 0 auto; 
-  background: var(--surface); 
-  border-bottom: 1px solid var(--border-color); 
-}
+/* ── PRODUTOS ── */
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); }
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
@@ -219,18 +214,14 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .badge-hot { background: var(--orange); color: #fff; box-shadow: 0 0 10px rgba(255,77,0,0.5); }
 .badge-new { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid var(--border-strong); }
 
-/* Área interna do card ajustada para ancorar o produto */
 .product-img-wrap { 
   height: 260px; 
   display: flex; align-items: center; justify-content: center; 
   padding: 30px; 
   position: relative; 
-  /* Fundo simulando um estúdio interno (ancorando a peça) */
   background: linear-gradient(to bottom, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.6) 100%);
   border-bottom: 1px solid var(--border-color);
 }
-
-/* O "Glow" radial interno bem sutil */
 .product-img-wrap::before {
   content: '';
   position: absolute;
@@ -243,24 +234,17 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
   transition: opacity 0.5s;
   z-index: 1;
 }
-.product-card:hover .product-img-wrap::before {
-  opacity: 0.15;
-}
+.product-card:hover .product-img-wrap::before { opacity: 0.15; }
 
-/* Imagem bem assentada */
 .product-img-wrap img { 
   max-height: 100%; max-width: 100%; 
   object-fit: contain; 
-  /* Sombra de contato no chão para dar base à imagem */
   filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
   position: relative;
   z-index: 2;
   transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
-
-.product-card:hover .product-img-wrap img { 
-  transform: scale(1.05); 
-}
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
 
 .product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; position: relative; z-index: 2; }
 .product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
