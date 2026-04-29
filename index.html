@@ -69,7 +69,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 
 /* ── HERO SCROLL-TELLING EXPERIENCE ── */
 #hero-track { 
-  height: 600vh; /* Aumentado para dar mais "espaço de respiro" para a fluidez */
+  height: 600vh; 
   position: relative; 
   width: 100%; 
 }
@@ -128,7 +128,6 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
   right: clamp(20px, 5vw, 10%);
   opacity: 0;
   pointer-events: none;
-  /* Retiramos as transitions do CSS para o JS fazer o trabalho 100% fluído frame a frame */
   will-change: transform, opacity, filter;
 }
 
@@ -182,34 +181,19 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
 .section-title .dim { color: var(--grey); }
 
-/* ── PROBLEMA ── */
-#problema { background: var(--surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
-.problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-.problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
-.problema-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,77,0,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--orange); }
-.problema-icon svg { width: 16px; height: 16px; }
-.problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
-.problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
-.solucao-box { background: var(--surface2); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
-.solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
-.solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
-.solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-.solucao-point strong { color: var(--white); font-weight: 500; }
-
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; }
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); }
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.product-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s; position: relative; }
+.product-card { background: var(--surface2); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s; position: relative; }
 .product-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
-.product-card.featured { border-color: rgba(255,77,0,0.4); background: linear-gradient(160deg, rgba(255,77,0,0.04) 0%, var(--surface) 50%); }
+.product-card.featured { border-color: rgba(255,77,0,0.4); background: linear-gradient(160deg, rgba(255,77,0,0.04) 0%, var(--surface2) 50%); }
 .product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; }
-.badge-default { background: var(--surface2); color: var(--grey); border: 1px solid var(--border-color); }
+.badge-default { background: var(--black); color: var(--grey); border: 1px solid var(--border-color); }
 .badge-hot { background: var(--orange); color: #fff; }
 .badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
 
-.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--surface2); border-bottom: 1px solid var(--border-color); }
+.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--black); border-bottom: 1px solid var(--border-color); }
 .product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); transition: transform 0.4s; }
 .product-card:hover .product-img-wrap img { transform: scale(1.05); }
 
@@ -226,8 +210,33 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
 .cta-outline:hover { border-color: var(--white) !important; color: var(--white); }
 
+/* ── PROBLEMA ── */
+#problema { background: var(--black); border-bottom: 1px solid var(--border-color); }
+.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
+.problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
+.problema-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,77,0,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--orange); }
+.problema-icon svg { width: 16px; height: 16px; }
+.problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
+.problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
+.solucao-box { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
+.solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+.solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
+.solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.solucao-point strong { color: var(--white); font-weight: 500; }
+
+/* ── SERVIÇOS ── */
+#servicos { background: var(--surface); border-bottom: 1px solid var(--border-color); }
+.servicos-inner { max-width: 1200px; margin: 0 auto; }
+.servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border-color); }
+.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
+.servico-item:hover { background: var(--surface2); }
+.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
+.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
+.servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
+
 /* ── FOOTER ── */
-footer { background: var(--surface); border-top: 1px solid var(--border-color); padding: 60px clamp(20px, 5vw, 10%); }
+footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 32px;}
 .footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 300px; margin-top: 12px; }
 .footer-address { font-family: var(--font-mono); font-size: 11px; color: var(--grey); line-height: 2; margin-top: 8px; text-transform: uppercase;}
@@ -303,7 +312,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
         <p class="hero-sub">Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente.</p>
         <div class="hero-actions">
           <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Resolver Problema</button>
-          <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('problema').scrollIntoView({behavior:'smooth'})">Ver Soluções</button>
+          <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Conheça nossos produtos</button>
         </div>
       </div>
 
@@ -322,43 +331,11 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
   </div>
 </div>
 
-<section id="problema">
-  <div class="problema-grid">
-    <div>
-      <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
-      <ul class="problema-list">
-        <li class="problema-item reveal reveal-d1">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
-        </li>
-        <li class="problema-item reveal reveal-d2">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
-        </li>
-      </ul>
-    </div>
-    <div class="reveal reveal-d2">
-      <div class="section-tag">A Solução</div>
-      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
-      <div class="solucao-box">
-        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
-        <ul class="solucao-points">
-          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
-          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
-          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
-        </ul>
-        <button class="btn-primary" style="margin-top:28px" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico agora</button>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="produtos">
   <div class="produtos-header">
     <div>
       <div class="section-tag reveal">Vitrine</div>
-      <h2 class="section-title reveal reveal-d1">Hardware <span class="dim">Premium.</span></h2>
+      <h2 class="section-title reveal reveal-d1">Conheça nossos <span class="dim">produtos.</span></h2>
     </div>
     <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Setups testados e otimizados antes de sair. Zero improviso.</p>
   </div>
@@ -409,6 +386,67 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
           <div><div class="spec-label">Arq.</div><div class="spec-value">Ampere</div></div>
         </div>
         <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276')">Consultar Valor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problema">
+  <div class="problema-grid">
+    <div>
+      <div class="section-tag reveal">O Problema</div>
+      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
+      <ul class="problema-list">
+        <li class="problema-item reveal reveal-d1">
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
+        </li>
+        <li class="problema-item reveal reveal-d2">
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
+        </li>
+      </ul>
+    </div>
+    <div class="reveal reveal-d2">
+      <div class="section-tag">A Solução</div>
+      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
+      <div class="solucao-box">
+        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
+        <ul class="solucao-points">
+          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
+          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
+          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
+        </ul>
+        <button class="btn-primary" style="margin-top:28px" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico agora</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="servicos-inner">
+    <div class="section-tag reveal">Serviços</div>
+    <h2 class="section-title reveal reveal-d1">O que <span class="dim">fazemos.</span></h2>
+    <div class="servicos-grid">
+      <div class="servico-item reveal reveal-d1">
+        <div class="servico-num">01</div>
+        <div class="servico-title">PCs & Notebooks</div>
+        <p class="servico-desc">Montagem gamer, limpeza técnica e reparos em geral.</p>
+      </div>
+      <div class="servico-item reveal reveal-d2">
+        <div class="servico-num">02</div>
+        <div class="servico-title">Segurança & Redes</div>
+        <p class="servico-desc">Instalação de CFTV e infraestrutura de rede robusta.</p>
+      </div>
+      <div class="servico-item reveal reveal-d3">
+        <div class="servico-num">03</div>
+        <div class="servico-title">Smartphones</div>
+        <p class="servico-desc">Troca de tela, bateria e reparos de sistema.</p>
+      </div>
+      <div class="servico-item reveal reveal-d4">
+        <div class="servico-num">04</div>
+        <div class="servico-title">Peças</div>
+        <p class="servico-desc">Periféricos e componentes de primeira linha.</p>
       </div>
     </div>
   </div>
