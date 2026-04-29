@@ -69,7 +69,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 
 /* ── HERO SCROLL-TELLING EXPERIENCE ── */
 #hero-track { 
-  height: 500vh; /* 5 telas de altura para rolar a história */
+  height: 600vh; /* Aumentado para dar mais "espaço de respiro" para a fluidez */
   position: relative; 
   width: 100%; 
 }
@@ -88,6 +88,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
   object-fit: cover; 
   filter: brightness(0.6); 
   z-index: 0;
+  will-change: transform;
 }
 .hero-overlay {
   position: absolute; inset: 0;
@@ -111,7 +112,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
-/* Cenas Animadas no Scroll */
+/* Cenas Animadas (JS Control) */
 .hero-content {
   position: relative; 
   z-index: 10;
@@ -126,21 +127,9 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
   left: clamp(20px, 5vw, 10%);
   right: clamp(20px, 5vw, 10%);
   opacity: 0;
-  transform: translateY(60px);
-  transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   pointer-events: none;
-  filter: blur(10px);
-}
-.scroll-scene.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-  filter: blur(0);
-}
-.scroll-scene.past {
-  opacity: 0;
-  transform: translateY(-60px);
-  filter: blur(10px);
+  /* Retiramos as transitions do CSS para o JS fazer o trabalho 100% fluído frame a frame */
+  will-change: transform, opacity, filter;
 }
 
 .hero-headline {
@@ -284,7 +273,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
     
     <div class="hero-content">
       
-      <div class="scroll-scene active">
+      <div class="scroll-scene">
         <h1 class="hero-headline">O SEU TEMPO VALE MAIS<br>QUE UM PC <span style="color: var(--orange);">LENTO.</span></h1>
         <p class="hero-sub">Demorando para ligar? Travando bem na hora que você mais precisa?</p>
       </div>
@@ -311,7 +300,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
 
       <div class="scroll-scene">
         <h1 class="hero-headline">RÁPIDO.<br>SEGURO.<br><span style="color: var(--orange);">DEFINITIVO.</span></h1>
-        <p class="hero-sub">Deixe a tecnologia trabalhar para você. Chega de frustração.</p>
+        <p class="hero-sub">Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente.</p>
         <div class="hero-actions">
           <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Resolver Problema</button>
           <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('problema').scrollIntoView({behavior:'smooth'})">Ver Soluções</button>
@@ -447,7 +436,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border-color); 
 
 <script>
 // ==========================================
-// LÓGICA DE SCROLL-TELLING E CANVAS
+// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -484,42 +473,63 @@ function render(index) {
   }
 }
 
+// Variáveis para a interpolação matemática (LERP) do Scroll
+let targetScroll = 0;
+let smoothScroll = 0;
+
 window.addEventListener('scroll', () => {
   const track = document.getElementById('hero-track');
   if(!track) return;
-  
   const maxScroll = track.offsetHeight - window.innerHeight;
-  let scrollFraction = window.scrollY / maxScroll;
-  if(scrollFraction < 0) scrollFraction = 0;
-  if(scrollFraction > 1) scrollFraction = 1;
-
-  // Renderiza imagem do canvas
-  const frameIndex = Math.min(frameCount - 1, Math.floor(scrollFraction * frameCount)); 
-  requestAnimationFrame(() => render(frameIndex));
-
-  // Lógica das Cenas de Texto (Scroll-Telling)
-  const scenes = document.querySelectorAll('.scroll-scene');
-  const numScenes = scenes.length;
-  const interval = 1 / numScenes;
-
-  scenes.forEach((scene, index) => {
-    const start = index * interval;
-    const end = start + interval;
-
-    if (scrollFraction >= start && scrollFraction < end) {
-      scene.classList.add('active');
-      scene.classList.remove('past');
-    } else if (scrollFraction >= end) {
-      scene.classList.remove('active');
-      scene.classList.add('past');
-    } else {
-      scene.classList.remove('active');
-      scene.classList.remove('past');
-    }
-  });
+  
+  targetScroll = window.scrollY / maxScroll;
+  if(targetScroll < 0) targetScroll = 0;
+  if(targetScroll > 1) targetScroll = 1;
 });
 
-// REVEAL ANIMATION
+function animate() {
+  // LERP garante a fluidez absurda independente da taxa de atualização do mouse
+  smoothScroll += (targetScroll - smoothScroll) * 0.08;
+  
+  // Renderiza a imagem de fundo correta
+  const frameIndex = Math.min(frameCount - 1, Math.floor(smoothScroll * frameCount)); 
+  render(frameIndex);
+
+  // Mapeamento Dinâmico (Parallax) das 6 Cenas de Texto
+  const scenes = document.querySelectorAll('.scroll-scene');
+  const numScenes = scenes.length;
+  
+  scenes.forEach((scene, index) => {
+    // Pico perfeito onde a cena ficará centralizada e focada
+    const sceneCenter = index / (numScenes - 1); 
+    const dist = smoothScroll - sceneCenter;
+    const threshold = 1.2 / numScenes; 
+    
+    if (Math.abs(dist) < threshold) {
+      const normalizedDist = dist / threshold; 
+      
+      // Curva matemática para opacidade (suavemente entra e sai)
+      const opacity = 1 - Math.pow(Math.abs(normalizedDist), 2);
+      
+      // Efeito Parallax (O texto sobe/desce numa velocidade "falsa" e muito fluida)
+      const yShift = normalizedDist * 120; 
+      const blur = Math.abs(normalizedDist) * 15;
+
+      scene.style.opacity = Math.max(0, opacity);
+      scene.style.transform = `translateY(${yShift}px)`;
+      scene.style.filter = `blur(${blur}px)`;
+      scene.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
+    } else {
+      scene.style.opacity = 0;
+      scene.style.pointerEvents = 'none';
+    }
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// REVEAL ANIMATION DAS OUTRAS SEÇÕES
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
