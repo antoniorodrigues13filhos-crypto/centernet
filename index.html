@@ -15,9 +15,12 @@
   --orange: #FF4D00;
   --orange-glow: rgba(255, 77, 0, 0.4);
   --border-color: rgba(255, 255, 255, 0.05);
+  --border-strong: rgba(248,245,240,0.18);
   --font-display: 'Bebas Neue', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
+  --surface: #111010;
+  --surface2: #1A1917;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,6 +34,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--orange); }
+
 /* ── PRELOADER ── */
 #preloader {
   position: fixed; inset: 0; z-index: 9999;
@@ -41,40 +49,26 @@ body {
 .load-bar { width: 240px; height: 1px; background: rgba(255,255,255,0.1); position: relative; }
 #load-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; box-shadow: 0 0 15px var(--orange); }
 
-/* ── BORDA MINIMALISTA PREMIUM ── */
-.frame-border {
-  position: fixed;
-  inset: 15px; /* Espaço da borda para o conteúdo */
-  border: 1px solid var(--border-color);
-  pointer-events: none;
-  z-index: 150;
-  transition: opacity 0.5s;
-}
-.frame-line {
-  position: absolute;
-  background: var(--orange);
-  box-shadow: 0 0 10px var(--orange);
-}
-/* Animação da linha que percorre a borda */
-.line-top { top: -1px; left: 0; height: 1px; width: 0; animation: lineH 4s infinite; }
-.line-right { top: 0; right: -1px; width: 1px; height: 0; animation: lineV 4s infinite 1s; }
-.line-bottom { bottom: -1px; right: 0; height: 1px; width: 0; animation: lineH 4s infinite 2s; }
-.line-left { bottom: 0; left: -1px; width: 1px; height: 0; animation: lineV 4s infinite 3s; }
-
-@keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
-@keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
-
 /* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 80px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 60px;
+  padding: 0 clamp(20px, 5vw, 60px);
+  background: rgba(5,5,5,0.6); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
 }
 .logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; }
 .logo span { color: var(--orange); }
 
+nav .cta-pill {
+  display: flex; align-items: center; gap: 8px; background: var(--orange); color: #fff;
+  padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
+  transition: background 0.2s, transform 0.2s; font-family: var(--font-body);
+}
+nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
+
 /* ── HERO CANVAS & TEXT EXPERIENCE ── */
-#hero-track { height: 500vh; position: relative; }
+#hero-track { height: 500vh; position: relative; width: 100%; }
 .hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; }
 #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
 
@@ -84,20 +78,40 @@ nav {
   z-index: 5;
 }
 
+/* BORDA MINIMALISTA RESTRITA AO HERO */
+.frame-border {
+  position: absolute;
+  inset: 15px; 
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+  z-index: 15;
+}
+.frame-line {
+  position: absolute;
+  background: var(--orange);
+  box-shadow: 0 0 10px var(--orange);
+}
+.line-top { top: -1px; left: 0; height: 1px; width: 0; animation: lineH 4s infinite; }
+.line-right { top: 0; right: -1px; width: 1px; height: 0; animation: lineV 4s infinite 1s; }
+.line-bottom { bottom: -1px; right: 0; height: 1px; width: 0; animation: lineH 4s infinite 2s; }
+.line-left { bottom: 0; left: -1px; width: 1px; height: 0; animation: lineV 4s infinite 3s; }
+@keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
+@keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
+
 .hero-content {
   position: relative; z-index: 10;
   height: 100%;
   display: flex; flex-direction: column;
   justify-content: center;
-  padding: 0 10%;
+  padding: 0 clamp(20px, 5vw, 10%);
 }
 
-/* Tipografia Animada */
 .hero-headline {
   font-family: var(--font-display);
-  font-size: clamp(60px, 12vw, 180px);
+  font-size: clamp(50px, 9vw, 140px);
   line-height: 0.85;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  color: var(--white);
   opacity: 0;
   transform: translateY(30px);
   filter: blur(10px);
@@ -105,20 +119,20 @@ nav {
 }
 
 .talking-text {
-  font-family: var(--font-mono);
-  font-size: clamp(14px, 2vw, 24px);
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 64px);
   color: var(--orange);
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  margin-bottom: 15px;
-  min-height: 1.5em;
+  margin-bottom: 20px;
+  min-height: 1.2em;
+  text-shadow: 0 4px 15px rgba(255,77,0,0.3);
+  letter-spacing: 0.02em;
 }
 
 .hero-sub {
-  font-size: clamp(16px, 1.8vw, 20px);
+  font-size: clamp(14px, 1.8vw, 18px);
   max-width: 500px;
   line-height: 1.6;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255,255,255,0.8);
   opacity: 0;
   animation: revealHero 1.2s forwards 0.8s;
 }
@@ -129,13 +143,13 @@ nav {
 
 .hero-actions {
   margin-top: 40px;
-  display: flex; gap: 20px;
+  display: flex; gap: 20px; flex-wrap: wrap;
   opacity: 0;
   animation: revealHero 1.2s forwards 1.1s;
 }
 
 .btn-premium {
-  padding: 18px 45px;
+  padding: 16px 36px;
   border-radius: 4px;
   font-weight: 700;
   text-transform: uppercase;
@@ -147,41 +161,107 @@ nav {
   border: none;
 }
 .btn-orange { background: var(--orange); color: white; box-shadow: 0 0 20px var(--orange-glow); }
-.btn-orange:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--orange); }
+.btn-orange:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--orange-glow); }
 
-/* ── SECTIONS (MANTENDO PRODUTOS) ── */
-section { padding: 120px 10%; position: relative; z-index: 20; background: var(--black); }
-.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 60px; }
-.product-card {
-  background: #0a0a0a;
-  border: 1px solid rgba(255,255,255,0.05);
-  padding: 40px;
-  transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+/* ── TICKER ── */
+.ticker-wrap { background: var(--orange); padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 10; }
+.ticker-inner { display: inline-flex; animation: ticker 35s linear infinite; }
+.ticker-item { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; padding: 0 40px; font-weight: 500;}
+.ticker-item::after { content: '✦'; margin-left: 40px; opacity: 0.5; }
+@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ── SHARED SECTIONS ── */
+section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: relative; z-index: 20; background: var(--black); }
+.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
+.section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
+.section-title .dim { color: var(--grey); }
+
+/* ── PROBLEMA ── */
+#problema { background: var(--surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
+.problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
+.problema-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,77,0,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--orange); }
+.problema-icon svg { width: 16px; height: 16px; }
+.problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
+.problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
+.solucao-box { background: var(--surface2); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
+.solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+.solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
+.solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+.solucao-point strong { color: var(--white); font-weight: 500; }
+
+/* ── PRODUTOS (RESTAURADOS) ── */
+#produtos { max-width: 1400px; margin: 0 auto; }
+.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.product-card { background: var(--surface); border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s; position: relative; }
+.product-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
+.product-card.featured { border-color: rgba(255,77,0,0.4); background: linear-gradient(160deg, rgba(255,77,0,0.04) 0%, var(--surface) 50%); }
+.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; }
+.badge-default { background: var(--surface2); color: var(--grey); border: 1px solid var(--border-color); }
+.badge-hot { background: var(--orange); color: #fff; }
+.badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
+
+.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--surface2); border-bottom: 1px solid var(--border-color); }
+.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); transition: transform 0.4s; }
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+.product-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+.product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
+.product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 24px; }
+.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+.spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
+
+.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; }
+.cta-filled { background: var(--orange); color: #fff; }
+.cta-filled:hover { background: var(--orange-dim); }
+.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
+.cta-outline:hover { border-color: var(--white) !important; color: var(--white); }
+
+/* ── SERVIÇOS ── */
+#servicos { background: var(--surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+.servicos-inner { max-width: 1200px; margin: 0 auto; }
+.servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border-color); }
+.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
+.servico-item:hover { background: var(--surface2); }
+.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
+.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
+.servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
+
+/* ── FOOTER ── */
+footer { background: var(--surface); border-top: 1px solid var(--border-color); padding: 60px clamp(20px, 5vw, 10%); }
+.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 32px;}
+.footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 300px; margin-top: 12px; }
+.footer-address { font-family: var(--font-mono); font-size: 11px; color: var(--grey); line-height: 2; margin-top: 8px; text-transform: uppercase;}
+.footer-address strong { color: var(--grey-light); font-weight: 400; }
+.footer-bottom { max-width: 1200px; margin: 24px auto 0; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--grey); text-transform: uppercase;}
+
+/* REVEAL ANIMATIONS */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+
+@media (max-width: 900px) {
+  .problema-grid { grid-template-columns: 1fr; gap: 40px; }
+  .products-grid { grid-template-columns: 1fr; }
 }
-.product-card:hover { border-color: var(--orange); transform: translateY(-10px); background: #111; }
-.product-name { font-family: var(--font-display); font-size: 40px; margin-bottom: 10px; }
-
-/* Endereço no Footer */
-.footer-address { font-family: var(--font-mono); color: #555; font-size: 12px; margin-top: 20px; }
 </style>
 </head>
 <body>
 
-<div class="frame-border">
-  <div class="frame-line line-top"></div>
-  <div class="frame-line line-right"></div>
-  <div class="frame-line line-bottom"></div>
-  <div class="frame-line line-left"></div>
-</div>
-
 <div id="preloader">
-  <div style="font-family: var(--font-mono); color: var(--orange); margin-bottom: 15px; font-size: 10px; letter-spacing: 0.5em;">SYSTEM INITIALIZING</div>
+  <div style="font-family: var(--font-mono); color: var(--orange); margin-bottom: 15px; font-size: 10px; letter-spacing: 0.5em;">SISTEMA INICIANDO</div>
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
 <nav>
-  <div class="logo">CENTER<span>NET</span></div>
-  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--orange);">ANAPOLIS // BRAZIL</div>
+  <div class="logo">Center<span>Net</span></div>
+  <button class="cta-pill" onclick="window.open('https://wa.me/5562993362276')">Falar com Especialista</button>
 </nav>
 
 <div id="hero-track">
@@ -189,64 +269,160 @@ section { padding: 120px 10%; position: relative; z-index: 20; background: var(-
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
     
+    <div class="frame-border">
+      <div class="frame-line line-top"></div>
+      <div class="frame-line line-right"></div>
+      <div class="frame-line line-bottom"></div>
+      <div class="frame-line line-left"></div>
+    </div>
+    
     <div class="hero-content">
+      <h1 class="hero-headline">O SEU TEMPO VALE MAIS<br>QUE UM PC <span style="color: var(--orange);">LENTO.</span></h1>
       <div class="talking-text" id="talking-text"></div>
-      <h1 class="hero-headline">TECNOLOGIA<br><span style="color: var(--orange);">SEM LIMITES.</span></h1>
+      
       <p class="hero-sub">
-        Especialistas em reviver sua máquina e proteger seu patrimônio. 
-        Da manutenção cirúrgica ao setup gamer dos sonhos.
+        Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente e tenha a sua máquina voando novamente.
       </p>
       
       <div class="hero-actions">
-        <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico</button>
-        <button class="btn-premium" style="background: transparent; border: 1px solid white; color: white;" onclick="document.getElementById('produtos').scrollIntoView()">Ver Produtos</button>
+        <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Diagnóstico Grátis</button>
+        <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('produtos').scrollIntoView()">Ver Soluções</button>
       </div>
     </div>
   </div>
 </div>
 
-<section id="produtos">
-  <h2 style="font-family: var(--font-display); font-size: 80px;">VITRINE<span style="color:var(--orange)">_</span>PRO</h2>
-  <div class="product-grid">
-    <div class="product-card reveal">
-      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">SKU: AMD-5600</div>
-      <h3 class="product-name">RYZEN 5 5600GT</h3>
-      <p style="color: #888;">Performance ideal para trabalho e games competitivos.</p>
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item">🖥️ PCs e Notebooks</span>
+    <span class="ticker-item">🪛 Montagem e Manutenção</span>
+    <span class="ticker-item">⌨️ Periféricos de Performance</span>
+    <span class="ticker-item">📹 Sistemas de Segurança</span>
+    <span class="ticker-item">📱 Smartphones</span>
+    <span class="ticker-item">⚡ Upgrades de Hardware</span>
+  </div>
+</div>
+
+<section id="problema">
+  <div class="problema-grid">
+    <div>
+      <div class="section-tag reveal">O Problema</div>
+      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
+      <ul class="problema-list">
+        <li class="problema-item reveal reveal-d1">
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
+        </li>
+        <li class="problema-item reveal reveal-d2">
+          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
+        </li>
+      </ul>
     </div>
-    <div class="product-card reveal" style="border-color: var(--orange);">
-      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">HOT ITEM</div>
-      <h3 class="product-name">ACER NITRO V</h3>
-      <p style="color: #888;">Poder RTX no seu colo. O queridinho dos entusiastas.</p>
-    </div>
-    <div class="product-card reveal">
-      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">UPGRADE</div>
-      <h3 class="product-name">RTX 3060 12GB</h3>
-      <p style="color: #888;">Memória de sobra para os softwares mais pesados.</p>
+    <div class="reveal reveal-d2">
+      <div class="section-tag">A Solução</div>
+      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
+      <div class="solucao-box">
+        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
+        <ul class="solucao-points">
+          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
+          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
+          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
+        </ul>
+        <button class="btn-primary" style="margin-top:28px" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico agora</button>
+      </div>
     </div>
   </div>
 </section>
 
-<footer style="padding: 60px 10%; border-top: 1px solid #111;">
-  <div class="logo">CENTER<span>NET</span></div>
-  <address class="footer-address">
-    RUA 15 DE DEZEMBRO, 98 SL A LJ 26/27, ANÁPOLIS - BRAZIL<br>
-    CEP 75024-070 // @CENTERNETINFO
-  </address>
+<section id="produtos">
+  <div class="produtos-header">
+    <div>
+      <div class="section-tag reveal">Vitrine</div>
+      <h2 class="section-title reveal reveal-d1">Hardware <span class="dim">Premium.</span></h2>
+    </div>
+    <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Setups testados e otimizados antes de sair. Zero improviso.</p>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal reveal-d1">
+      <span class="product-badge badge-default">Workstation V1</span>
+      <div class="product-img-wrap">
+        <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT">
+      </div>
+      <div class="product-body">
+        <div class="product-sku">SKU: AMD-5600</div>
+        <div class="product-name">AMD Ryzen 5<br>5600GT</div>
+        <div class="product-specs">
+          <div><div class="spec-label">Processamento</div><div class="spec-value">6C / 12T</div></div>
+          <div><div class="spec-label">Gráficos</div><div class="spec-value">Radeon™ iGPU</div></div>
+        </div>
+        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276')">Solicitar Cotação</button>
+      </div>
+    </div>
+
+    <div class="product-card featured reveal reveal-d2">
+      <span class="product-badge badge-hot">🔥 Mais Vendido</span>
+      <div class="product-img-wrap">
+        <img src="produtos/nitrov5.png" alt="Acer Nitro V">
+      </div>
+      <div class="product-body">
+        <div class="product-sku">SKU: NITRO-V</div>
+        <div class="product-name">Acer Nitro V<br>Intel + RTX</div>
+        <div class="product-specs">
+          <div><div class="spec-label">Display</div><div class="spec-value">144Hz IPS</div></div>
+          <div><div class="spec-label">GPU</div><div class="spec-value">NVIDIA RTX</div></div>
+        </div>
+        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276')">Verificar Estoque</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal reveal-d3">
+      <span class="product-badge badge-new">Upgrade GPU</span>
+      <div class="product-img-wrap">
+        <img src="produtos/rtx3090.png" alt="RTX 3060 OC">
+      </div>
+      <div class="product-body">
+        <div class="product-sku">SKU: RTX-3060</div>
+        <div class="product-name">GeForce RTX<br>3060 OC</div>
+        <div class="product-specs">
+          <div><div class="spec-label">VRAM</div><div class="spec-value">12GB GDDR6</div></div>
+          <div><div class="spec-label">Arq.</div><div class="spec-value">Ampere</div></div>
+        </div>
+        <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276')">Consultar Valor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">Center<span>Net</span></div>
+      <p>A melhor assistência técnica, montagem de infraestrutura e venda de hardware de Anápolis.</p>
+    </div>
+    <div>
+      <div class="section-tag" style="margin-bottom:12px">Base Operacional</div>
+      <address class="footer-address">
+        <strong>Rua 15 de Dezembro, 98 sl A lj 26/27</strong><br>
+        Anápolis, Brazil 75024070
+      </address>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Center Net Informática.</span>
+    <span>Siga no Instagram: @centernetinfo</span>
+  </div>
 </footer>
 
 <script>
-// 1. LÓGICA DO TEXTO QUE FALA COM O USUÁRIO
+// LÓGICA DO TEXTO DINÂMICO (TYPEWRITER - VERSÃO 2 DA COPY)
 const messages = [
-  "O seu PC travou de novo?",
-  "Nós temos a solução.",
-  "Seu celular quebrou?",
-  "Nós trocamos rápido.",
-  "Notebook esquentando?",
-  "A gente resolve agora.",
-  "Precisando de segurança?",
-  "Instalamos as melhores câmeras.",
-  "Center Net: Performance pura.",
-  "Simples. Rápido. Definitivo."
+  "Demorando para ligar?", "Nós aceleramos.",
+  "Bateria viciada?", "Trocamos na hora.",
+  "O jogo tá travando?", "Fazemos o upgrade.",
+  "A rede caiu?", "Nós reconectamos.",
+  "Rápido e definitivo."
 ];
 
 let msgIndex = 0;
@@ -257,7 +433,7 @@ function typeMessage() {
   if (charIndex < messages[msgIndex].length) {
     talkingEl.textContent += messages[msgIndex].charAt(charIndex);
     charIndex++;
-    setTimeout(typeMessage, 50);
+    setTimeout(typeMessage, 40);
   } else {
     setTimeout(eraseMessage, 2000);
   }
@@ -267,16 +443,15 @@ function eraseMessage() {
   if (charIndex > 0) {
     talkingEl.textContent = messages[msgIndex].substring(0, charIndex - 1);
     charIndex--;
-    setTimeout(eraseMessage, 30);
+    setTimeout(eraseMessage, 20);
   } else {
     msgIndex = (msgIndex + 1) % messages.length;
-    setTimeout(typeMessage, 500);
+    setTimeout(typeMessage, 400);
   }
 }
-
 typeMessage();
 
-// 2. CANVAS ANIMATION (205 FRAMES)
+// CANVAS ANIMATION (205 FRAMES)
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
 const frameCount = 205;
@@ -313,23 +488,21 @@ function render(index) {
 }
 
 window.addEventListener('scroll', () => {
-  const scrollFraction = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-  const frameIndex = Math.min(frameCount - 1, Math.floor(scrollFraction * frameCount * 1.5)); // Multiplicador para acelerar a troca
+  const track = document.getElementById('hero-track');
+  if(!track) return;
+  const scrollFraction = window.scrollY / (track.offsetHeight - window.innerHeight);
+  const frameIndex = Math.min(frameCount - 1, Math.floor(scrollFraction * frameCount * 1.5)); 
   requestAnimationFrame(() => render(frameIndex));
 });
 
-// 3. REVEAL ANIMATION PARA PRODUTOS
+// REVEAL ANIMATION
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.style.opacity = 1;
+    if (entry.isIntersecting) entry.target.classList.add('visible');
   });
 }, { threshold: 0.1 });
 
-document.querySelectorAll('.reveal').forEach(el => {
-  el.style.opacity = 0;
-  el.style.transition = "opacity 1s ease-out";
-  observer.observe(el);
-});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
