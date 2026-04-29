@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Center Net Informática — Hardware de Performance</title>
+<title>Center Net Informática — Especialistas em Performance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
   --black: #050505;
   --white: #F8F5F0;
-  --cream: #EDE8DF;
   --orange: #FF4D00;
-  --orange-dim: #C93B00;
-  --grey: #7A7570;
-  --grey-light: #B8B2A8;
-  --surface: #111010;
-  --surface2: #1A1917;
-  --border: rgba(248,245,240,0.08);
-  --border-strong: rgba(248,245,240,0.18);
+  --orange-glow: rgba(255, 77, 0, 0.4);
+  --border-color: rgba(255, 255, 255, 0.05);
   --font-display: 'Bebas Neue', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
@@ -33,500 +27,310 @@ body {
   background: var(--black);
   color: var(--white);
   font-family: var(--font-body);
-  font-weight: 300;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--black); }
-::-webkit-scrollbar-thumb { background: var(--orange); }
 
 /* ── PRELOADER ── */
 #preloader {
   position: fixed; inset: 0; z-index: 9999;
   background: var(--black);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 0.8s ease;
+  transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.load-text { font-family: var(--font-mono); color: var(--orange); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
-.load-bar { width: 200px; height: 2px; background: var(--surface2); position: relative; overflow: hidden; }
-#load-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--orange); width: 0%; transition: width 0.1s; }
+.load-bar { width: 240px; height: 1px; background: rgba(255,255,255,0.1); position: relative; }
+#load-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; box-shadow: 0 0 15px var(--orange); }
+
+/* ── BORDA MINIMALISTA PREMIUM ── */
+.frame-border {
+  position: fixed;
+  inset: 15px; /* Espaço da borda para o conteúdo */
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+  z-index: 150;
+  transition: opacity 0.5s;
+}
+.frame-line {
+  position: absolute;
+  background: var(--orange);
+  box-shadow: 0 0 10px var(--orange);
+}
+/* Animação da linha que percorre a borda */
+.line-top { top: -1px; left: 0; height: 1px; width: 0; animation: lineH 4s infinite; }
+.line-right { top: 0; right: -1px; width: 1px; height: 0; animation: lineV 4s infinite 1s; }
+.line-bottom { bottom: -1px; right: 0; height: 1px; width: 0; animation: lineH 4s infinite 2s; }
+.line-left { bottom: 0; left: -1px; width: 1px; height: 0; animation: lineV 4s infinite 3s; }
+
+@keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
+@keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
 /* ── NAV ── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 80px;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 0 clamp(20px, 5vw, 80px);
-  border-bottom: 1px solid var(--border);
-  background: rgba(5,5,5,0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  padding: 0 60px;
 }
-.logo { font-family: var(--font-display); font-size: 24px; letter-spacing: 0.05em; color: var(--white); }
+.logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; }
 .logo span { color: var(--orange); }
 
-nav .cta-pill {
-  display: flex; align-items: center; gap: 8px; background: var(--orange); color: #fff;
-  padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 600;
-  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
-  transition: background 0.2s, transform 0.2s; font-family: var(--font-body);
+/* ── HERO CANVAS & TEXT EXPERIENCE ── */
+#hero-track { height: 500vh; position: relative; }
+.hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 20%, var(--black) 100%);
+  z-index: 5;
 }
-nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 
-/* ── HERO TRACK ── */
-#hero-track { height: 400vh; position: relative; width: 100%; }
-.hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
-#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; filter: contrast(1.1) brightness(0.7); }
-.hero-overlay-vignette { position: absolute; inset: 0; z-index: 1; background: radial-gradient(circle at center, transparent 30%, var(--black) 120%); pointer-events: none; }
-.hero-content { position: relative; z-index: 2; padding: clamp(80px, 10vh, 140px) clamp(20px, 5vw, 80px) clamp(40px, 6vh, 80px); width: 100%; transition: opacity 0.3s; }
+.hero-content {
+  position: relative; z-index: 10;
+  height: 100%;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  padding: 0 10%;
+}
 
-.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,77,0,0.12); border: 1px solid rgba(255,77,0,0.3); color: var(--orange); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; padding: 6px 14px; border-radius: 4px; margin-bottom: 28px; }
-.hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--orange); border-radius: 50%; animation: blink 1.4s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+/* Tipografia Animada */
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 12vw, 180px);
+  line-height: 0.85;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(30px);
+  filter: blur(10px);
+  animation: revealHero 1.2s forwards 0.5s;
+}
 
-.hero-headline { font-family: var(--font-display); font-size: clamp(52px, 9vw, 140px); line-height: 0.95; letter-spacing: 0.01em; color: var(--white); margin-bottom: 12px; text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-.hero-headline .line-orange { color: var(--orange); }
+.talking-text {
+  font-family: var(--font-mono);
+  font-size: clamp(14px, 2vw, 24px);
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 15px;
+  min-height: 1.5em;
+}
 
-/* Animação do Texto Dinâmico */
-.dynamic-phrase-box { min-height: clamp(36px, 6vw, 70px); margin-bottom: 24px; }
-#dynamic-phrase { font-family: var(--font-display); font-size: clamp(32px, 5vw, 64px); color: var(--orange); transition: opacity 0.3s ease; text-shadow: 0 4px 15px rgba(255,77,0,0.3); letter-spacing: 0.02em; }
+.hero-sub {
+  font-size: clamp(16px, 1.8vw, 20px);
+  max-width: 500px;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.7);
+  opacity: 0;
+  animation: revealHero 1.2s forwards 0.8s;
+}
 
-.hero-bottom { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 32px; }
-.hero-desc { max-width: 460px; font-size: clamp(14px, 1.6vw, 16px); line-height: 1.75; color: var(--white); font-weight: 400; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+@keyframes revealHero {
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
 
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 24px; }
-.btn-primary { display: flex; align-items: center; gap: 10px; background: var(--orange); color: #fff; padding: 16px 32px; border-radius: 8px; font-size: 13px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: background 0.2s, transform 0.2s; }
-.btn-primary:hover { background: var(--orange-dim); transform: translateY(-2px); }
-.btn-secondary { display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.5); color: var(--white); padding: 16px 24px; border-radius: 8px; font-size: 13px; border: 1px solid var(--border-strong); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-.btn-secondary:hover { border-color: var(--white); background: rgba(0,0,0,0.8); }
+.hero-actions {
+  margin-top: 40px;
+  display: flex; gap: 20px;
+  opacity: 0;
+  animation: revealHero 1.2s forwards 1.1s;
+}
 
-/* ── TICKER ── */
-.ticker-wrap { background: var(--orange); padding: 12px 0; overflow: hidden; white-space: nowrap; border-top: 1px solid rgba(255,255,255,0.1); border-bottom: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 10; }
-.ticker-inner { display: inline-flex; animation: ticker 35s linear infinite; }
-.ticker-item { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; padding: 0 40px; font-weight: 500;}
-.ticker-item::after { content: '✦'; margin-left: 40px; opacity: 0.5; }
-@keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.btn-premium {
+  padding: 18px 45px;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.4s;
+  border: none;
+}
+.btn-orange { background: var(--orange); color: white; box-shadow: 0 0 20px var(--orange-glow); }
+.btn-orange:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--orange); }
 
-/* ── SECTIONS ── */
-section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 80px); position: relative; z-index: 10; background: var(--black); }
-.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
-.section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
-.section-title .dim { color: var(--grey); }
+/* ── SECTIONS (MANTENDO PRODUTOS) ── */
+section { padding: 120px 10%; position: relative; z-index: 20; background: var(--black); }
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; margin-top: 60px; }
+.product-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 40px;
+  transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.product-card:hover { border-color: var(--orange); transform: translateY(-10px); background: #111; }
+.product-name { font-family: var(--font-display); font-size: 40px; margin-bottom: 10px; }
 
-/* ── PROBLEMA/SOLUÇÃO ── */
-#problema { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
-.problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-.problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
-.problema-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,77,0,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--orange); }
-.problema-icon svg { width: 16px; height: 16px; }
-.problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
-.problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
-
-.solucao-box { background: var(--surface2); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
-.solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
-.solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
-.solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-.solucao-point strong { color: var(--white); font-weight: 500; }
-
-/* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; }
-.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.product-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s; position: relative; }
-.product-card:hover { border-color: var(--border-strong); transform: translateY(-4px); }
-.product-card.featured { border-color: rgba(255,77,0,0.4); background: linear-gradient(160deg, rgba(255,77,0,0.04) 0%, var(--surface) 50%); }
-.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; }
-.badge-default { background: var(--surface2); color: var(--grey); border: 1px solid var(--border); }
-.badge-hot { background: var(--orange); color: #fff; }
-.badge-new { background: rgba(255,255,255,0.08); color: var(--white); border: 1px solid var(--border-strong); }
-
-.product-img-wrap { height: 220px; display: flex; align-items: center; justify-content: center; padding: 28px; background: var(--surface2); border-bottom: 1px solid var(--border); }
-.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6)); }
-
-.product-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
-.product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
-.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
-.product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 24px; }
-.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
-.spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
-
-.card-cta { margin-top: auto; width: 100%; padding: 14px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.cta-filled { background: var(--orange); color: #fff; }
-.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
-
-/* ── SERVIÇOS ── */
-#servicos { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.servicos-inner { max-width: 1200px; margin: 0 auto; }
-.servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border); }
-.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
-.servico-item:hover { background: var(--surface2); }
-.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
-.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
-.servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
-
-/* ── PROVAS SOCIAIS ── */
-#provas { max-width: 1200px; margin: 0 auto; }
-.provas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.prova-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px; display: flex; flex-direction: column; gap: 20px; }
-.stars { display: flex; gap: 3px; }
-.star { width: 14px; height: 14px; color: var(--orange); fill: var(--orange); }
-.prova-text { font-size: 14px; line-height: 1.75; color: var(--grey-light); font-style: italic; }
-.prova-author { display: flex; align-items: center; gap: 12px; }
-.prova-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border-strong); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 18px; color: var(--orange); }
-
-/* ── FAQ ── */
-#faq { background: var(--surface); border-top: 1px solid var(--border); }
-.faq-inner { max-width: 760px; margin: 0 auto; }
-details.faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; background: var(--black); cursor: pointer; }
-details.faq-item summary { display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; font-size: 15px; font-weight: 500; color: var(--white); list-style: none; outline: none; }
-.faq-body { padding: 0 24px 22px; font-size: 14px; line-height: 1.8; color: var(--grey-light); }
-
-/* ── CTA FINAL ── */
-#cta-final { background: var(--black); border-top: 1px solid var(--border); text-align: center; padding: 100px 20px; }
-.cta-title { font-family: var(--font-display); font-size: clamp(52px, 10vw, 120px); line-height: 0.88; margin-bottom: 28px; }
-
-/* ── FOOTER ── */
-footer { background: var(--surface); border-top: 1px solid var(--border); padding: 48px clamp(20px, 5vw, 80px) 32px; }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-.footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 260px; }
-.footer-address { font-family: var(--font-mono); font-size: 11px; color: var(--grey); line-height: 2; margin-top: 8px; }
-.footer-bottom { max-width: 1200px; margin: 24px auto 0; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--grey); text-transform: uppercase; }
-
-/* ── CHAT ── */
-#chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 200; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-#chat-box { width: 360px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.8); }
-.chat-head { background: var(--black); border-bottom: 1px solid var(--border); padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; }
-#chat-messages { flex: 1; height: 340px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
-.msg-bot, .msg-user { max-width: 82%; padding: 12px 16px; border-radius: 12px; font-size: 13px; }
-.msg-bot { background: var(--surface2); color: var(--grey-light); align-self: flex-start; }
-.msg-user { background: var(--orange); color: #fff; align-self: flex-end; }
-.chat-input-area { padding: 14px 16px; background: var(--black); border-top: 1px solid var(--border); display: flex; gap: 10px; }
-#chat-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px; color: var(--white); outline: none; }
-#send-btn, #chat-fab { background: var(--orange); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-#chat-fab { width: 58px; height: 58px; border-radius: 50%; box-shadow: 0 8px 32px rgba(255,77,0,0.5); }
-
-/* ANIMATIONS */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Endereço no Footer */
+.footer-address { font-family: var(--font-mono); color: #555; font-size: 12px; margin-top: 20px; }
 </style>
 </head>
 <body>
 
+<div class="frame-border">
+  <div class="frame-line line-top"></div>
+  <div class="frame-line line-right"></div>
+  <div class="frame-line line-bottom"></div>
+  <div class="frame-line line-left"></div>
+</div>
+
 <div id="preloader">
-  <div class="load-text">A INICIAR HARDWARE...</div>
+  <div style="font-family: var(--font-mono); color: var(--orange); margin-bottom: 15px; font-size: 10px; letter-spacing: 0.5em;">SYSTEM INITIALIZING</div>
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
 <nav>
-  <div class="logo">Center<span>Net</span></div>
-  <button class="cta-pill" onclick="openChat()">Falar com Especialista</button>
+  <div class="logo">CENTER<span>NET</span></div>
+  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--orange);">ANAPOLIS // BRAZIL</div>
 </nav>
 
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
-    <div class="hero-overlay-vignette"></div>
-    <div class="hero-content" id="hero-text-content">
-      <div class="hero-tag">Center Net Informática ⚡</div>
+    <div class="hero-overlay"></div>
+    
+    <div class="hero-content">
+      <div class="talking-text" id="talking-text"></div>
+      <h1 class="hero-headline">TECNOLOGIA<br><span style="color: var(--orange);">SEM LIMITES.</span></h1>
+      <p class="hero-sub">
+        Especialistas em reviver sua máquina e proteger seu patrimônio. 
+        Da manutenção cirúrgica ao setup gamer dos sonhos.
+      </p>
       
-      <h1 class="hero-headline">O seu tempo vale mais<br>que um PC <span class="line-orange">lento.</span></h1>
-      
-      <div class="dynamic-phrase-box">
-        <span id="dynamic-phrase">O PC encravou de novo?</span>
-      </div>
-
-      <div class="hero-bottom">
-        <p class="hero-desc">Do telemóvel com o ecrã partido ao portátil que demora uma vida a ligar. A Center Net conserta, acelera e protege a sua tecnologia. Diagnóstico transparente e peças de alta performance. Deixe a tecnologia trabalhar para si.</p>
-        <div class="hero-actions">
-          <button class="btn-primary" onclick="openChat()">Falar com um Técnico Agora</button>
-          <button class="btn-secondary" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Ver Configurações</button>
-        </div>
+      <div class="hero-actions">
+        <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico</button>
+        <button class="btn-premium" style="background: transparent; border: 1px solid white; color: white;" onclick="document.getElementById('produtos').scrollIntoView()">Ver Produtos</button>
       </div>
     </div>
   </div>
 </div>
-
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker-inner">
-    <span class="ticker-item">🖥️ PCs e Portáteis</span>
-    <span class="ticker-item">🪛 Montagem e Manutenção</span>
-    <span class="ticker-item">⌨️ Periféricos de Performance</span>
-    <span class="ticker-item">📹 Sistemas de Segurança</span>
-    <span class="ticker-item">📱 Telemóveis</span>
-    <span class="ticker-item">⚡ Upgrades</span>
-  </div>
-</div>
-
-<section id="problema">
-  <div class="problema-grid">
-    <div>
-      <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa a sua paz.</span></h2>
-      <ul class="problema-list">
-        <li class="problema-item reveal reveal-d1">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="problema-item-text"><strong>Lentidão e problemas diários</strong>O seu PC ou portátil demora uma eternidade para iniciar e encrava logo quando mais precisa.</div>
-        </li>
-        <li class="problema-item reveal reveal-d2">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <div class="problema-item-text"><strong>Telemóvel partido ou bateria viciada</strong>O ecrã partiu, a bateria não dura nada ou o aparelho simplesmente desligou.</div>
-        </li>
-        <li class="problema-item reveal reveal-d3">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
-          <div class="problema-item-text"><strong>Aquecimento e falhas</strong>A máquina faz barulho de turbina e aquece demasiado. As suas câmaras ou rede falham quando mais precisa.</div>
-        </li>
-      </ul>
-    </div>
-    <div class="reveal reveal-d2">
-      <div class="section-tag">A Solução</div>
-      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
-      <div class="solucao-box">
-        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, portátil ou telemóvel</strong> para voltarem a funcionar como novos.</p>
-        <ul class="solucao-points">
-          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem complicações ou taxas ocultas.</li>
-          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
-          <li class="solucao-point"><strong>Reparação cirúrgica</strong> — da pasta térmica à instalação de CFTV.</li>
-          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que precisar.</li>
-        </ul>
-        <button class="btn-primary" style="margin-top:28px" onclick="openChatWith('Gostaria de um diagnóstico para o meu aparelho.')">Falar com um técnico agora</button>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="produtos">
-  <div style="max-width:1200px;margin:0 auto">
-    <div class="produtos-header">
-      <div>
-        <div class="section-tag reveal">Montra</div>
-        <h2 class="section-title reveal reveal-d1">Hardware <span class="dim">Premium.</span></h2>
-      </div>
-      <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;">Setups testados e otimizados um a um.</p>
+  <h2 style="font-family: var(--font-display); font-size: 80px;">VITRINE<span style="color:var(--orange)">_</span>PRO</h2>
+  <div class="product-grid">
+    <div class="product-card reveal">
+      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">SKU: AMD-5600</div>
+      <h3 class="product-name">RYZEN 5 5600GT</h3>
+      <p style="color: #888;">Performance ideal para trabalho e games competitivos.</p>
     </div>
-    <div class="products-grid">
-      <div class="product-card reveal reveal-d1">
-        <span class="product-badge badge-default">Workstation V1</span>
-        <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="AMD Ryzen 5"></div>
-        <div class="product-body">
-          <div class="product-sku">SKU: AMD-5600</div>
-          <div class="product-name">AMD Ryzen 5 5600GT</div>
-          <div class="product-specs">
-            <div class="spec-item"><div class="spec-label">CPU</div><div class="spec-value">6C / 12T</div></div>
-            <div class="spec-item"><div class="spec-label">Nível</div><div class="spec-value">Pro</div></div>
-          </div>
-          <button class="card-cta cta-filled" onclick="openChatWith('Interesse na Workstation V1')">Orçamento</button>
-        </div>
-      </div>
-      <div class="product-card featured reveal reveal-d2">
-        <span class="product-badge badge-hot">🔥 Destaque</span>
-        <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Acer Nitro V"></div>
-        <div class="product-body">
-          <div class="product-sku">SKU: NITRO-V</div>
-          <div class="product-name">Acer Nitro V</div>
-          <div class="product-specs">
-            <div class="spec-item"><div class="spec-label">Ecrã</div><div class="spec-value">144Hz IPS</div></div>
-            <div class="spec-item"><div class="spec-label">GPU</div><div class="spec-value">RTX Series</div></div>
-          </div>
-          <button class="card-cta cta-filled" onclick="openChatWith('Interesse no Nitro V')">Ver Estoque</button>
-        </div>
-      </div>
-      <div class="product-card reveal reveal-d3">
-        <span class="product-badge badge-new">GPU</span>
-        <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX 3060"></div>
-        <div class="product-body">
-          <div class="product-sku">SKU: RTX-3060</div>
-          <div class="product-name">GeForce RTX 3060</div>
-          <div class="product-specs">
-            <div class="spec-item"><div class="spec-label">VRAM</div><div class="spec-value">12GB</div></div>
-            <div class="spec-item"><div class="spec-label">Arq</div><div class="spec-value">Ampere</div></div>
-          </div>
-          <button class="card-cta cta-outline" onclick="openChatWith('Interesse na RTX 3060')">Consultar</button>
-        </div>
-      </div>
+    <div class="product-card reveal" style="border-color: var(--orange);">
+      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">HOT ITEM</div>
+      <h3 class="product-name">ACER NITRO V</h3>
+      <p style="color: #888;">Poder RTX no seu colo. O queridinho dos entusiastas.</p>
+    </div>
+    <div class="product-card reveal">
+      <div style="color: var(--orange); font-family: var(--font-mono); margin-bottom: 10px;">UPGRADE</div>
+      <h3 class="product-name">RTX 3060 12GB</h3>
+      <p style="color: #888;">Memória de sobra para os softwares mais pesados.</p>
     </div>
   </div>
 </section>
 
-<section id="servicos">
-  <div class="servicos-inner">
-    <div class="section-tag reveal">Serviços</div>
-    <h2 class="section-title reveal reveal-d1">O que <span class="dim">fazemos.</span></h2>
-    <div class="servicos-grid">
-      <div class="servico-item reveal reveal-d1">
-        <div class="servico-num">01</div>
-        <div class="servico-title">PCs & Portáteis</div>
-        <p class="servico-desc">Montagem gamer, limpeza técnica e reparações em geral.</p>
-      </div>
-      <div class="servico-item reveal reveal-d2">
-        <div class="servico-num">02</div>
-        <div class="servico-title">Segurança & Redes</div>
-        <p class="servico-desc">Instalação de CFTV e infraestrutura de rede robusta.</p>
-      </div>
-      <div class="servico-item reveal reveal-d3">
-        <div class="servico-num">03</div>
-        <div class="servico-title">Telemóveis</div>
-        <p class="servico-desc">Troca de ecrã, bateria e reparações de sistema.</p>
-      </div>
-      <div class="servico-item reveal reveal-d4">
-        <div class="servico-num">04</div>
-        <div class="servico-title">Peças</div>
-        <p class="servico-desc">Periféricos e componentes de primeira linha.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="provas">
-  <div class="provas-grid">
-    <div class="prova-card reveal">
-      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">O meu portátil voltou a ser rápido como novo. Atendimento excelente.</p>
-      <div class="prova-author"><div class="prova-avatar">L</div><div class="prova-name">Lucas F.</div></div>
-    </div>
-    <div class="prova-card reveal">
-      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">Câmaras instaladas com perfeição. Recomendo muito.</p>
-      <div class="prova-author"><div class="prova-avatar">R</div><div class="prova-name">Rafael M.</div></div>
-    </div>
-    <div class="prova-card reveal">
-      <div class="stars"><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div><div class="star">★</div></div>
-      <p class="prova-text">Configuraram o meu PC gamer do zero. Performance incrível.</p>
-      <div class="prova-author"><div class="prova-avatar">C</div><div class="prova-name">Carla S.</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="faq-inner">
-    <h2 class="section-title reveal">Perguntas <span class="dim">Frequentes.</span></h2>
-    <div class="faq-list">
-      <details class="faq-item"><summary>Fazem orçamentos online?</summary><div class="faq-body">Sim, via WhatsApp podemos fazer uma prévia do diagnóstico.</div></details>
-      <details class="faq-item"><summary>Qual o prazo da reparação?</summary><div class="faq-body">Muitos serviços são feitos no próprio dia ou em até 48h.</div></details>
-    </div>
-  </div>
-</section>
-
-<section id="cta-final">
-  <div class="cta-final-inner">
-    <h2 class="cta-title">Chega de <span class="line-orange">perder</span> tempo.</h2>
-    <button class="btn-primary" style="margin: 0 auto" onclick="openChat()">Diagnóstico via WhatsApp</button>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo">Center<span>Net</span></div>
-      <p>Performance, segurança e tecnologia de ponta.</p>
-    </div>
-    <div>
-      <div class="section-tag">Base Operacional</div>
-      <address class="footer-address">
-        <strong>Rua 15 de Dezembro, 98 sl A lj 26/27</strong><br>
-        Centro — Anápolis, Brazil 75024070
-      </address>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Center Net Informática.</span>
-    <span>Instagram: @centernetinfo</span>
-  </div>
+<footer style="padding: 60px 10%; border-top: 1px solid #111;">
+  <div class="logo">CENTER<span>NET</span></div>
+  <address class="footer-address">
+    RUA 15 DE DEZEMBRO, 98 SL A LJ 26/27, ANÁPOLIS - BRAZIL<br>
+    CEP 75024-070 // @CENTERNETINFO
+  </address>
 </footer>
 
-<div id="chat-fab-wrap">
-  <div id="chat-box">
-    <div class="chat-head"><strong>Center Net</strong><button onclick="closeChat()">✕</button></div>
-    <div id="chat-messages"><div class="msg-bot">Olá! 👋 Como podemos ajudar com o seu equipamento hoje?</div></div>
-    <div class="chat-input-area"><input type="text" id="chat-input" placeholder="Mensagem..."><button id="send-btn" onclick="sendMessage()">➤</button></div>
-  </div>
-  <button id="chat-fab" onclick="toggleChat()">💬</button>
-</div>
-
 <script>
-// LÓGICA DAS FRASES DINÂMICAS NO HERO
-const phrases = [
-  "O PC encravou de novo?", "Nós destravamos.",
-  "O ecrã do telemóvel partiu?", "Trocamos rápido.",
-  "O portátil está a ferver?", "Nós resolvemos.",
-  "Precisa de câmaras?", "Nós instalamos.",
-  "Fim do stress.", "Simples assim."
+// 1. LÓGICA DO TEXTO QUE FALA COM O USUÁRIO
+const messages = [
+  "O seu PC travou de novo?",
+  "Nós temos a solução.",
+  "Seu celular quebrou?",
+  "Nós trocamos rápido.",
+  "Notebook esquentando?",
+  "A gente resolve agora.",
+  "Precisando de segurança?",
+  "Instalamos as melhores câmeras.",
+  "Center Net: Performance pura.",
+  "Simples. Rápido. Definitivo."
 ];
-let phraseIndex = 0;
-const dynamicPhraseEl = document.getElementById('dynamic-phrase');
-setInterval(() => {
-  dynamicPhraseEl.style.opacity = 0;
-  setTimeout(() => {
-    phraseIndex = (phraseIndex + 1) % phrases.length;
-    dynamicPhraseEl.innerText = phrases[phraseIndex];
-    dynamicPhraseEl.style.opacity = 1;
-  }, 300);
-}, 2500);
 
-// CANVAS LOGIC
+let msgIndex = 0;
+let charIndex = 0;
+const talkingEl = document.getElementById('talking-text');
+
+function typeMessage() {
+  if (charIndex < messages[msgIndex].length) {
+    talkingEl.textContent += messages[msgIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(typeMessage, 50);
+  } else {
+    setTimeout(eraseMessage, 2000);
+  }
+}
+
+function eraseMessage() {
+  if (charIndex > 0) {
+    talkingEl.textContent = messages[msgIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(eraseMessage, 30);
+  } else {
+    msgIndex = (msgIndex + 1) % messages.length;
+    setTimeout(typeMessage, 500);
+  }
+}
+
+typeMessage();
+
+// 2. CANVAS ANIMATION (205 FRAMES)
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
-const frameCount = 205; 
+const frameCount = 205;
 const images = [];
-let loadedImages = 0;
-const loadProgress = document.getElementById('load-progress');
+let loadedCount = 0;
 
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
   img.src = `./${i.toString().padStart(4, '0')}.webp`;
   img.onload = () => {
-    loadedImages++;
-    loadProgress.style.width = `${(loadedImages / frameCount) * 100}%`;
-    if (loadedImages === 1) renderFrame(0);
-    if (loadedImages === frameCount) {
-      setTimeout(() => { document.getElementById('preloader').style.opacity = "0"; setTimeout(() => document.getElementById('preloader').style.display = "none", 800); }, 500);
+    loadedCount++;
+    document.getElementById('load-progress').style.width = (loadedCount / frameCount * 100) + '%';
+    if(loadedCount === 1) render(0);
+    if(loadedCount === frameCount) {
+      setTimeout(() => {
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(() => document.getElementById('preloader').style.display = 'none', 1000);
+      }, 500);
     }
   };
   images.push(img);
 }
 
-function renderFrame(index) {
-  if (images[index]?.complete) {
+function render(index) {
+  if (images[index]) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
     const img = images[index];
-    const cw = canvas.width = window.innerWidth;
-    const ch = canvas.height = window.innerHeight;
-    const r = Math.max(cw / img.width, ch / img.height);
-    ctx.drawImage(img, (cw - img.width * r) / 2, (ch - img.height * r) / 2, img.width * r, img.height * r);
+    const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+    const x = (canvas.width - img.width * ratio) / 2;
+    const y = (canvas.height - img.height * ratio) / 2;
+    ctx.drawImage(img, x, y, img.width * ratio, img.height * ratio);
   }
 }
 
-let targetFrame = 0, smoothFrame = 0;
 window.addEventListener('scroll', () => {
-  const track = document.getElementById('hero-track');
-  const scrollFraction = window.scrollY / (track.offsetHeight - window.innerHeight);
-  targetFrame = Math.max(0, Math.min(frameCount - 1, scrollFraction * (frameCount - 1)));
-  document.getElementById('hero-text-content').style.opacity = scrollFraction > 0.4 ? 0 : 1;
+  const scrollFraction = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  const frameIndex = Math.min(frameCount - 1, Math.floor(scrollFraction * frameCount * 1.5)); // Multiplicador para acelerar a troca
+  requestAnimationFrame(() => render(frameIndex));
 });
 
-function animate() {
-  smoothFrame += (targetFrame - smoothFrame) * 0.08;
-  renderFrame(Math.round(smoothFrame));
-  requestAnimationFrame(animate);
-}
-animate();
+// 3. REVEAL ANIMATION PARA PRODUTOS
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.style.opacity = 1;
+  });
+}, { threshold: 0.1 });
 
-// CHAT LOGIC
-function toggleChat() { const b = document.getElementById('chat-box'); b.style.display = b.style.display === 'flex' ? 'none' : 'flex'; }
-function closeChat() { document.getElementById('chat-box').style.display = 'none'; }
-function openChat() { document.getElementById('chat-box').style.display = 'flex'; }
-function openChatWith(m) { openChat(); document.getElementById('chat-input').value = m; sendMessage(); }
-function sendMessage() {
-  const i = document.getElementById('chat-input'), t = i.value.trim();
-  if (!t) return;
-  const m = document.getElementById('chat-messages'), d = document.createElement('div');
-  d.className = 'msg-user'; d.textContent = t; m.appendChild(d); i.value = '';
-  setTimeout(() => { window.open(`https://wa.me/5562993362276?text=${encodeURIComponent(t)}`, '_blank'); }, 1000);
-}
-
-// REVEAL
-const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(e => obs.observe(e));
+document.querySelectorAll('.reveal').forEach(el => {
+  el.style.opacity = 0;
+  el.style.transition = "opacity 1s ease-out";
+  observer.observe(el);
+});
 </script>
+
 </body>
 </html>
