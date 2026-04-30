@@ -281,9 +281,9 @@ function sendMessage() {
     // Normalização: Remove acentos e joga tudo para minúsculo
     const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    // THE EASTER EGG: Agora só precisa ter "jose" e "vagabundo", sem se importar com acento
+    // THE EASTER EGG (Com a pontuação corrigida!)
     if(low.includes("jose") && low.includes("vagabundo")) {
-      reply = "sim e e pq causa de homens assim que estamos indo para 3 guerra mundial";
+      reply = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
     } 
     // PRODUCT INFO
     else if(low.includes("nitro") || low.includes("notebook")) {
