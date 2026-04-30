@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Center Net Informática — Especialistas em Performance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,42 +69,13 @@ nav .cta-pill {
 nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 
 /* ── HERO SCROLL-TELLING EXPERIENCE ── */
-#hero-track { 
-  height: 600vh; 
-  position: relative; 
-  width: 100%; 
-}
-.hero-sticky { 
-  position: sticky; 
-  top: 0; 
-  width: 100%; 
-  height: 100vh; 
-  overflow: hidden; 
-}
-#hero-canvas { 
-  position: absolute; 
-  inset: 0; 
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
-  filter: brightness(0.6); 
-  z-index: 0;
-  will-change: transform;
-}
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at center, transparent 20%, var(--black) 100%);
-  z-index: 5;
-}
+#hero-track { height: 600vh; position: relative; width: 100%; }
+.hero-sticky { position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden; }
+#hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); z-index: 0; will-change: transform; }
+.hero-overlay { position: absolute; inset: 0; background: radial-gradient(circle at center, transparent 20%, var(--black) 100%); z-index: 5; }
 
 /* BORDA MINIMALISTA RESTRITA AO HERO */
-.frame-border {
-  position: absolute;
-  inset: 15px; 
-  border: 1px solid var(--border-color);
-  pointer-events: none;
-  z-index: 15;
-}
+.frame-border { position: absolute; inset: 15px; border: 1px solid var(--border-color); pointer-events: none; z-index: 15; }
 .frame-line { position: absolute; background: var(--orange); box-shadow: 0 0 10px var(--orange); }
 .line-top { top: -1px; left: 0; height: 1px; width: 0; animation: lineH 4s infinite; }
 .line-right { top: 0; right: -1px; width: 1px; height: 0; animation: lineV 4s infinite 1s; }
@@ -113,58 +84,13 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
-/* Cenas Animadas */
-.hero-content {
-  position: relative; 
-  z-index: 10;
-  height: 100vh;
-  display: flex; 
-  align-items: center; 
-  justify-content: flex-start;
-  padding: 0 clamp(20px, 5vw, 10%);
-}
-.scroll-scene {
-  position: absolute;
-  left: clamp(20px, 5vw, 10%);
-  right: clamp(20px, 5vw, 10%);
-  opacity: 0;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
+.hero-content { position: relative; z-index: 10; height: 100vh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 5vw, 10%); }
+.scroll-scene { position: absolute; left: clamp(20px, 5vw, 10%); right: clamp(20px, 5vw, 10%); opacity: 0; pointer-events: none; will-change: transform, opacity; }
+.hero-headline { font-family: var(--font-display); font-size: clamp(40px, 9vw, 140px); line-height: 0.95; margin-bottom: 20px; color: var(--white); text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+.hero-sub { font-size: clamp(14px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); }
+.hero-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
 
-.hero-headline {
-  font-family: var(--font-display);
-  font-size: clamp(50px, 9vw, 140px);
-  line-height: 0.95; 
-  margin-bottom: 20px;
-  color: var(--white);
-  text-shadow: 0 10px 30px rgba(0,0,0,0.8);
-}
-
-.hero-sub {
-  font-size: clamp(16px, 2vw, 22px);
-  max-width: 600px;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.8);
-}
-
-.hero-actions {
-  margin-top: 40px;
-  display: flex; gap: 20px; flex-wrap: wrap;
-}
-
-.btn-premium {
-  padding: 16px 36px;
-  border-radius: 4px;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-family: var(--font-body);
-  font-size: 13px;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  transition: all 0.4s;
-  border: none;
-}
+.btn-premium { padding: 16px 36px; border-radius: 4px; font-weight: 700; text-transform: uppercase; font-family: var(--font-body); font-size: 13px; letter-spacing: 0.1em; cursor: pointer; transition: all 0.4s; border: none; }
 .btn-orange { background: var(--orange); color: white; box-shadow: 0 0 20px var(--orange-glow); }
 .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 10px 40px var(--orange-glow); }
 
@@ -175,480 +101,145 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 .ticker-item::after { content: '✦'; margin-left: 40px; opacity: 0.5; }
 @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-/* ── SHARED SECTIONS ── */
-section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: relative; z-index: 20; background: var(--black); }
-.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.section-tag::before { content: ''; width: 24px; height: 1px; background: var(--orange); }
-.section-title { font-family: var(--font-display); font-size: clamp(44px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
-.section-title .dim { color: var(--grey); }
-
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; }
-.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; }
-.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; position: relative; z-index: 10; }
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; overflow: hidden;}
+.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; padding: 0 5%; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; position: relative; z-index: 10; padding: 0 5% 80px; }
 
-.product-card { 
-  background: linear-gradient(160deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,1) 100%);
-  border: 1px solid var(--border-color); 
-  border-radius: 20px; 
-  overflow: hidden; 
-  display: flex; flex-direction: column; 
-  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); 
-  position: relative; 
-}
-.product-card:hover { 
-  border-color: rgba(255,77,0,0.3); 
-  transform: translateY(-6px); 
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-}
-.product-card.featured { 
-  border-color: var(--orange-glow); 
-  background: linear-gradient(160deg, rgba(255,77,0,0.08) 0%, rgba(10,10,10,1) 60%); 
-}
-.product-card.featured:hover { 
-  border-color: var(--orange); 
-  box-shadow: 0 15px 50px var(--orange-glow); 
-}
-
-.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; z-index: 10; }
-.badge-default { background: var(--surface2); color: var(--grey); border: 1px solid var(--border-color); }
-.badge-hot { background: var(--orange); color: #fff; box-shadow: 0 0 10px rgba(255,77,0,0.5); }
-.badge-new { background: rgba(255,255,255,0.05); color: var(--white); border: 1px solid var(--border-strong); }
-
-.product-img-wrap { 
-  height: 260px; 
-  display: flex; align-items: center; justify-content: center; 
-  padding: 30px; 
-  position: relative; 
-  background: linear-gradient(to bottom, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.6) 100%);
-  border-bottom: 1px solid var(--border-color);
-}
-.product-img-wrap::before {
-  content: ''; position: absolute; width: 140px; height: 140px; background: var(--orange); filter: blur(60px); border-radius: 50%; opacity: 0.05; transition: opacity 0.5s; z-index: 1;
-}
-.product-card:hover .product-img-wrap::before { opacity: 0.15; }
-
-.product-img-wrap img { 
-  max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); position: relative; z-index: 2; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-}
-.product-card:hover .product-img-wrap img { transform: scale(1.05); }
-
-.product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; position: relative; z-index: 2; }
-.product-sku { font-family: var(--font-mono); font-size: 9px; color: var(--grey); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+.product-card { background: linear-gradient(160deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,1) 100%); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); position: relative; }
+.product-card:hover { border-color: rgba(255,77,0,0.3); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
+.product-badge { position: absolute; top: 16px; right: 16px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; z-index: 10; background: var(--surface2); color: var(--grey); border: 1px solid var(--border-color); }
+.product-img-wrap { height: 260px; display: flex; align-items: center; justify-content: center; padding: 30px; position: relative; background: linear-gradient(to bottom, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.6) 100%); border-bottom: 1px solid var(--border-color); }
+.product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); transition: transform 0.5s; }
+.product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
 .product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
 .product-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px 0; border-top: 1px solid var(--border-color); margin-bottom: 24px; }
-.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
+.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); }
 .spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
 
-.card-cta { margin-top: auto; width: 100%; padding: 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; text-align: center;}
-.cta-filled { background: var(--orange); color: #fff; }
-.cta-filled:hover { background: var(--orange-dim); box-shadow: 0 5px 15px rgba(255,77,0,0.3); }
-.cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
-.cta-outline:hover { border-color: var(--white) !important; color: var(--white); background: rgba(255,255,255,0.05); }
-
 /* ── PROBLEMA ── */
-#problema { background: var(--black); border-bottom: 1px solid var(--border-color); }
-.problema-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
-.problema-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
-.problema-item { display: flex; align-items: flex-start; gap: 14px; padding: 20px; background: rgba(255,77,0,0.05); border: 1px solid rgba(255,77,0,0.12); border-radius: 8px; }
-.problema-icon { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,77,0,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--orange); }
-.problema-icon svg { width: 16px; height: 16px; }
-.problema-item-text { font-size: 14px; line-height: 1.6; color: var(--grey-light); }
-.problema-item-text strong { color: var(--white); display: block; font-weight: 500; margin-bottom: 2px; font-size: 15px; }
-.solucao-box { background: var(--surface); border: 1px solid var(--border-strong); border-radius: 16px; padding: 40px; }
-.solucao-points { list-style: none; display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
-.solucao-point { display: flex; align-items: flex-start; gap: 14px; font-size: 14px; color: var(--grey-light); line-height: 1.6; }
-.solucao-point::before { content: '→'; color: var(--orange); font-weight: 600; flex-shrink: 0; margin-top: 1px; }
-.solucao-point strong { color: var(--white); font-weight: 500; }
+section { padding: 100px 5%; background: var(--black); }
+.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-title { font-family: var(--font-display); font-size: clamp(40px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
+.dim { color: var(--grey); }
 
-/* ── SERVIÇOS ── */
-#servicos { background: var(--surface); border-bottom: 1px solid var(--border-color); }
-.servicos-inner { max-width: 1200px; margin: 0 auto; }
-.servicos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; margin-top: 56px; background: var(--border-color); }
-.servico-item { padding: 40px 32px; background: var(--black); transition: background 0.3s; }
-.servico-item:hover { background: var(--surface2); }
-.servico-num { font-family: var(--font-display); font-size: 56px; color: rgba(255,77,0,0.15); margin-bottom: 24px; }
-.servico-title { font-family: var(--font-display); font-size: 26px; margin-bottom: 14px; color: var(--white); }
-.servico-desc { font-size: 13px; line-height: 1.75; color: var(--grey-light); }
+/* ── CHATBOT WIDGET (CORREÇÕES MOBILE) ── */
+#chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
+#chat-fab { width: 64px; height: 64px; background: transparent; border: none; cursor: pointer; transition: transform 0.25s; position: relative; padding: 0; }
+#chat-fab:hover { transform: scale(1.08); }
+#chat-fab img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+.fab-badge { position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; background: var(--orange); border-radius: 50%; border: 3px solid var(--black); color: #fff; font-family: var(--font-mono); font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
 
-/* ── FOOTER ── */
-footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
-.footer-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 32px;}
-.footer-brand p { font-size: 13px; color: var(--grey); line-height: 1.7; max-width: 300px; margin-top: 12px; }
-.footer-address { font-family: var(--font-mono); font-size: 11px; color: var(--grey); line-height: 2; margin-top: 8px; text-transform: uppercase;}
-.footer-address strong { color: var(--grey-light); font-weight: 400; }
-.footer-bottom { max-width: 1200px; margin: 24px auto 0; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--grey); text-transform: uppercase;}
-
-/* REVEAL ANIMATIONS */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* ── WIDGET DO CHATBOT ABERTO ── */
-#chat-fab-wrap { 
-  position: fixed; bottom: 28px; right: 28px; z-index: 9999; 
-  display: flex; flex-direction: column; align-items: flex-end; gap: 12px; 
-}
 #chat-box { 
-  width: 360px; max-height: 80vh; background: var(--surface); 
+  width: 360px; max-height: 500px; background: var(--surface); 
   border: 1px solid var(--border-strong); border-radius: 20px; 
   display: none; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.8); 
   transform-origin: bottom right; animation: chatPop 0.3s cubic-bezier(0.34,1.56,0.64,1); 
+  overflow: hidden; margin-bottom: 15px;
 }
 @keyframes chatPop { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
 
-.chat-head { background: var(--black); border-bottom: 1px solid var(--border-color); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-radius: 20px 20px 0 0; }
-.chat-agent { display: flex; align-items: center; gap: 12px; }
-
-/* Avatar da Camila */
-.chat-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--surface2); border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.chat-head { background: var(--black); border-bottom: 1px solid var(--border-color); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.chat-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--orange); overflow: hidden; }
 .chat-avatar img { width: 100%; height: 100%; object-fit: cover; }
-.chat-avatar::after { content: ''; position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 2px solid var(--black); z-index: 2;}
-
 .chat-agent-name { font-weight: 600; font-size: 15px; color: var(--white); }
-.chat-agent-status { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: #22c55e; }
-#close-chat-btn { background: none; border: none; color: var(--grey); cursor: pointer; padding: 4px; transition: color 0.2s; }
-#close-chat-btn:hover { color: var(--white); }
-#close-chat-btn svg { width: 20px; height: 20px; }
 
-#chat-messages { flex: 1; min-height: 350px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; scrollbar-width: thin; scrollbar-color: rgba(255,77,0,0.3) transparent; }
-.msg-bot, .msg-user { max-width: 85%; padding: 14px 18px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
-.msg-bot { background: var(--surface2); border: 1px solid var(--border-color); color: var(--white); align-self: flex-start; border-radius: 12px 12px 12px 4px; }
-.msg-user { background: var(--orange); color: #fff; align-self: flex-end; border-radius: 12px 12px 4px 12px; }
+#chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; background: rgba(5,5,5,0.4); }
+.msg-bot, .msg-user { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+.msg-bot { background: var(--surface2); color: var(--white); align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid var(--border-color); }
+.msg-user { background: var(--orange); color: #fff; align-self: flex-end; border-bottom-right-radius: 2px; }
 
-.chat-input-area { padding: 14px 16px; background: var(--black); border-top: 1px solid var(--border-color); display: flex; gap: 10px; align-items: center; border-radius: 0 0 20px 20px;}
-#chat-input { flex: 1; background: var(--surface2); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--white); font-family: var(--font-body); outline: none; transition: border-color 0.2s; }
-#chat-input:focus { border-color: var(--orange); }
-#send-btn { width: 42px; height: 42px; background: var(--orange); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
-#send-btn:hover { background: var(--orange-dim); }
-#send-btn svg { width: 18px; height: 18px; color: #fff; }
+.chat-input-area { padding: 12px; background: var(--black); border-top: 1px solid var(--border-color); display: flex; gap: 8px; align-items: center; }
+#chat-input { 
+  flex: 1; background: var(--surface2); border: 1px solid var(--border-color); 
+  border-radius: 10px; padding: 12px 15px; color: var(--white); 
+  font-family: var(--font-body); outline: none;
+  /* CRÍTICO: Font-size 16px impede o zoom automático no Mobile */
+  font-size: 16px !important; 
+}
+#send-btn { width: 45px; height: 45px; background: var(--orange); border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+#send-btn svg { width: 20px; height: 20px; color: #fff; }
 
-/* Botão Flutuante Personalizado (CORRIGIDO: Sem overflow hidden) */
-#chat-fab { width: 64px; height: 64px; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,0,0,0.5); transition: transform 0.25s; position: relative; padding: 0; border-radius: 50%;}
-#chat-fab:hover { transform: scale(1.08); }
-#chat-fab img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
-.fab-badge { position: absolute; top: -2px; right: -2px; width: 22px; height: 22px; background: var(--orange); border-radius: 50%; border: 2px solid var(--surface); font-family: var(--font-mono); font-size: 11px; font-weight: bold; color: #fff; display: flex; align-items: center; justify-content: center; z-index: 10;}
-
-/* Typing animation */
-.typing { display: flex; gap: 4px; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border-color); border-radius: 12px 12px 12px 4px; align-self: flex-start; width: fit-content; }
-.dot { width: 6px; height: 6px; background: var(--grey); border-radius: 50%; animation: dotbounce 1.2s infinite; }
-.dot:nth-child(2) { animation-delay: 0.2s; }
-.dot:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dotbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
-
-/* ── CORREÇÃO DO CHAT PARA MOBILE ── */
+/* ── ADAPTAÇÃO MOBILE DO CHAT ── */
 @media (max-width: 768px) {
-  .problema-grid { grid-template-columns: 1fr; gap: 40px; }
-  
-  #chat-fab-wrap { bottom: 16px; right: 16px; z-index: 10000;}
-  
+  #chat-fab-wrap { bottom: 20px; right: 20px; }
   #chat-box {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    width: 100%;
-    /* Utiliza DVH para adaptar dinamicamente ao teclado virtual do iOS/Android */
-    height: 100vh;
-    height: 100dvh; 
-    max-height: none;
-    border-radius: 0;
-    border: none;
-    animation: chatPopMobile 0.3s ease-out forwards;
-    z-index: 10000;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw; height: 100dvh; max-height: none; 
+    border-radius: 0; margin-bottom: 0; z-index: 10000;
   }
-  
-  .chat-head { border-radius: 0; }
-  .chat-input-area { border-radius: 0; padding-bottom: 20px; } /* Espaço extra para a base do mobile */
-  
-  #chat-messages {
-    min-height: 0; /* Permite que encolha quando o teclado aparece */
-    flex: 1;
-  }
+  .chat-head { border-radius: 0; padding: 20px; }
+  .chat-input-area { padding: 15px 15px 30px; } /* Espaço para a barra do iPhone */
 }
 
-@keyframes chatPopMobile {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
+/* Footer Simples */
+footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var(--border-color); }
 </style>
 </head>
 <body>
 
 <div id="preloader">
-  <div style="font-family: var(--font-mono); color: var(--orange); margin-bottom: 15px; font-size: 10px; letter-spacing: 0.5em;">SISTEMA INICIANDO</div>
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
 <nav>
   <div class="logo">Center<span>Net</span></div>
-  <button class="cta-pill" onclick="openChat()">Falar com Especialista</button>
+  <button class="cta-pill" onclick="openChat()">Ajuda Online</button>
 </nav>
 
-<!-- HERO TRACK COM FLUID SCROLL-TELLING -->
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-overlay"></div>
-    
     <div class="frame-border">
       <div class="frame-line line-top"></div>
       <div class="frame-line line-right"></div>
       <div class="frame-line line-bottom"></div>
       <div class="frame-line line-left"></div>
     </div>
-    
     <div class="hero-content">
+      <div class="scroll-scene"><h1 class="hero-headline">TECNOLOGIA QUE<br><span style="color:var(--orange)">NUNCA PARA.</span></h1><p class="hero-sub">O seu tempo vale mais que um PC lento ou um telemóvel quebrado.</p></div>
+      <div class="scroll-scene"><h1 class="hero-headline">NÓS<br><span style="color:var(--orange)">ACELERAMOS.</span></h1><p class="hero-sub">Diagnóstico preciso e reparação imediata com peças originais.</p></div>
+      <div class="scroll-scene"><h1 class="hero-headline">HARDWARE<br><span style="color:var(--orange)">DE ELITE.</span></h1><p class="hero-sub">Workstations e Setups Gamer montados por quem entende de performance.</p></div>
       <div class="scroll-scene">
-        <h1 class="hero-headline">O SEU TEMPO VALE MAIS<br>QUE UM PC <span style="color: var(--orange);">LENTO.</span></h1>
-        <p class="hero-sub">Demorando para ligar? Travando bem na hora que você mais precisa?</p>
-      </div>
-      <div class="scroll-scene">
-        <h1 class="hero-headline">NÓS <span style="color: var(--orange);">ACELERAMOS.</span></h1>
-        <p class="hero-sub">O celular quebrou ou a bateria viciou? Trocamos rápido para você não parar.</p>
-      </div>
-      <div class="scroll-scene">
-        <h1 class="hero-headline">O JOGO TÁ <span style="color: var(--orange);">TRAVANDO?</span></h1>
-        <p class="hero-sub">Identificamos o gargalo e fazemos o upgrade exato para a sua máquina voar.</p>
-      </div>
-      <div class="scroll-scene">
-        <h1 class="hero-headline">SISTEMAS DE <span style="color: var(--orange);">SEGURANÇA.</span></h1>
-        <p class="hero-sub">A rede caiu? Câmeras falhando? Nós reconectamos e protegemos seu patrimônio.</p>
-      </div>
-      <div class="scroll-scene">
-        <h1 class="hero-headline">MÁQUINAS QUE NÃO<br>TE DEIXAM NA <span style="color: var(--orange);">MÃO.</span></h1>
-        <p class="hero-sub">Especialistas em montagem, performance extrema e reparo cirúrgico.</p>
-      </div>
-      <div class="scroll-scene">
-        <h1 class="hero-headline">RÁPIDO.<br>SEGURO.<br><span style="color: var(--orange);">DEFINITIVO.</span></h1>
-        <p class="hero-sub">Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente.</p>
+        <h1 class="hero-headline">SISTEMA<br><span style="color:var(--orange)">DEFINITIVO.</span></h1>
+        <p class="hero-sub">Segurança, manutenção e componentes premium num só lugar.</p>
         <div class="hero-actions">
-          <button class="btn-premium btn-orange" onclick="openChatWith('Quero resolver um problema no meu aparelho.')">Resolver Problema</button>
-          <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Conheça nossos produtos</button>
+          <button class="btn-premium btn-orange" onclick="openChatWith('Preciso de um técnico urgente.')">Falar com Técnico</button>
+          <button class="btn-premium" style="background:transparent; border:1px solid #fff; color:#fff" onclick="document.getElementById('produtos').scrollIntoView()">Ver Produtos</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="ticker-wrap" aria-hidden="true">
-  <div class="ticker-inner">
-    <span class="ticker-item">🖥️ PCs e Notebooks</span>
-    <span class="ticker-item">🪛 Montagem e Manutenção</span>
-    <span class="ticker-item">⌨️ Periféricos de Performance</span>
-    <span class="ticker-item">📹 Sistemas de Segurança</span>
-    <span class="ticker-item">📱 Smartphones</span>
-    <span class="ticker-item">⚡ Upgrades de Hardware</span>
-  </div>
-</div>
-
-<!-- SEÇÃO DE PRODUTOS -->
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
-
   <div class="produtos-header">
-    <div>
-      <div class="section-tag reveal">Vitrine</div>
-      <h2 class="section-title reveal">Conheça nossos <span class="dim">produtos.</span></h2>
-    </div>
-    <p class="reveal" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Setups testados e otimizados antes de sair. Zero improviso.</p>
+    <div><div class="section-tag">Vitrine</div><h2 class="section-title">Conheça nossos <span class="dim">produtos.</span></h2></div>
   </div>
-
   <div class="products-grid">
-    <!-- CARD 1 -->
-    <div class="product-card reveal">
-      <span class="product-badge badge-default">Workstation V1</span>
-      <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT"></div>
-      <div class="product-body">
-        <div class="product-sku">SKU: AMD-5600</div>
-        <div class="product-name">AMD Ryzen 5<br>5600GT</div>
-        <div class="product-specs">
-          <div><div class="spec-label">Processamento</div><div class="spec-value">6C / 12T</div></div>
-          <div><div class="spec-label">Gráficos</div><div class="spec-value">Radeon™ iGPU</div></div>
-        </div>
-        <button class="card-cta cta-filled" onclick="openChatWith('Quero um orçamento da Workstation V1 (Ryzen 5 5600GT)')">Solicitar Cotação</button>
-      </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="product-card featured reveal">
-      <span class="product-badge badge-hot">🔥 Mais Vendido</span>
-      <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Acer Nitro V"></div>
-      <div class="product-body">
-        <div class="product-sku">SKU: NITRO-V</div>
-        <div class="product-name">Acer Nitro V<br>Intel + RTX</div>
-        <div class="product-specs">
-          <div><div class="spec-label">Display</div><div class="spec-value">144Hz IPS</div></div>
-          <div><div class="spec-label">GPU</div><div class="spec-value">NVIDIA RTX</div></div>
-        </div>
-        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de verificar o estoque do Acer Nitro V')">Verificar Estoque</button>
-      </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="product-card reveal">
-      <span class="product-badge badge-new">Upgrade GPU</span>
-      <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX 3060 OC"></div>
-      <div class="product-body">
-        <div class="product-sku">SKU: RTX-3060</div>
-        <div class="product-name">GeForce RTX<br>3060 OC</div>
-        <div class="product-specs">
-          <div><div class="spec-label">VRAM</div><div class="spec-value">12GB GDDR6</div></div>
-          <div><div class="spec-label">Arq.</div><div class="spec-value">Ampere</div></div>
-        </div>
-        <button class="card-cta cta-outline" onclick="openChatWith('Qual o valor da RTX 3060 OC?')">Consultar Valor</button>
-      </div>
-    </div>
-
-    <!-- CARD 4 -->
-    <div class="product-card reveal">
-      <span class="product-badge badge-default">Conforto</span>
-      <div class="product-img-wrap"><img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright"></div>
-      <div class="product-body">
-        <div class="product-sku">SKU: CADEIRA-BRIGHT</div>
-        <div class="product-name">Cadeira Gamer<br>Bright</div>
-        <div class="product-specs">
-          <div><div class="spec-label">Suporte</div><div class="spec-value">Até 120Kg</div></div>
-          <div><div class="spec-label">Tipo</div><div class="spec-value">Reclinável</div></div>
-        </div>
-        <button class="card-cta cta-filled" onclick="openChatWith('Tem Cadeira Gamer Bright no estoque?')">Verificar Estoque</button>
-      </div>
-    </div>
-
-    <!-- CARD 5 -->
-    <div class="product-card reveal">
-      <span class="product-badge badge-new">Imersão</span>
-      <div class="product-img-wrap"><img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer 27 Curvo Acer"></div>
-      <div class="product-body">
-        <div class="product-sku">SKU: ACER-ED273</div>
-        <div class="product-name">Monitor Acer 27"<br>Curvo 144Hz</div>
-        <div class="product-specs">
-          <div><div class="spec-label">Resolução</div><div class="spec-value">Full HD</div></div>
-          <div><div class="spec-label">Resposta</div><div class="spec-value">1ms</div></div>
-        </div>
-        <button class="card-cta cta-outline" onclick="openChatWith('Gostaria de consultar o valor do Monitor Curvo 27 da Acer')">Consultar Valor</button>
-      </div>
-    </div>
+    <div class="product-card reveal"><span class="product-badge">Top Vendas</span><div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Nitro V"></div><div class="product-body"><h3 class="product-name">ACER NITRO V</h3><div class="product-specs"><div><div class="spec-label">GPU</div><div class="spec-value">RTX Series</div></div><div><div class="spec-label">Ecrã</div><div class="spec-value">144Hz IPS</div></div></div><button class="card-cta cta-filled" onclick="openChatWith('Tenho interesse no Acer Nitro V')">Consultar Stock</button></div></div>
+    <div class="product-card reveal"><span class="product-badge">Performance</span><div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="Ryzen"></div><div class="product-body"><h3 class="product-name">RYZEN 5 5600GT</h3><div class="product-specs"><div><div class="spec-label">Núcleos</div><div class="spec-value">6 Cores</div></div><div><div class="spec-label">Gráficos</div><div class="spec-value">Radeon™</div></div></div><button class="card-cta cta-filled" onclick="openChatWith('Orçamento para Ryzen 5 5600GT')">Ver Preço</button></div></div>
+    <div class="product-card reveal"><span class="product-badge">Upgrade</span><div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX"></div><div class="product-body"><h3 class="product-name">RTX 3060 12GB</h3><div class="product-specs"><div><div class="spec-label">VRAM</div><div class="spec-value">12GB GDDR6</div></div><div><div class="spec-label">Arq.</div><div class="spec-value">Ampere</div></div></div><button class="card-cta cta-outline" onclick="openChatWith('Quero saber o valor da RTX 3060')">Consultar</button></div></div>
   </div>
 </section>
 
-<!-- PROBLEMA / SOLUÇÃO -->
-<section id="problema">
-  <div class="problema-grid">
-    <div>
-      <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
-      <ul class="problema-list">
-        <li class="problema-item reveal">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
-        </li>
-        <li class="problema-item reveal">
-          <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
-        </li>
-      </ul>
-    </div>
-    <div class="reveal">
-      <div class="section-tag">A Solução</div>
-      <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
-      <div class="solucao-box">
-        <p style="font-size:14px;line-height:1.8;color:var(--grey-light)">Nós resolvemos o problema real do seu <strong style="color:var(--white)">PC, notebook ou smartphone</strong> para eles voltarem a funcionar como novos.</p>
-        <ul class="solucao-points">
-          <li class="solucao-point"><strong>Diagnóstico transparente</strong> — sem enrolação ou taxas ocultas.</li>
-          <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
-          <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
-        </ul>
-        <button class="btn-primary" style="margin-top:28px" onclick="openChatWith('Preciso de manutenção em um aparelho')">Falar com a Camila agora</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SERVIÇOS -->
-<section id="servicos">
-  <div class="servicos-inner">
-    <div class="section-tag reveal">Serviços</div>
-    <h2 class="section-title reveal">O que <span class="dim">fazemos.</span></h2>
-    <div class="servicos-grid">
-      <div class="servico-item reveal">
-        <div class="servico-num">01</div>
-        <div class="servico-title">PCs & Notebooks</div>
-        <p class="servico-desc">Especialistas em computadores e portáteis. Da otimização de sistema ao reparo avançado de hardware.</p>
-      </div>
-      <div class="servico-item reveal">
-        <div class="servico-num">02</div>
-        <div class="servico-title">Periféricos & Segurança</div>
-        <p class="servico-desc">Acessórios de alta performance para o seu setup e instalação profissional de sistemas de segurança (CFTV).</p>
-      </div>
-      <div class="servico-item reveal">
-        <div class="servico-num">03</div>
-        <div class="servico-title">Montagem & Manutenção</div>
-        <p class="servico-desc">Montagem de máquinas do zero, limpeza preventiva e manutenção cirúrgica para prolongar a vida útil do hardware.</p>
-      </div>
-      <div class="servico-item reveal">
-        <div class="servico-num">04</div>
-        <div class="servico-title">Smartphones</div>
-        <p class="servico-desc">Assistência técnica rápida e confiável. Troca de telas, baterias e recuperação completa de sistemas.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="logo">Center<span>Net</span></div>
-      <p>A melhor assistência técnica, montagem de infraestrutura e venda de hardware de Anápolis.</p>
-    </div>
-    <div>
-      <div class="section-tag" style="margin-bottom:12px">Base Operacional</div>
-      <address class="footer-address">
-        <strong>Rua 15 de Dezembro, 98 sl A lj 26/27</strong><br>
-        Anápolis, Brazil 75024070
-      </address>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2026 Center Net Informática.</span>
-    <span>Siga no Instagram: @centernetinfo</span>
-  </div>
-</footer>
-
-<!-- WIDGET DO CHATBOT -->
 <div id="chat-fab-wrap">
   <div id="chat-box">
     <div class="chat-head">
-      <div class="chat-agent">
-        <!-- AVATAR CAMILA -->
-        <div class="chat-avatar">
-          <img src="assetschat/camila.jpg.jpg" alt="Camila">
-        </div>
-        <div>
-          <div class="chat-agent-name">Camila</div>
-          <div class="chat-agent-status">● Online agora</div>
-        </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="chat-avatar"><img src="assetschat/camila.jpg.jpg" alt="Camila"></div>
+        <div><div class="chat-agent-name">Camila</div><div style="font-size:10px; color:#22c55e;">● Online</div></div>
       </div>
-      <button id="close-chat-btn" onclick="closeChat()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button onclick="closeChat()" style="background:none; border:none; color:#555; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-    
-    <div id="chat-messages">
-      <div class="msg-bot">
-        Olá! Sou a Camila, assistente virtual da Center Net Informática. 👋<br><br>
-        Posso te ajudar com dúvidas sobre nossos produtos (Workstations, Notebooks Nitro, RTX, Monitores, Cadeiras) ou agendar manutenções para PCs, celulares e CFTV. O que você procura?
-      </div>
-    </div>
-
+    <div id="chat-messages"><div class="msg-bot">Olá! Sou a Camila. Como posso ajudar com os nossos produtos ou serviços hoje?</div></div>
     <div class="chat-input-area">
-      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-      <button id="send-btn" onclick="sendMessage()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-      </button>
+      <input type="text" id="chat-input" placeholder="Escreva aqui..." autocomplete="off">
+      <button id="send-btn" onclick="sendMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
   </div>
-
-  <!-- ICONE DO FAB (3D APP) -->
   <button id="chat-fab" onclick="toggleChat()">
     <img src="midia w/3d-icon-social-media-app.png" alt="Chat">
     <span class="fab-badge">1</span>
@@ -657,115 +248,56 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <script>
 // ==========================================
-// LÓGICA DO CHATBOT DA CAMILA
+// CHATBOT LOGIC
 // ==========================================
 let chatOpen = false;
 
-function openChat() {
-  document.getElementById('chat-box').style.display = 'flex';
-  chatOpen = true;
-  document.querySelector('.fab-badge').style.display = 'none';
-  
-  // Tenta dar foco no input apenas em Desktop (no mobile isso abre o teclado sozinho, o que é chato)
-  if(window.innerWidth > 768) {
-    setTimeout(() => document.getElementById('chat-input').focus(), 100);
-  }
-}
-
-function closeChat() {
-  document.getElementById('chat-box').style.display = 'none';
-  chatOpen = false;
-}
-
-function toggleChat() {
-  chatOpen ? closeChat() : openChat();
-}
+function toggleChat() { chatOpen ? closeChat() : openChat(); }
+function openChat() { document.getElementById('chat-box').style.display = 'flex'; chatOpen = true; document.querySelector('.fab-badge').style.display = 'none'; }
+function closeChat() { document.getElementById('chat-box').style.display = 'none'; chatOpen = false; }
 
 function openChatWith(msg) {
   openChat();
-  setTimeout(() => {
-    document.getElementById('chat-input').value = msg;
-    sendMessage();
-  }, 300);
-}
-
-function getBotResponse(input) {
-  const lowerInput = input.toLowerCase();
-
-  // EASTER EGG
-  if (lowerInput.includes("jose") && lowerInput.includes("vagabundo") && lowerInput.includes("preguiçoso")) {
-    return "sim e e pq causa de homens assim que estamos indo para 3 guerra mundial";
-  }
-
-  if (lowerInput.includes("workstation") || lowerInput.includes("ryzen") || lowerInput.includes("v1") || lowerInput.includes("5600")) {
-    return "A nossa Workstation V1 vem equipada com o poderoso AMD Ryzen 5 5600GT (6 Núcleos / 12 Threads) e gráficos Radeon integrados. É o setup ideal para entrada profissional e alta performance sem gastar muito. Quer que eu te passe o valor final pelo WhatsApp?";
-  }
-  
-  if (lowerInput.includes("nitro") || lowerInput.includes("notebook") || lowerInput.includes("laptop")) {
-    return "O Acer Nitro V é o nosso monstro em mobilidade! 🔥 Vem com Intel e NVIDIA RTX dedicada, além de uma tela ultra fluida de 144Hz IPS. É perfeito pra rodar tudo ou trabalhar pesado onde você estiver. Quer consultar nosso estoque atual?";
-  }
-  
-  if (lowerInput.includes("rtx") || lowerInput.includes("3060") || lowerInput.includes("placa de video") || lowerInput.includes("gpu")) {
-    return "A GeForce RTX 3060 OC tem 12GB de VRAM GDDR6 e arquitetura Ampere. É a injeção de FPS e velocidade de renderização que a sua máquina tá pedindo. Quer que eu veja o preço para você?";
-  }
-  
-  if (lowerInput.includes("cadeira") || lowerInput.includes("bright")) {
-    return "A Cadeira Gamer Bright suporta até 120Kg e é totalmente reclinável. É o nível máximo de conforto para quem passa horas trabalhando ou jogando. Gostaria de saber as condições de pagamento?";
-  }
-  
-  if (lowerInput.includes("monitor") || lowerInput.includes("curvo") || lowerInput.includes("tela") || lowerInput.includes("144hz")) {
-    return "O Monitor Acer de 27 polegadas Curvo é incrível. Ele entrega Full HD a 144Hz com 1ms de resposta, dando uma vantagem competitiva enorme e imersão total. Posso te encaminhar pro especialista para fechar a compra?";
-  }
-
-  if (lowerInput.includes("manutenção") || lowerInput.includes("conserto") || lowerInput.includes("quebrou") || lowerInput.includes("arrumar") || lowerInput.includes("lento")) {
-    return "Nós somos especialistas! Realizamos diagnóstico de PCs lentos, limpeza técnica, instalação de câmeras (CFTV) e claro, conserto de telas e baterias de celulares. Se quiser, clique aqui para falar com um técnico de verdade no WhatsApp: <br><br><a href='https://wa.me/5562993362276' target='_blank' style='color:var(--orange); text-decoration:underline;'>Falar no WhatsApp</a>";
-  }
-
-  return "Desculpe, não entendi muito bem. Sou uma assistente virtual focada nos nossos produtos da loja (Workstations, RTX 3060, Monitores, Cadeiras) e serviços de reparo. Como posso te ajudar hoje?";
+  document.getElementById('chat-input').value = msg;
+  sendMessage();
 }
 
 function sendMessage() {
-  const inputEl = document.getElementById('chat-input');
-  const text = inputEl.value.trim();
-  if (!text) return;
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if(!text) return;
 
-  const messagesContainer = document.getElementById('chat-messages');
+  const container = document.getElementById('chat-messages');
+  const userMsg = document.createElement('div');
+  userMsg.className = 'msg-user';
+  userMsg.textContent = text;
+  container.appendChild(userMsg);
+  input.value = '';
+  container.scrollTop = container.scrollHeight;
 
-  const userDiv = document.createElement('div');
-  userDiv.className = 'msg-user';
-  userDiv.textContent = text;
-  messagesContainer.appendChild(userDiv);
-  inputEl.value = '';
-  messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
+  // Bot Response Logic
   setTimeout(() => {
-    const typing = document.createElement('div');
-    typing.className = 'typing';
-    typing.id = 'typing';
-    typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    messagesContainer.appendChild(typing);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-    setTimeout(() => {
-      document.getElementById('typing')?.remove();
-      const botResponseText = getBotResponse(text);
-      
-      const botDiv = document.createElement('div');
-      botDiv.className = 'msg-bot';
-      botDiv.innerHTML = botResponseText;
-      messagesContainer.appendChild(botDiv);
-      messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 1200); 
-
-  }, 400);
+    const botMsg = document.createElement('div');
+    botMsg.className = 'msg-bot';
+    let reply = "Estou a processar o seu pedido. Posso adiantar que temos os melhores componentes de Anápolis. Deseja falar com um técnico humano?";
+    
+    const low = text.toLowerCase();
+    if(low.includes("jose") && low.includes("vagabundo")) {
+      reply = "sim e e pq causa de homens assim que estamos indo para 3 guerra mundial";
+    } else if(low.includes("nitro") || low.includes("rtx") || low.includes("ryzen")) {
+      reply = "Excelente escolha! Esse hardware é de alta performance. Temos stock limitado. Posso reservar para si?";
+    }
+    
+    botMsg.innerHTML = reply;
+    container.appendChild(botMsg);
+    container.scrollTop = container.scrollHeight;
+  }, 1000);
 }
 
-document.getElementById('chat-input').addEventListener('keypress', e => {
-  if (e.key === 'Enter') sendMessage();
-});
+document.getElementById('chat-input').addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
 
 // ==========================================
-// SCROLL-TELLING E P5.JS (MANTIDOS)
+// RENDER & SCROLL LOGIC
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -775,116 +307,74 @@ let loadedCount = 0;
 
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
-  img.decoding = "async"; 
   img.src = `./${i.toString().padStart(4, '0')}.webp`;
   img.onload = () => {
     loadedCount++;
     document.getElementById('load-progress').style.width = (loadedCount / frameCount * 100) + '%';
     if(loadedCount === 1) render(0);
     if(loadedCount === frameCount) {
-      setTimeout(() => {
-        document.getElementById('preloader').style.opacity = '0';
-        setTimeout(() => document.getElementById('preloader').style.display = 'none', 600);
-      }, 300);
+      setTimeout(() => { document.getElementById('preloader').style.opacity = '0'; setTimeout(() => document.getElementById('preloader').style.display = 'none', 600); }, 300);
     }
   };
   images.push(img);
 }
 
-function render(index) {
-  if (images[index]) {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const img = images[index];
+function render(idx) {
+  if (images[idx]) {
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const img = images[idx];
     const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
-    const x = (canvas.width - img.width * ratio) / 2;
-    const y = (canvas.height - img.height * ratio) / 2;
+    const x = (canvas.width - img.width * ratio) / 2; const y = (canvas.height - img.height * ratio) / 2;
     ctx.drawImage(img, x, y, img.width * ratio, img.height * ratio);
   }
 }
 
-let targetScroll = 0;
-let smoothScrollCanvas = 0;
-let smoothScrollText = 0;
-
+let tScroll = 0, sScrollCanvas = 0, sScrollText = 0;
 window.addEventListener('scroll', () => {
   const track = document.getElementById('hero-track');
-  if(!track) return;
-  const maxScroll = track.offsetHeight - window.innerHeight;
-  targetScroll = window.scrollY / maxScroll;
-  if(targetScroll < 0) targetScroll = 0;
-  if(targetScroll > 1) targetScroll = 1;
+  tScroll = window.scrollY / (track.offsetHeight - window.innerHeight);
 });
 
-function animate() {
-  smoothScrollCanvas += (targetScroll - smoothScrollCanvas) * 0.12;
-  smoothScrollText += (targetScroll - smoothScrollText) * 0.08; 
-  const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.floor(smoothScrollCanvas * frameCount))); 
-  render(frameIndex);
-
+function anim() {
+  sScrollCanvas += (tScroll - sScrollCanvas) * 0.12;
+  sScrollText += (tScroll - sScrollText) * 0.08;
+  render(Math.min(frameCount-1, Math.max(0, Math.floor(sScrollCanvas * frameCount))));
+  
   const scenes = document.querySelectorAll('.scroll-scene');
-  const numScenes = scenes.length;
-  scenes.forEach((scene, index) => {
-    const sceneCenter = index / (numScenes - 1); 
-    const dist = smoothScrollText - sceneCenter;
-    const threshold = 1.0 / numScenes; 
-    if (Math.abs(dist) < threshold) {
-      const normalizedDist = dist / threshold; 
-      const opacity = 1 - Math.pow(Math.abs(normalizedDist), 2);
-      const yShift = normalizedDist * 120; 
-      scene.style.opacity = Math.max(0, opacity);
-      scene.style.transform = `translateY(${yShift}px) translateZ(0)`; 
-      scene.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
-    } else {
-      scene.style.opacity = 0;
-      scene.style.pointerEvents = 'none';
-    }
+  scenes.forEach((s, i) => {
+    const center = i / (scenes.length - 1);
+    const dist = sScrollText - center;
+    const opacity = 1 - Math.pow(Math.abs(dist / 0.25), 2);
+    s.style.opacity = Math.max(0, opacity);
+    s.style.transform = `translateY(${dist * 120}px) translateZ(0)`;
   });
-  requestAnimationFrame(animate);
+  requestAnimationFrame(anim);
 }
-animate();
+anim();
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.1 });
+const observer = new IntersectionObserver(es => { es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.1});
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-const productRevealSketch = (p) => {
-  let container;
-  p.setup = () => {
-    container = document.getElementById('produtos');
-    let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
-    canvas.parent('p5-reveal-layer');
-    p.pixelDensity(1); 
-  };
+// ==========================================
+// P5.JS SCANNER
+// ==========================================
+new p5((p) => {
+  let c;
+  p.setup = () => { c = document.getElementById('produtos'); p.createCanvas(c.offsetWidth, c.offsetHeight).parent('p5-reveal-layer'); p.pixelDensity(1); };
   p.draw = () => {
-    p.clear(); 
-    if(!container) return;
-    let rectBounds = container.getBoundingClientRect();
-    let viewportHeight = window.innerHeight;
-    let progress = p.map(rectBounds.top, viewportHeight * 0.85, viewportHeight * 0.15, 0, 1);
-    progress = p.constrain(progress, 0, 1);
-    if (rectBounds.top > viewportHeight || progress >= 1) return;
-    if (progress <= 0) {
-      p.fill(5, 5, 5, 255); p.noStroke(); p.rect(0, 0, p.width, p.height); return;
-    }
-    p.noStroke();
-    let revealX = p.map(progress, 0, 1, 0, p.width);
-    p.fill(5, 5, 5, 255);
-    p.rect(revealX, 0, p.width - revealX, p.height);
-    p.strokeCap(p.SQUARE);
-    p.strokeWeight(20); p.stroke(255, 77, 0, 30); p.line(revealX, 0, revealX, p.height);
-    p.strokeWeight(8); p.stroke(255, 77, 0, 80); p.line(revealX, 0, revealX, p.height);
-    p.strokeWeight(3); p.stroke(255, 77, 0, 255); p.line(revealX, 0, revealX, p.height);
-    p.strokeWeight(1); p.stroke(255, 255, 255, 255); p.line(revealX, 0, revealX, p.height);
+    p.clear(); if(!c) return;
+    let b = c.getBoundingClientRect();
+    let prog = p.map(b.top, window.innerHeight*0.85, window.innerHeight*0.15, 0, 1);
+    prog = p.constrain(prog, 0, 1);
+    if(b.top > window.innerHeight || prog >= 1) return;
+    if(prog <= 0) { p.fill(5).noStroke().rect(0,0,p.width,p.height); return; }
+    let x = p.map(prog, 0, 1, 0, p.width);
+    p.fill(5).noStroke().rect(x, 0, p.width-x, p.height);
+    p.strokeWeight(3).stroke(255, 77, 0).line(x, 0, x, p.height);
+    p.strokeWeight(1).stroke(255).line(x, 0, x, p.height);
   };
-  p.windowResized = () => {
-    if(container) p.resizeCanvas(container.offsetWidth, container.offsetHeight);
-  };
-};
-new p5(productRevealSketch);
+  p.windowResized = () => { if(c) p.resizeCanvas(c.offsetWidth, c.offsetHeight); };
+});
 </script>
 
 </body>
