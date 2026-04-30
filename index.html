@@ -130,7 +130,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
   right: clamp(20px, 5vw, 10%);
   opacity: 0;
   pointer-events: none;
-  will-change: transform, opacity; /* Removido o filter do will-change (pesado no mobile) */
+  will-change: transform, opacity;
 }
 
 .hero-headline {
@@ -389,7 +389,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
-<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS OTIMIZADA -->
+<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS PARA REVELAÇÃO ESQUERDA -> DIREITA -->
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
 
@@ -402,6 +402,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 
   <div class="products-grid">
+    <!-- CARD 1 -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Workstation V1</span>
       <div class="product-img-wrap">
@@ -418,6 +419,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 2 (FEATURED) -->
     <div class="product-card featured reveal reveal-d2">
       <span class="product-badge badge-hot">🔥 Mais Vendido</span>
       <div class="product-img-wrap">
@@ -434,6 +436,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 3 -->
     <div class="product-card reveal reveal-d3">
       <span class="product-badge badge-new">Upgrade GPU</span>
       <div class="product-img-wrap">
@@ -450,6 +453,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 4 (CADEIRA) -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Conforto</span>
       <div class="product-img-wrap">
@@ -466,6 +470,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 5 (MONITOR) -->
     <div class="product-card reveal reveal-d2">
       <span class="product-badge badge-new">Imersão</span>
       <div class="product-img-wrap">
@@ -570,7 +575,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <script>
 // ==========================================
-// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO (HERO)
+// 1. LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -580,7 +585,7 @@ let loadedCount = 0;
 
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
-  img.decoding = "async"; // Otimização p/ Mobile
+  img.decoding = "async"; 
   img.src = `./${i.toString().padStart(4, '0')}.webp`;
   img.onload = () => {
     loadedCount++;
@@ -624,7 +629,7 @@ window.addEventListener('scroll', () => {
 
 function animate() {
   smoothScrollCanvas += (targetScroll - smoothScrollCanvas) * 0.12;
-  smoothScrollText += (targetScroll - smoothScrollText) * 0.08; // Aumentado para melhor responsividade
+  smoothScrollText += (targetScroll - smoothScrollText) * 0.08; 
   
   const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.floor(smoothScrollCanvas * frameCount))); 
   render(frameIndex);
@@ -644,7 +649,6 @@ function animate() {
       const yShift = normalizedDist * 120; 
 
       scene.style.opacity = Math.max(0, opacity);
-      // Removido o filtro blur do JS para não estourar a GPU em Mobile, usando apenas translateZ para forçar 3D hardware
       scene.style.transform = `translateY(${yShift}px) translateZ(0)`; 
       scene.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
     } else {
@@ -658,7 +662,7 @@ function animate() {
 animate();
 
 // ==========================================
-// REVEAL ANIMATION DAS OUTRAS SEÇÕES
+// 2. REVEAL ANIMATION (CSS CLASSES)
 // ==========================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -669,7 +673,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ==========================================
-// CAMADA P5.JS (REVELAÇÃO LASER OTIMIZADA PARA MOBILE)
+// 3. CAMADA P5.JS (REVELAÇÃO LASER VERTICAL - DA ESQUERDA PARA A DIREITA)
 // ==========================================
 const productRevealSketch = (p) => {
   let container;
@@ -678,7 +682,7 @@ const productRevealSketch = (p) => {
     container = document.getElementById('produtos');
     let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
     canvas.parent('p5-reveal-layer');
-    p.pixelDensity(1); // Otimização extrema para ecrãs de telemóvel
+    p.pixelDensity(1); 
   };
 
   p.draw = () => {
@@ -702,35 +706,32 @@ const productRevealSketch = (p) => {
     }
 
     p.noStroke();
-    let slant = 300; 
-    let revealX = p.map(progress, 0, 1, -slant, p.width + slant);
+    // Mapeia de 0 até p.width (Esquerda para a Direita)
+    let revealX = p.map(progress, 0, 1, 0, p.width);
 
+    // Fundo escuro na parte que AINDA NÃO FOI revelada (do X atual até ao final da direita)
     p.fill(5, 5, 5, 255);
-    p.beginShape();
-    p.vertex(revealX + slant, 0); 
-    p.vertex(p.width, 0);
-    p.vertex(p.width, p.height);
-    p.vertex(revealX - slant, p.height); 
-    p.endShape(p.CLOSE);
+    p.rect(revealX, 0, p.width - revealX, p.height);
 
     p.strokeCap(p.SQUARE);
     
     // Simulação de Glow sem usar shadowBlur (MUITO mais rápido no Mobile)
+    // Linha reta vertical
     p.strokeWeight(20);
     p.stroke(255, 77, 0, 30);
-    p.line(revealX + slant, 0, revealX - slant, p.height);
+    p.line(revealX, 0, revealX, p.height);
 
     p.strokeWeight(8);
     p.stroke(255, 77, 0, 80);
-    p.line(revealX + slant, 0, revealX - slant, p.height);
+    p.line(revealX, 0, revealX, p.height);
 
     p.strokeWeight(3);
     p.stroke(255, 77, 0, 255); 
-    p.line(revealX + slant, 0, revealX - slant, p.height);
+    p.line(revealX, 0, revealX, p.height);
 
     p.strokeWeight(1);
     p.stroke(255, 255, 255, 255);
-    p.line(revealX + slant, 0, revealX - slant, p.height);
+    p.line(revealX, 0, revealX, p.height);
   };
 
   p.windowResized = () => {
