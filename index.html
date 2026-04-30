@@ -18,6 +18,7 @@
   --orange-glow: rgba(255, 77, 0, 0.4);
   --border-color: rgba(255, 255, 255, 0.05);
   --border-strong: rgba(248,245,240,0.18);
+  --grey: #888888;
   --font-display: 'Bebas Neue', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'DM Mono', monospace;
@@ -67,6 +68,7 @@ nav .cta-pill {
   letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
   transition: background 0.2s, transform 0.2s; font-family: var(--font-body);
 }
+nav .cta-pill:hover { background: #e64500; transform: scale(1.05); }
 
 /* ── HERO SCROLL-TELLING ── */
 #hero-track { height: 600vh; position: relative; width: 100%; }
@@ -87,7 +89,21 @@ nav .cta-pill {
 .scroll-scene { position: absolute; left: clamp(20px, 5vw, 10%); right: clamp(20px, 5vw, 10%); opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .hero-headline { font-family: var(--font-display); font-size: clamp(40px, 9vw, 140px); line-height: 0.95; margin-bottom: 20px; color: var(--white); text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
 .hero-sub { font-size: clamp(14px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); }
-.hero-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; }
+.hero-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; pointer-events: auto; }
+
+/* ── BOTÕES ── */
+.btn-premium { padding: 16px 32px; border-radius: 100px; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+.btn-orange { background: var(--orange); color: #fff; border: none; }
+.btn-orange:hover { background: #e64500; transform: translateY(-2px); }
+.btn-premium[style*="transparent"]:hover { background: rgba(255,255,255,0.1) !important; transform: translateY(-2px); }
+
+/* ── TICKER (Letreiro) ── */
+.ticker-wrap {
+  width: 100%; overflow: hidden; background: var(--surface2); border-bottom: 1px solid var(--border-color); border-top: 1px solid var(--border-color); padding: 15px 0;
+}
+.ticker-inner { display: inline-flex; white-space: nowrap; animation: tickerAnim 25s linear infinite; }
+.ticker-item { padding: 0 30px; font-family: var(--font-mono); font-size: 14px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; }
+@keyframes tickerAnim { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
 /* ── PRODUTOS ── */
 #produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; overflow: hidden;}
@@ -98,8 +114,19 @@ nav .cta-pill {
 .product-card:hover { border-color: rgba(255,77,0,0.3); transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.8); }
 .product-img-wrap { height: 260px; display: flex; align-items: center; justify-content: center; padding: 30px; position: relative; background: linear-gradient(to bottom, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.6) 100%); border-bottom: 1px solid var(--border-color); }
 .product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); transition: transform 0.5s; }
+.product-card:hover .product-img-wrap img { transform: scale(1.05); }
 .product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
 .product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
+
+.card-cta { width: 100%; padding: 12px; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: auto; }
+.cta-filled { background: var(--orange); color: #fff; border: none; }
+.cta-filled:hover { background: #e64500; }
+.cta-outline { background: transparent; color: var(--white); border: 1px solid var(--border-color); }
+.cta-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+/* Reveal Animation */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ── PROBLEMA ── */
 section { padding: 100px 5%; background: var(--black); }
@@ -197,6 +224,13 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
 
 <div class="ticker-wrap" aria-hidden="true">
   <div class="ticker-inner">
+    <span class="ticker-item">🖥️ PCs e Notebooks</span>
+    <span class="ticker-item">🪛 Montagem e Manutenção</span>
+    <span class="ticker-item">⌨️ Periféricos de Performance</span>
+    <span class="ticker-item">📹 Sistemas de Segurança</span>
+    <span class="ticker-item">📱 Smartphones</span>
+    <span class="ticker-item">⚡ Upgrades de Hardware</span>
+    <!-- Itens duplicados para a animação contínua funcionar melhor -->
     <span class="ticker-item">🖥️ PCs e Notebooks</span>
     <span class="ticker-item">🪛 Montagem e Manutenção</span>
     <span class="ticker-item">⌨️ Periféricos de Performance</span>
