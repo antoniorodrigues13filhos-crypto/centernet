@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Importação do P5.js para o efeito de desfragmentação digital -->
+<!-- Importação do P5.js para o efeito Premium de revelação -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
 <style>
@@ -184,7 +184,7 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title .dim { color: var(--grey); }
 
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; }
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; overflow: hidden; }
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 10; }
 
@@ -389,9 +389,8 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
-<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS PARA DESFRAGMENTAÇÃO DIGITAL -->
+<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS (REVELAÇÃO LASER PREMIUM) -->
 <section id="produtos">
-  <!-- A CAMADA DO CANVAS P5 -->
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
 
   <div class="produtos-header">
@@ -403,7 +402,6 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 
   <div class="products-grid">
-    <!-- CARD 1 -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Workstation V1</span>
       <div class="product-img-wrap">
@@ -420,7 +418,6 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
-    <!-- CARD 2 (FEATURED) -->
     <div class="product-card featured reveal reveal-d2">
       <span class="product-badge badge-hot">🔥 Mais Vendido</span>
       <div class="product-img-wrap">
@@ -437,7 +434,6 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
-    <!-- CARD 3 -->
     <div class="product-card reveal reveal-d3">
       <span class="product-badge badge-new">Upgrade GPU</span>
       <div class="product-img-wrap">
@@ -454,7 +450,6 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
-    <!-- CARD 4 (CADEIRA) -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Conforto</span>
       <div class="product-img-wrap">
@@ -471,7 +466,6 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
-    <!-- CARD 5 (MONITOR) -->
     <div class="product-card reveal reveal-d2">
       <span class="product-badge badge-new">Imersão</span>
       <div class="product-img-wrap">
@@ -576,7 +570,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <script>
 // ==========================================
-// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO (HERO)
+// 1. LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -613,7 +607,6 @@ function render(index) {
   }
 }
 
-// Interpolação Matemática (LERP) unificada para máxima fluidez do Hero
 let targetScroll = 0;
 let smoothScrollCanvas = 0;
 let smoothScrollText = 0;
@@ -664,7 +657,9 @@ function animate() {
 }
 animate();
 
-// REVEAL ANIMATION DAS OUTRAS SEÇÕES
+// ==========================================
+// 2. REVEAL ANIMATION (CSS CLASSES)
+// ==========================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -674,30 +669,16 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ==========================================
-// LÓGICA DA CAMADA P5.JS (REVELAÇÃO DIGITAL DOS PRODUTOS)
+// 3. CAMADA P5.JS (REVELAÇÃO LASER PREMIUM)
 // ==========================================
 const productRevealSketch = (p) => {
-  let cols, rows;
-  const size = 60; 
-  let offsets = [];
   let container;
 
   p.setup = () => {
     container = document.getElementById('produtos');
     let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
     canvas.parent('p5-reveal-layer');
-    calculateGrid();
   };
-
-  function calculateGrid() {
-    cols = p.floor(p.width / size) + 1;
-    rows = p.floor(p.height / size) + 1;
-    offsets = [];
-    
-    for (let i = 0; i < cols * rows; i++) {
-      offsets.push(p.noise(i * 0.1) * p.random(0.5, 1)); 
-    }
-  }
 
   p.draw = () => {
     p.clear(); 
@@ -707,40 +688,50 @@ const productRevealSketch = (p) => {
     let rectBounds = container.getBoundingClientRect();
     let viewportHeight = window.innerHeight;
 
-    let progress = p.map(rectBounds.top, viewportHeight * 0.8, viewportHeight * 0.2, 0, 1);
+    let progress = p.map(rectBounds.top, viewportHeight * 0.85, viewportHeight * 0.15, 0, 1);
     progress = p.constrain(progress, 0, 1);
 
-    if (rectBounds.top > viewportHeight || rectBounds.bottom < 0) return;
+    if (rectBounds.top > viewportHeight || progress >= 1) return;
+
+    if (progress <= 0) {
+      p.fill(5, 5, 5, 255);
+      p.noStroke();
+      p.rect(0, 0, p.width, p.height);
+      return;
+    }
 
     p.noStroke();
+    let slant = 300; 
+    let revealX = p.map(progress, 0, 1, -slant, p.width + slant);
 
-    let index = 0;
-    for (let y = 0; y < rows; y++) {
-      for (let x = 0; x < cols; x++) {
-        
-        let blockProgress = p.map(progress, offsets[index] * 0.6, (offsets[index] * 0.6) + 0.4, 0, 1);
-        blockProgress = p.constrain(blockProgress, 0, 1);
+    p.fill(5, 5, 5, 255);
+    p.beginShape();
+    p.vertex(revealX + slant, 0); 
+    p.vertex(p.width, 0);
+    p.vertex(p.width, p.height);
+    p.vertex(revealX - slant, p.height); 
+    p.endShape(p.CLOSE);
 
-        let currentSize = size * (1 - blockProgress);
+    p.strokeCap(p.SQUARE);
+    
+    p.drawingContext.shadowBlur = 40;
+    p.drawingContext.shadowColor = 'rgba(255, 77, 0, 0.9)';
+    p.strokeWeight(3);
+    p.stroke(255, 77, 0, 255); 
+    p.line(revealX + slant, 0, revealX - slant, p.height);
 
-        if (currentSize > 0.5) {
-          p.fill(5, 5, 5, 255); 
-          p.rect(x * size + (size - currentSize)/2, y * size + (size - currentSize)/2, currentSize, currentSize);
+    p.drawingContext.shadowBlur = 10;
+    p.drawingContext.shadowColor = '#FFFFFF';
+    p.strokeWeight(1);
+    p.stroke(255, 255, 255, 200);
+    p.line(revealX + slant, 0, revealX - slant, p.height);
 
-          if (blockProgress > 0.1 && blockProgress < 0.9) {
-            p.fill(255, 77, 0, 180); 
-            p.rect(x * size + (size - currentSize)/2, y * size + (size - currentSize)/2, currentSize, 2); 
-          }
-        }
-        index++;
-      }
-    }
+    p.drawingContext.shadowBlur = 0; 
   };
 
   p.windowResized = () => {
     if(container) {
       p.resizeCanvas(container.offsetWidth, container.offsetHeight);
-      calculateGrid();
     }
   };
 };
