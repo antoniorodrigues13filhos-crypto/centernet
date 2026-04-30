@@ -603,7 +603,18 @@ for (let i = 1; i <= frameCount; i++) {
     document.getElementById('load-progress').style.width = (loadedCount / frameCount * 100) + '%';
     if(loadedCount === 1) render(0);
     if(loadedCount === frameCount) {
-      setTimeout(() => { document.getElementById('preloader').style.opacity = '0'; setTimeout(() => document.getElementById('preloader').style.display = 'none', 600); }, 300);
+      setTimeout(() => { 
+        document.getElementById('preloader').style.opacity = '0'; 
+        setTimeout(() => { 
+          document.getElementById('preloader').style.display = 'none';
+          
+          // 👇 O SEGREDO ESTÁ AQUI: Força o scroll para a vitrine após carregar 👇
+          if(window.location.hash === '#produtos') {
+            document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });
+          }
+          
+        }, 600); 
+      }, 300);
     }
   };
   images.push(img);
