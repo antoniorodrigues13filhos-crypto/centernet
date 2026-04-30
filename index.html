@@ -229,7 +229,6 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
@@ -463,6 +462,12 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
 
 <script>
 // ==========================================
+// CONFIGURAÇÕES GERAIS
+// ==========================================
+// Mude apenas aqui para alterar em todo o site
+const NUMERO_WHATSAPP = "5562000000000"; 
+
+// ==========================================
 // FUNÇÃO DO NOVO FORMULÁRIO (HERO) + TRACKING
 // ==========================================
 function submitHeroLead() {
@@ -473,24 +478,19 @@ function submitHeroLead() {
   }
   
   // 🎯 DISPARO DE EVENTOS DE CONVERSÃO (CRO)
-  if(typeof fbq === 'function') {
-    fbq('track', 'Lead');
-  }
-  if(typeof gtag === 'function') {
-    gtag('event', 'generate_lead', {
-      'event_category': 'WhatsApp',
-      'event_label': 'Formulario_Hero'
-    });
-  }
+  if(typeof fbq === 'function') fbq('track', 'Lead');
+  if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Formulario_Hero'});
 
   const msg = encodeURIComponent(`Olá! Quero garantir a prioridade para atendimento. Meu número é ${phone}.`);
-  window.open(`https://wa.me/5562000000000?text=${msg}`, '_blank');
+  window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msg}`, '_blank');
 }
 
 // ==========================================
-// CHATBOT LOGIC
+// CHATBOT LOGIC (FUNIL DE 2 PASSOS)
 // ==========================================
 let chatOpen = false;
+let chatStep = 0; // Passo 0 = Pegar Dúvida | Passo 1 = Pegar Nome
+let clienteDuvida = "";
 
 function toggleChat() { chatOpen ? closeChat() : openChat(); }
 function openChat() { document.getElementById('chat-box').style.display = 'flex'; chatOpen = true; document.querySelector('.fab-badge').style.display = 'none'; }
@@ -500,6 +500,11 @@ function openChatWith(msg) {
   openChat();
   document.getElementById('chat-input').value = msg;
   sendMessage();
+}
+
+function forceZAP(nome) {
+  const finalMsg = encodeURIComponent(`Olá, meu nome é ${nome}. Vim pelo chat do site e preciso de: "${clienteDuvida}"`);
+  window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${finalMsg}`, '_blank');
 }
 
 function sendMessage() {
@@ -515,33 +520,60 @@ function sendMessage() {
   input.value = '';
   container.scrollTop = container.scrollHeight;
 
+  // Trava o input enquanto ela "digita"
+  input.disabled = true;
+
   setTimeout(() => {
     const botMsg = document.createElement('div');
     botMsg.className = 'msg-bot';
-    let reply = "Estou verificando essa informação para você. Nossos técnicos estão disponíveis agora. Deseja falar com um atendente humano?";
+    let reply = "";
     
-    const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    
-    if(low.includes("jose") && low.includes("vagabundo")) {
-      reply = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
-    } else if(low.includes("nitro") || low.includes("notebook")) {
-      reply = "O Acer Nitro V é incrível! Temos unidades a pronta entrega. Quer que eu separe um para você buscar na nossa loja (Rua 15 de Dezembro)?";
-    } else if(low.includes("rtx") || low.includes("3060")) {
-      reply = "A RTX 3060 de 12GB é o upgrade perfeito. Temos as últimas unidades com preço especial. Posso reservar?";
-    } else if(low.includes("ryzen") || low.includes("5600")) {
-      reply = "O Ryzen 5 5600GT é um campeão de vendas. Gostaria de saber nossas opções de parcelamento?";
-    } else if(low.includes("cadeira") || low.includes("bright")) {
-      reply = "A Cadeira Gamer Bright suporta até 120kg e é super confortável. Quer verificar se entregamos no seu bairro?";
-    } else if(low.includes("monitor") || low.includes("curvo") || low.includes("144hz")) {
-      reply = "Esse Monitor Curvo da Acer de 27 polegadas 144Hz é sensacional. Deseja fechar o pedido pelo WhatsApp agora mesmo?";
-    } else if(low.includes("limpeza") || low.includes("preventiva") || low.includes("diagnostico")) {
-      reply = "Excelente! Nossa limpeza preventiva inclui troca de pasta térmica. Trazendo hoje na nossa loja na Rua 15 de Dezembro, entregamos rapidinho. Qual o seu nome?";
+    // PASSO 0: LENDO A NECESSIDADE E PEDINDO O NOME
+    if (chatStep === 0) {
+        clienteDuvida = text; // Salva o que ele quer
+        const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
+        let intro = "Entendi! Nossos especialistas resolvem isso rápido.";
+        
+        // Personaliza a introdução se reconhecer uma palavra-chave
+        if(low.includes("jose") && low.includes("vagabundo")) {
+          intro = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
+        } else if(low.includes("nitro") || low.includes("notebook")) {
+          intro = "O Acer Nitro V é incrível! Temos a pronta entrega.";
+        } else if(low.includes("rtx") || low.includes("3060")) {
+          intro = "A RTX 3060 é um upgrade e tanto. Estamos com preço especial.";
+        } else if(low.includes("cadeira") || low.includes("bright")) {
+          intro = "A Cadeira Bright é super confortável e suporta 120kg.";
+        } else if(low.includes("limpeza") || low.includes("preventiva")) {
+          intro = "Excelente! Nossa limpeza já inclui troca de pasta térmica de alta performance.";
+        }
+        
+        reply = intro + " Já vou avisar o técnico aqui e abrir seu WhatsApp. <b>Qual é o seu nome?</b>";
+        chatStep = 1; // Avança o funil
+    } 
+    // PASSO 1: PEGOU O NOME E JOGA PRO ZAP
+    else if (chatStep === 1) {
+        const clienteNome = text;
+        reply = `Obrigada, ${clienteNome}! Redirecionando para o nosso WhatsApp Seguro... 🚀<br><br><span style="font-size:11px; color:#aaa">Se não abrir automático, <a href="#" onclick="forceZAP('${clienteNome}')" style="color:var(--orange)">clique aqui</a>.</span>`;
+        
+        // Disparo de Conversão
+        if(typeof fbq === 'function') fbq('track', 'Lead');
+        if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot'});
+        
+        // Monta a mensagem pré-pronta e abre o zap
+        setTimeout(() => { forceZAP(clienteNome); }, 1500);
+        
+        chatStep = 0; // Reseta para o próximo cliente
     }
-    
+
     botMsg.innerHTML = reply;
     container.appendChild(botMsg);
     container.scrollTop = container.scrollHeight;
-  }, 1000);
+    
+    // Libera o input e foca
+    input.disabled = false;
+    input.focus();
+  }, 1200);
 }
 
 document.getElementById('chat-input').addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
