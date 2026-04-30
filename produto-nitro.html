@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<title>Acer Nitro V — Center Net Informática</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --black: #050505;
+  --white: #F8F5F0;
+  --orange: #FF4D00;
+  --orange-glow: rgba(255, 77, 0, 0.4);
+  --border-color: rgba(255, 255, 255, 0.05);
+  --surface: #111010;
+  --surface2: #1A1917;
+  --grey: #888888;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--black); color: var(--white); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 80px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 5vw, 60px);
+  background: rgba(5,5,5,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
+}
+.logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; text-decoration: none; color: var(--white); }
+.logo span { color: var(--orange); }
+.btn-back { display: flex; align-items: center; gap: 8px; color: var(--grey); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.btn-back:hover { color: var(--white); }
+
+/* ── LAYOUT DO PRODUTO ── */
+.product-page-container {
+  padding: 140px 5% 100px; max-width: 1300px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+
+.product-gallery {
+  position: relative; background: radial-gradient(circle at center, rgba(30,30,30,0.8) 0%, var(--surface) 100%);
+  border: 1px solid var(--border-color); border-radius: 24px; padding: 60px;
+  display: flex; justify-content: center; align-items: center; height: 600px;
+}
+.product-gallery::after { content:''; position:absolute; width: 60%; height: 60%; background: var(--orange); filter: blur(120px); opacity: 0.1; z-index: 0; }
+.product-gallery img { max-width: 100%; max-height: 100%; object-fit: contain; z-index: 10; position: relative; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8)); animation: float 6s ease-in-out infinite; }
+
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+
+.product-info { display: flex; flex-direction: column; }
+.product-stock { font-family: var(--font-mono); font-size: 12px; color: #22c55e; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 6px; }
+.product-stock::before { content: ''; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.5); }
+.product-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 20px; color: var(--white); }
+.product-desc { color: var(--grey); font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+
+.specs-list { list-style: none; margin-bottom: 40px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+.specs-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 15px; }
+.specs-list li span:first-child { color: var(--grey); }
+.specs-list li span:last-child { font-weight: 600; color: var(--white); }
+
+.buy-btn {
+  background: var(--orange); color: #fff; border: none; padding: 20px 40px; border-radius: 12px;
+  font-family: var(--font-body); font-weight: 700; font-size: 16px; text-transform: uppercase; cursor: pointer;
+  transition: all 0.3s; box-shadow: 0 10px 30px rgba(255,77,0,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
+}
+.buy-btn:hover { background: #e64500; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,77,0,0.5); }
+.buy-btn svg { width: 24px; height: 24px; fill: currentColor; }
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  .product-page-container { grid-template-columns: 1fr; padding-top: 100px; gap: 40px; }
+  .product-gallery { height: 400px; padding: 30px; }
+}
+
+footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var(--border-color); text-align: center; font-family: var(--font-mono); font-size: 11px; color: #555; margin-top: 60px; }
+</style>
+
+<!-- RASTREAMENTO -->
+<script>
+  // COLOQUE SEU PIXEL AQUI (Rastreia que o cliente viu o produto)
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+  fbq('track', 'PageView');
+  fbq('track', 'ViewContent', { content_name: 'Acer Nitro V' });
+</script>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="btn-back">← Voltar para Vitrine</a>
+  <a href="index.html" class="logo">Center<span>Net</span></a>
+</nav>
+
+<div class="product-page-container">
+  <!-- Imagem do Produto -->
+  <div class="product-gallery">
+    <img src="produtos/nitrov5.png" alt="Acer Nitro V">
+  </div>
+
+  <!-- Informações do Produto -->
+  <div class="product-info">
+    <span class="product-stock">Pronta Entrega em Anápolis</span>
+    <h1 class="product-title">ACER NITRO V</h1>
+    <p class="product-desc">O setup definitivo para quem não tem tempo a perder. Alta performance para jogos competitivos, edição de vídeo avançada e modelagem 3D. Máquina fria, rápida e silenciosa.</p>
+    
+    <ul class="specs-list">
+      <li><span>Processador</span> <span>Intel Core / Ryzen (Consulte)</span></li>
+      <li><span>Placa de Vídeo</span> <span>Série RTX (Consulte)</span></li>
+      <li><span>Tela</span> <span>144Hz Full HD</span></li>
+      <li><span>Condição</span> <span>Novo com Garantia</span></li>
+    </ul>
+
+    <!-- Botão de Venda Direta -->
+    <button class="buy-btn" onclick="comprarProduto('Acer Nitro V')">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-10.852c-4.574 0-8.286 3.714-8.288 8.287-.001 1.464.382 2.895 1.109 4.156l-1.173 4.283 4.385-1.15c1.218.665 2.595 1.016 4.004 1.018h.003c4.571 0 8.285-3.712 8.288-8.285.002-4.575-3.712-8.289-8.287-8.289h-.001v-.02z"/></svg>
+      Consultar Preço e Estoque
+    </button>
+  </div>
+</div>
+
+<footer>
+  <p>Rua 15 de Dezembro, 98 sl A lj 26/27, Anápolis - GO, 75024-070</p>
+  <p style="margin-top: 10px;">© 2026 CENTER NET INFORMÁTICA. TODOS OS DIREITOS RESERVADOS.</p>
+</footer>
+
+<script>
+  const NUMERO_WHATSAPP = "5562000000000"; // Mude para seu número real
+  
+  function comprarProduto(nomeDoProduto) {
+    // 1. Avisa o Pixel que a pessoa iniciou a compra (InitiateCheckout)
+    if(typeof fbq === 'function') fbq('track', 'InitiateCheckout', { content_name: nomeDoProduto });
+    
+    // 2. Monta a mensagem e abre o WhatsApp
+    const msg = encodeURIComponent(`Olá! Estou na página do site e tenho interesse em: ${nomeDoProduto}. Gostaria de confirmar valores e disponibilidade.`);
+    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msg}`, '_blank');
+  }
+</script>
+
+</body>
+</html>
