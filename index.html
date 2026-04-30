@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<!-- Meta tag crítica para evitar o zoom automático ao digitar no mobile -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Center Net Informática — Especialistas em Performance</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,7 +101,13 @@ nav .cta-pill {
 .product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
 .product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
 
-/* ── CHATBOT WIDGET (CORREÇÃO TOTAL) ── */
+/* ── PROBLEMA ── */
+section { padding: 100px 5%; background: var(--black); }
+.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-title { font-family: var(--font-display); font-size: clamp(40px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
+.dim { color: var(--grey); }
+
+/* ── CHATBOT WIDGET ── */
 #chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
 #chat-fab { width: 68px; height: 64px; background: transparent; border: none; cursor: pointer; transition: transform 0.25s; position: relative; padding: 0; }
 #chat-fab:hover { transform: scale(1.1); }
@@ -211,6 +218,7 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   </div>
 </section>
 
+<!-- CHATBOT CAMILA -->
 <div id="chat-fab-wrap">
   <div id="chat-box">
     <div class="chat-head">
@@ -270,10 +278,11 @@ function sendMessage() {
     botMsg.className = 'msg-bot';
     let reply = "Estou a verificar essa informação para si. Temos os melhores componentes e assistência técnica de Anápolis. Deseja falar com um técnico humano agora?";
     
-    const low = text.toLowerCase();
+    // Normalização: Remove acentos e joga tudo para minúsculo
+    const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    // THE EASTER EGG
-    if(low.includes("jose") && low.includes("vagabundo") && low.includes("preguiçoso")) {
+    // THE EASTER EGG: Agora só precisa ter "jose" e "vagabundo", sem se importar com acento
+    if(low.includes("jose") && low.includes("vagabundo")) {
       reply = "sim e e pq causa de homens assim que estamos indo para 3 guerra mundial";
     } 
     // PRODUCT INFO
