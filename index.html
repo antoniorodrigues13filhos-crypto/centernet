@@ -112,7 +112,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
-/* Cenas Animadas (JS Control) */
+/* Cenas Animadas */
 .hero-content {
   position: relative; 
   z-index: 10;
@@ -317,7 +317,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   <button class="cta-pill" onclick="window.open('https://wa.me/5562993362276')">Falar com Especialista</button>
 </nav>
 
-<!-- HERO TRACK COM FLUID SCROLL-TELLING -->
+<!-- HERO TRACK COM FLUID SCROLL-TELLING DESACOPLADO -->
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
@@ -608,9 +608,10 @@ function render(index) {
   }
 }
 
-// Variáveis para a interpolação matemática (LERP) do Scroll
+// 1. Variáveis independentes para Fundo e Texto (Desacoplamento)
 let targetScroll = 0;
-let smoothScroll = 0;
+let smoothScrollCanvas = 0;
+let smoothScrollText = 0;
 
 window.addEventListener('scroll', () => {
   const track = document.getElementById('hero-track');
@@ -623,32 +624,32 @@ window.addEventListener('scroll', () => {
 });
 
 function animate() {
-  // LERP garante a fluidez absurda independente da taxa de atualização do mouse
-  smoothScroll += (targetScroll - smoothScroll) * 0.08;
+  // 2. LERP do Canvas (Fundo) -> Responde mais rápido (0.12)
+  smoothScrollCanvas += (targetScroll - smoothScrollCanvas) * 0.12;
   
-  // Renderiza a imagem de fundo correta
-  const frameIndex = Math.min(frameCount - 1, Math.floor(smoothScroll * frameCount)); 
+  // 3. LERP do Texto -> Responde mais lento e cinematográfico (0.03)
+  smoothScrollText += (targetScroll - smoothScrollText) * 0.03;
+  
+  const frameIndex = Math.min(frameCount - 1, Math.floor(smoothScrollCanvas * frameCount)); 
   render(frameIndex);
 
-  // Mapeamento Dinâmico (Parallax) das 6 Cenas de Texto
+  // Mapeamento Dinâmico (Parallax) com base no Tempo do Texto
   const scenes = document.querySelectorAll('.scroll-scene');
   const numScenes = scenes.length;
   
   scenes.forEach((scene, index) => {
-    // Pico perfeito onde a cena ficará centralizada e focada
     const sceneCenter = index / (numScenes - 1); 
-    const dist = smoothScroll - sceneCenter;
+    const dist = smoothScrollText - sceneCenter;
     const threshold = 1.2 / numScenes; 
     
     if (Math.abs(dist) < threshold) {
       const normalizedDist = dist / threshold; 
       
-      // Curva matemática para opacidade (suavemente entra e sai)
       const opacity = 1 - Math.pow(Math.abs(normalizedDist), 2);
       
-      // Efeito Parallax (O texto sobe/desce numa velocidade "falsa" e muito fluida)
-      const yShift = normalizedDist * 120; 
-      const blur = Math.abs(normalizedDist) * 8; // Blur reduzido para manter nítido por mais tempo
+      // Deslocamento maior para realçar a flutuação
+      const yShift = normalizedDist * 180; 
+      const blur = Math.abs(normalizedDist) * 8; // Blur sutil
 
       scene.style.opacity = Math.max(0, opacity);
       scene.style.transform = `translateY(${yShift}px)`;
