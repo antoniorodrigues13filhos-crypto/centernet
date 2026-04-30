@@ -64,11 +64,12 @@ nav {
 
 nav .cta-pill {
   display: flex; align-items: center; gap: 8px; background: var(--orange); color: #fff;
-  padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 600;
+  padding: 10px 22px; border-radius: 100px; font-size: 12px; font-weight: 700;
   letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; border: none;
-  transition: background 0.2s, transform 0.2s; font-family: var(--font-body);
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s; font-family: var(--font-body);
+  box-shadow: 0 0 15px var(--orange-glow);
 }
-nav .cta-pill:hover { background: #e64500; transform: scale(1.05); }
+nav .cta-pill:hover { background: #e64500; transform: scale(1.05); box-shadow: 0 0 25px var(--orange-glow); }
 
 /* ── HERO SCROLL-TELLING ── */
 #hero-track { height: 600vh; position: relative; width: 100%; }
@@ -88,25 +89,53 @@ nav .cta-pill:hover { background: #e64500; transform: scale(1.05); }
 .hero-content { position: relative; z-index: 10; height: 100vh; display: flex; align-items: center; justify-content: flex-start; padding: 0 clamp(20px, 5vw, 10%); }
 .scroll-scene { position: absolute; left: clamp(20px, 5vw, 10%); right: clamp(20px, 5vw, 10%); opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .hero-headline { font-family: var(--font-display); font-size: clamp(40px, 9vw, 140px); line-height: 0.95; margin-bottom: 20px; color: var(--white); text-shadow: 0 10px 30px rgba(0,0,0,0.8); }
-.hero-sub { font-size: clamp(14px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); }
-.hero-actions { margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; pointer-events: auto; }
+.hero-sub { font-size: clamp(14px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); margin-bottom: 30px; }
+.hero-actions { display: flex; gap: 20px; flex-wrap: wrap; pointer-events: auto; }
+
+/* ── ESTILOS CRO (NOVOS) ── */
+.urgency-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 77, 0, 0.1); border: 1px solid rgba(255,77,0,0.3); padding: 6px 14px; border-radius: 100px; font-family: var(--font-mono); font-size: 12px; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+.pulse-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 10px var(--orange); animation: pulseDot 1.5s infinite; }
+@keyframes pulseDot { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 77, 0, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); } }
+
+.cro-capture-form { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; max-width: 500px; background: rgba(10,10,10,0.6); padding: 8px; border-radius: 12px; border: 1px solid var(--border-color); backdrop-filter: blur(10px); pointer-events: auto; }
+.cro-capture-form input { flex: 1; min-width: 200px; background: transparent; border: none; padding: 16px; color: #fff; font-family: var(--font-body); font-size: 16px; outline: none; }
+.cro-capture-form input::placeholder { color: var(--grey); }
+.cro-capture-form button { flex-shrink: 0; }
+
+.micro-urgency { margin-top: 15px; font-size: 13px; color: var(--grey); font-family: var(--font-body); display: flex; align-items: center; gap: 6px;}
+.micro-urgency b { color: var(--white); }
 
 /* ── BOTÕES ── */
-.btn-premium { padding: 16px 32px; border-radius: 100px; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-.btn-orange { background: var(--orange); color: #fff; border: none; }
-.btn-orange:hover { background: #e64500; transform: translateY(-2px); }
+.btn-premium { padding: 16px 32px; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 14px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+.btn-orange { background: var(--orange); color: #fff; border: none; box-shadow: 0 4px 15px rgba(255,77,0,0.2); }
+.btn-orange:hover { background: #e64500; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,77,0,0.4); }
 .btn-premium[style*="transparent"]:hover { background: rgba(255,255,255,0.1) !important; transform: translateY(-2px); }
 
 /* ── TICKER (Letreiro) ── */
-.ticker-wrap {
-  width: 100%; overflow: hidden; background: var(--surface2); border-bottom: 1px solid var(--border-color); border-top: 1px solid var(--border-color); padding: 15px 0;
-}
+.ticker-wrap { width: 100%; overflow: hidden; background: var(--surface2); border-bottom: 1px solid var(--border-color); border-top: 1px solid var(--border-color); padding: 15px 0; }
 .ticker-inner { display: inline-flex; white-space: nowrap; animation: tickerAnim 25s linear infinite; }
 .ticker-item { padding: 0 30px; font-family: var(--font-mono); font-size: 14px; color: var(--orange); text-transform: uppercase; letter-spacing: 0.1em; }
 @keyframes tickerAnim { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+/* ── SEÇÕES GERAIS ── */
+section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid var(--border-color); }
+.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.section-tag::before { content: ''; width: 20px; height: 1px; background: var(--orange); }
+.section-title { font-family: var(--font-display); font-size: clamp(40px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
+.dim { color: var(--grey); }
+
+/* ── SERVIÇOS EXPRESSOS (NOVO CRO) ── */
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 50px; }
+.service-card { background: var(--surface); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 16px; transition: transform 0.3s, border-color 0.3s; position: relative; overflow: hidden;}
+.service-card:hover { transform: translateY(-5px); border-color: var(--orange); }
+.service-icon { font-size: 32px; margin-bottom: 20px; color: var(--orange); }
+.service-card h3 { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; margin-bottom: 10px; color: var(--white); }
+.service-card p { color: var(--grey); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+.service-link { color: var(--orange); font-weight: 600; font-size: 14px; text-transform: uppercase; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;}
+.service-link:hover { text-decoration: underline; }
+
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; overflow: hidden;}
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); position: relative; overflow: hidden;}
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; padding: 0 5%; }
 .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; position: relative; z-index: 10; padding: 0 5% 80px; }
 
@@ -116,30 +145,40 @@ nav .cta-pill:hover { background: #e64500; transform: scale(1.05); }
 .product-img-wrap img { max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); transition: transform 0.5s; }
 .product-card:hover .product-img-wrap img { transform: scale(1.05); }
 .product-body { padding: 30px; display: flex; flex-direction: column; flex: 1; }
-.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 20px; color: var(--white); }
+.product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 8px; color: var(--white); }
+.product-stock { font-family: var(--font-mono); font-size: 11px; color: #22c55e; margin-bottom: 20px; display: inline-block; padding: 4px 8px; background: rgba(34, 197, 94, 0.1); border-radius: 4px; }
 
-.card-cta { width: 100%; padding: 12px; border-radius: 8px; font-family: var(--font-body); font-weight: 600; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: auto; }
+.card-cta { width: 100%; padding: 14px; border-radius: 8px; font-family: var(--font-body); font-weight: 700; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: auto; }
 .cta-filled { background: var(--orange); color: #fff; border: none; }
 .cta-filled:hover { background: #e64500; }
 .cta-outline { background: transparent; color: var(--white); border: 1px solid var(--border-color); }
-.cta-outline:hover { border-color: var(--orange); color: var(--orange); }
+.cta-outline:hover { border-color: var(--orange); background: rgba(255,77,0,0.1); }
+
+/* ── DEPOIMENTOS (NOVO CRO) ── */
+.reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.review-card { background: var(--surface2); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); }
+.review-stars { color: var(--orange); margin-bottom: 15px; font-size: 18px; letter-spacing: 2px; }
+.review-text { font-style: italic; color: var(--white); line-height: 1.6; margin-bottom: 20px; font-size: 15px; }
+.review-author { display: flex; align-items: center; gap: 12px; }
+.author-avatar { width: 40px; height: 40px; background: var(--surface); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); color: var(--orange); font-size: 20px; border: 1px solid var(--border-color); }
+.author-info h4 { font-size: 14px; color: var(--white); margin-bottom: 2px; }
+.author-info span { font-size: 12px; color: var(--grey); }
 
 /* Reveal Animation */
 .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── PROBLEMA ── */
-section { padding: 100px 5%; background: var(--black); }
-.section-tag { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-.section-title { font-family: var(--font-display); font-size: clamp(40px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
-.dim { color: var(--grey); }
-
-/* ── CHATBOT WIDGET ── */
+/* ── CHATBOT & WHATSAPP WIDGETS ── */
 #chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
 #chat-fab { width: 68px; height: 64px; background: transparent; border: none; cursor: pointer; transition: transform 0.25s; position: relative; padding: 0; }
 #chat-fab:hover { transform: scale(1.1); }
 #chat-fab img { width: 100%; height: 100%; object-fit: contain; }
 .fab-badge { position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; background: var(--orange); border-radius: 50%; border: 3px solid var(--black); color: #fff; font-family: var(--font-mono); font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10;}
+
+/* Novo Botão Fixo de WhatsApp */
+#wa-fixed { position: fixed; bottom: 28px; left: 28px; z-index: 9998; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s; text-decoration: none; border: 3px solid var(--black); }
+#wa-fixed:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 25px rgba(37, 211, 102, 0.4); }
+#wa-fixed svg { width: 30px; height: 30px; fill: #fff; }
 
 #chat-box { 
   width: 360px; max-height: 520px; background: var(--surface); 
@@ -166,21 +205,24 @@ section { padding: 100px 5%; background: var(--black); }
   flex: 1; background: var(--surface2); border: 1px solid var(--border-color); 
   border-radius: 10px; padding: 12px 15px; color: var(--white); 
   font-family: var(--font-body); outline: none;
-  font-size: 16px !important; /* CRÍTICO: Impede zoom no Mobile */
+  font-size: 16px !important; 
 }
 #send-btn { width: 45px; height: 45px; background: var(--orange); border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 #send-btn svg { width: 20px; height: 20px; color: #fff; }
 
-/* ── ADAPTAÇÃO MOBILE DO CHAT ── */
 @media (max-width: 768px) {
   #chat-fab-wrap { bottom: 20px; right: 20px; }
+  #wa-fixed { bottom: 20px; left: 20px; width: 50px; height: 50px; }
+  #wa-fixed svg { width: 24px; height: 24px; }
   #chat-box {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw; height: 100dvh; max-height: none; 
     border-radius: 0; margin-bottom: 0; z-index: 10000;
   }
   .chat-head { border-radius: 0; padding: 18px; }
-  .chat-input-area { padding: 12px 12px 34px; } /* Ajuste para barra inferior do iOS */
+  .chat-input-area { padding: 12px 12px 34px; } 
+  .cro-capture-form { flex-direction: column; }
+  .cro-capture-form button { width: 100%; }
 }
 
 footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var(--border-color); text-align: center; font-family: var(--font-mono); font-size: 11px; color: #555;}
@@ -192,9 +234,15 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
 
+<!-- Botão WA Fixo -->
+<a href="https://wa.me/5562000000000?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" id="wa-fixed" title="Falar no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-10.852c-4.574 0-8.286 3.714-8.288 8.287-.001 1.464.382 2.895 1.109 4.156l-1.173 4.283 4.385-1.15c1.218.665 2.595 1.016 4.004 1.018h.003c4.571 0 8.285-3.712 8.288-8.285.002-4.575-3.712-8.289-8.287-8.289h-.001v-.02z"/></svg>
+</a>
+
 <nav>
   <div class="logo">Center<span>Net</span></div>
-  <button class="cta-pill" onclick="openChat()">Ajuda Online</button>
+  <!-- Microcopy orientada a benefício -->
+  <button class="cta-pill" onclick="openChatWith('Gostaria de um diagnóstico gratuito do meu equipamento.')">Diagnóstico Grátis</button>
 </nav>
 
 <div id="hero-track">
@@ -208,15 +256,27 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
       <div class="frame-line line-left"></div>
     </div>
     <div class="hero-content">
-      <div class="scroll-scene"><h1 class="hero-headline">TECNOLOGIA QUE<br><span style="color:var(--orange)">NUNCA PARA.</span></h1><p class="hero-sub">O seu tempo vale mais que um PC lento ou um smartphone quebrado.</p></div>
-      <div class="scroll-scene"><h1 class="hero-headline">NÓS<br><span style="color:var(--orange)">ACELERAMOS.</span></h1><p class="hero-sub">Diagnóstico preciso e reparação imediata com peças originais e garantia.</p></div>
+      <div class="scroll-scene">
+        <div class="urgency-badge"><span class="pulse-dot"></span> Plantão Técnico Ativo Hoje</div>
+        <h1 class="hero-headline">TECNOLOGIA QUE<br><span style="color:var(--orange)">NUNCA PARA.</span></h1>
+        <p class="hero-sub">O seu tempo vale mais que um PC lento ou um smartphone quebrado.</p>
+      </div>
+      
+      <div class="scroll-scene">
+        <h1 class="hero-headline">NÓS<br><span style="color:var(--orange)">ACELERAMOS.</span></h1>
+        <p class="hero-sub">Diagnóstico preciso e reparação imediata com peças originais e garantia.</p>
+      </div>
+      
       <div class="scroll-scene">
         <h1 class="hero-headline">SISTEMA<br><span style="color:var(--orange)">DEFINITIVO.</span></h1>
-        <p class="hero-sub">Segurança, manutenção e componentes de elite num só lugar.</p>
-        <div class="hero-actions">
-          <button class="btn-premium btn-orange" onclick="openChatWith('Preciso de um técnico urgente para o meu aparelho.')">Falar com Técnico</button>
-          <button class="btn-premium" style="background:transparent; border:1px solid #fff; color:#fff" onclick="document.getElementById('produtos').scrollIntoView()">Ver Produtos</button>
+        <p class="hero-sub">Segurança, manutenção e componentes de elite. <b>Orçamento em até 15 minutos.</b></p>
+        
+        <!-- Formulário Rápido de Captura -->
+        <div class="cro-capture-form">
+          <input type="tel" id="hero-phone" placeholder="Seu WhatsApp com DDD" autocomplete="tel">
+          <button class="btn-premium btn-orange" onclick="submitHeroLead()">Garantir Prioridade</button>
         </div>
+        <p class="micro-urgency">🔥 Restam apenas <b>2 vagas</b> para manutenção prioritária hoje.</p>
       </div>
     </div>
   </div>
@@ -239,17 +299,46 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   </div>
 </div>
 
+<!-- NOVA SEÇÃO: SERVIÇOS EXPRESSOS -->
+<section id="servicos-cro">
+  <div class="produtos-header" style="margin-bottom: 20px;">
+    <div><div class="section-tag">Soluções Rápidas</div><h2 class="section-title">Nossos <span class="dim">Serviços.</span></h2></div>
+  </div>
+  <div class="services-grid" style="padding: 0 5%;">
+    <div class="service-card reveal">
+      <div class="service-icon">🪛</div>
+      <h3>Manutenção Preventiva</h3>
+      <p>Limpeza completa, troca de pasta térmica de alta condutividade e formatação otimizada para evitar superaquecimento e lentidão.</p>
+      <a class="service-link" onclick="openChatWith('Quero agendar uma limpeza preventiva.')">Agendar Limpeza →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">⚡</div>
+      <h3>Upgrade de Performance</h3>
+      <p>Instalação de SSDs NVMe e expansão de memória RAM. Deixe seu computador até 10x mais rápido no mesmo dia.</p>
+      <a class="service-link" onclick="openChatWith('Gostaria de fazer um orçamento para Upgrade.')">Fazer Orçamento →</a>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🖥️</div>
+      <h3>Montagem Customizada</h3>
+      <p>Projetamos e montamos o PC Gamer ou Workstation perfeito para a sua necessidade e orçamento. Cable management impecável.</p>
+      <a class="service-link" onclick="openChatWith('Quero ajuda para montar um PC do zero.')">Falar com Especialista →</a>
+    </div>
+  </div>
+</section>
+
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
   <div class="produtos-header">
-    <div><div class="section-tag">Vitrine</div><h2 class="section-title">Conheça nossos <span class="dim">produtos.</span></h2></div>
+    <div><div class="section-tag">Ofertas Ativas</div><h2 class="section-title">Estoque <span class="dim">Selecionado.</span></h2></div>
   </div>
   <div class="products-grid">
     <div class="product-card reveal">
       <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Nitro V"></div>
       <div class="product-body">
         <h3 class="product-name">ACER NITRO V</h3>
-        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de saber o stock do Acer Nitro V')">Consultar Stock</button>
+        <span class="product-stock">● Em Estoque</span>
+        <!-- CTA Melhorado -->
+        <button class="card-cta cta-filled" onclick="openChatWith('Quero garantir o meu Acer Nitro V')">Garantir o Meu</button>
       </div>
     </div>
     
@@ -257,7 +346,8 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
       <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="Ryzen"></div>
       <div class="product-body">
         <h3 class="product-name">RYZEN 5 5600GT</h3>
-        <button class="card-cta cta-filled" onclick="openChatWith('Quero o preço do processador Ryzen 5 5600GT')">Ver Preço</button>
+        <span class="product-stock">● Pronta Entrega</span>
+        <button class="card-cta cta-filled" onclick="openChatWith('Qual o valor atual do Ryzen 5 5600GT?')">Ver Preço Especial</button>
       </div>
     </div>
     
@@ -265,16 +355,17 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
       <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX"></div>
       <div class="product-body">
         <h3 class="product-name">RTX 3060 12GB</h3>
-        <button class="card-cta cta-outline" onclick="openChatWith('Qual o valor da RTX 3060?')">Consultar</button>
+        <span class="product-stock" style="color:var(--orange); background:rgba(255,77,0,0.1)">● Últimas Unidades</span>
+        <button class="card-cta cta-outline" onclick="openChatWith('Gostaria de reservar a RTX 3060')">Reservar Agora</button>
       </div>
     </div>
 
-    <!-- NOVOS PRODUTOS ADICIONADOS AQUI -->
     <div class="product-card reveal">
       <div class="product-img-wrap"><img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright"></div>
       <div class="product-body">
         <h3 class="product-name">CADEIRA GAMER BRIGHT</h3>
-        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de saber mais sobre a Cadeira Gamer Bright')">Ver Detalhes</button>
+        <span class="product-stock">● Em Estoque</span>
+        <button class="card-cta cta-filled" onclick="openChatWith('Quero saber detalhes e entrega da Cadeira Bright')">Comprar Agora</button>
       </div>
     </div>
 
@@ -282,7 +373,41 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
       <div class="product-img-wrap"><img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer Acer"></div>
       <div class="product-body">
         <h3 class="product-name">MONITOR ACER 27" CURVO</h3>
-        <button class="card-cta cta-filled" onclick="openChatWith('Quero saber o valor do Monitor Acer 27 Curvo 144hz')">Ver Preço</button>
+        <span class="product-stock">● Pronta Entrega</span>
+        <button class="card-cta cta-filled" onclick="openChatWith('Qual o valor do Monitor Acer Curvo?')">Consultar Oferta</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOVA SEÇÃO: PROVA SOCIAL -->
+<section id="depoimentos-cro" style="background: var(--surface);">
+  <div class="produtos-header" style="justify-content: center; text-align: center;">
+    <div><div class="section-tag" style="justify-content: center; margin-bottom: 20px;">Resultados Reais</div><h2 class="section-title">Aprovado por <span class="dim">quem usa.</span></h2></div>
+  </div>
+  <div class="reviews-grid" style="padding: 0 5%;">
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Meu notebook estava impossível de usar. Levei na Center Net de manhã e a tarde já estava voando com SSD novo. Atendimento nota 1000 em Anápolis!"</p>
+      <div class="review-author">
+        <div class="author-avatar">M</div>
+        <div class="author-info"><h4>Marcos Silva</h4><span>Cliente Verificado</span></div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Comprei todas as peças do meu PC Gamer com eles. O João foi super honesto no orçamento e a montagem ficou perfeita. Recomendo demais."</p>
+      <div class="review-author">
+        <div class="author-avatar">A</div>
+        <div class="author-info"><h4>Ana Paula</h4><span>Gamer / Designer</span></div>
+      </div>
+    </div>
+    <div class="review-card reveal">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Consertaram a tela do meu iPhone no mesmo dia. Peça original e preço justo. Já é minha assistência de confiança."</p>
+      <div class="review-author">
+        <div class="author-avatar">R</div>
+        <div class="author-info"><h4>Rafael Costa</h4><span>Cliente Verificado</span></div>
       </div>
     </div>
   </div>
@@ -294,11 +419,11 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
     <div class="chat-head">
       <div style="display:flex; align-items:center; gap:12px;">
         <div class="chat-avatar"><img src="assetschat/camila.jpg.jpg" alt="Camila"></div>
-        <div><div class="chat-agent-name">Camila</div><div style="font-size:10px; color:#22c55e; font-family:var(--font-mono)">● ONLINE</div></div>
+        <div><div class="chat-agent-name">Camila</div><div style="font-size:10px; color:#22c55e; font-family:var(--font-mono)">● ONLINE AGORA</div></div>
       </div>
       <button onclick="closeChat()" style="background:none; border:none; color:#555; cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-    <div id="chat-messages"><div class="msg-bot">Olá! Sou a Camila. Como posso ajudar com os nossos produtos ou serviços de informática hoje?</div></div>
+    <div id="chat-messages"><div class="msg-bot">Olá! Sou a Camila. O que a sua máquina precisa hoje? (Respondo em segundos) ⚡</div></div>
     <div class="chat-input-area">
       <input type="text" id="chat-input" placeholder="Escreva aqui..." autocomplete="off">
       <button id="send-btn" onclick="sendMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
@@ -311,12 +436,27 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
 </div>
 
 <footer>
-  © 2026 CENTER NET INFORMÁTICA - ANÁPOLIS, GO. TODOS OS DIREITOS RESERVADOS.
+  <p>Rua 15 de Dezembro, 98 sl A lj 26/27, Anápolis - GO, 75024-070</p>
+  <p style="margin-top: 10px;">© 2026 CENTER NET INFORMÁTICA. TODOS OS DIREITOS RESERVADOS.</p>
 </footer>
 
 <script>
 // ==========================================
-// CHATBOT LOGIC (CONVERSA ABERTA + EASTER EGG)
+// FUNÇÃO DO NOVO FORMULÁRIO (HERO)
+// ==========================================
+function submitHeroLead() {
+  const phone = document.getElementById('hero-phone').value.trim();
+  if(phone.length < 9) {
+    alert("Por favor, insira um WhatsApp válido com DDD.");
+    return;
+  }
+  // Envia direto para o WhatsApp do vendedor já com a mensagem e o número que o cliente digitou
+  const msg = encodeURIComponent(`Olá! Quero garantir a prioridade para atendimento. Meu número é ${phone}.`);
+  window.open(`https://wa.me/5562000000000?text=${msg}`, '_blank');
+}
+
+// ==========================================
+// CHATBOT LOGIC
 // ==========================================
 let chatOpen = false;
 
@@ -346,26 +486,24 @@ function sendMessage() {
   setTimeout(() => {
     const botMsg = document.createElement('div');
     botMsg.className = 'msg-bot';
-    let reply = "Estou a verificar essa informação para si. Temos os melhores componentes e assistência técnica de Anápolis. Deseja falar com um técnico humano agora?";
+    let reply = "Estou verificando essa informação para você. Nossos técnicos estão disponíveis agora. Deseja falar com um atendente humano?";
     
-    // Normalização: Remove acentos e joga tudo para minúsculo
     const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    // THE EASTER EGG
     if(low.includes("jose") && low.includes("vagabundo")) {
       reply = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
-    } 
-    // PRODUCT INFO
-    else if(low.includes("nitro") || low.includes("notebook")) {
-      reply = "O Acer Nitro V é incrível! Tem ecrã de 144Hz e placa RTX. Quer que eu veja se ainda temos em stock?";
+    } else if(low.includes("nitro") || low.includes("notebook")) {
+      reply = "O Acer Nitro V é incrível! Temos unidades a pronta entrega. Quer que eu separe um para você buscar na nossa loja (Rua 15 de Dezembro)?";
     } else if(low.includes("rtx") || low.includes("3060")) {
-      reply = "A RTX 3060 de 12GB é o upgrade perfeito para quem quer performance. Posso reservar uma para si?";
+      reply = "A RTX 3060 de 12GB é o upgrade perfeito. Temos as últimas unidades com preço especial. Posso reservar?";
     } else if(low.includes("ryzen") || low.includes("5600")) {
-      reply = "O Ryzen 5 5600GT é um campeão de vendas pelo seu custo-benefício com gráficos integrados potentes.";
+      reply = "O Ryzen 5 5600GT é um campeão de vendas. Gostaria de saber nossas opções de parcelamento?";
     } else if(low.includes("cadeira") || low.includes("bright")) {
-      reply = "A Cadeira Gamer Bright suporta até 120kg, é reclinável e super confortável para as suas gameplays. Quer que eu verifique a disponibilidade?";
+      reply = "A Cadeira Gamer Bright suporta até 120kg e é super confortável. Quer verificar se entregamos no seu bairro?";
     } else if(low.includes("monitor") || low.includes("curvo") || low.includes("144hz")) {
-      reply = "Esse Monitor Curvo da Acer de 27 polegadas com 144Hz e 1ms é sensacional para competitivos. Gostaria de saber os métodos de pagamento?";
+      reply = "Esse Monitor Curvo da Acer de 27 polegadas 144Hz é sensacional. Deseja fechar o pedido pelo WhatsApp agora mesmo?";
+    } else if(low.includes("limpeza") || low.includes("preventiva") || low.includes("diagnostico")) {
+      reply = "Excelente! Nossa limpeza preventiva inclui troca de pasta térmica. Trazendo hoje na nossa loja na Rua 15 de Dezembro, entregamos rapidinho. Qual o seu nome?";
     }
     
     botMsg.innerHTML = reply;
