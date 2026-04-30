@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- Importação do P5.js para o efeito Premium de revelação -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
 <style>
@@ -46,7 +46,7 @@ body {
   position: fixed; inset: 0; z-index: 9999;
   background: var(--black);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 0.6s ease;
 }
 .load-bar { width: 240px; height: 1px; background: rgba(255,255,255,0.1); position: relative; }
 #load-progress { position: absolute; top: 0; left: 0; height: 100%; background: var(--orange); width: 0%; transition: width 0.3s; box-shadow: 0 0 15px var(--orange); }
@@ -114,7 +114,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
-/* Cenas Animadas (JS Control) */
+/* Cenas Animadas (Otimizadas para GPU Mobile) */
 .hero-content {
   position: relative; 
   z-index: 10;
@@ -130,7 +130,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
   right: clamp(20px, 5vw, 10%);
   opacity: 0;
   pointer-events: none;
-  will-change: transform, opacity, filter;
+  will-change: transform, opacity; /* Removido o filter do will-change (pesado no mobile) */
 }
 
 .hero-headline {
@@ -184,7 +184,7 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title .dim { color: var(--grey); }
 
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; overflow: hidden; }
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; }
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; }
 .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 10; }
 
@@ -389,7 +389,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
-<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS (REVELAÇÃO LASER PREMIUM) -->
+<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS OTIMIZADA -->
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
 
@@ -570,7 +570,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <script>
 // ==========================================
-// 1. LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
+// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO (HERO)
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -580,6 +580,7 @@ let loadedCount = 0;
 
 for (let i = 1; i <= frameCount; i++) {
   const img = new Image();
+  img.decoding = "async"; // Otimização p/ Mobile
   img.src = `./${i.toString().padStart(4, '0')}.webp`;
   img.onload = () => {
     loadedCount++;
@@ -588,8 +589,8 @@ for (let i = 1; i <= frameCount; i++) {
     if(loadedCount === frameCount) {
       setTimeout(() => {
         document.getElementById('preloader').style.opacity = '0';
-        setTimeout(() => document.getElementById('preloader').style.display = 'none', 1000);
-      }, 500);
+        setTimeout(() => document.getElementById('preloader').style.display = 'none', 600);
+      }, 300);
     }
   };
   images.push(img);
@@ -623,7 +624,7 @@ window.addEventListener('scroll', () => {
 
 function animate() {
   smoothScrollCanvas += (targetScroll - smoothScrollCanvas) * 0.12;
-  smoothScrollText += (targetScroll - smoothScrollText) * 0.03;
+  smoothScrollText += (targetScroll - smoothScrollText) * 0.08; // Aumentado para melhor responsividade
   
   const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.floor(smoothScrollCanvas * frameCount))); 
   render(frameIndex);
@@ -634,18 +635,17 @@ function animate() {
   scenes.forEach((scene, index) => {
     const sceneCenter = index / (numScenes - 1); 
     const dist = smoothScrollText - sceneCenter;
-    const threshold = 1.2 / numScenes; 
+    const threshold = 1.0 / numScenes; 
     
     if (Math.abs(dist) < threshold) {
       const normalizedDist = dist / threshold; 
       const opacity = 1 - Math.pow(Math.abs(normalizedDist), 2);
       
-      const yShift = normalizedDist * 180; 
-      const blur = Math.abs(normalizedDist) * 8; 
+      const yShift = normalizedDist * 120; 
 
       scene.style.opacity = Math.max(0, opacity);
-      scene.style.transform = `translateY(${yShift}px)`;
-      scene.style.filter = `blur(${blur}px)`;
+      // Removido o filtro blur do JS para não estourar a GPU em Mobile, usando apenas translateZ para forçar 3D hardware
+      scene.style.transform = `translateY(${yShift}px) translateZ(0)`; 
       scene.style.pointerEvents = opacity > 0.8 ? 'auto' : 'none';
     } else {
       scene.style.opacity = 0;
@@ -658,7 +658,7 @@ function animate() {
 animate();
 
 // ==========================================
-// 2. REVEAL ANIMATION (CSS CLASSES)
+// REVEAL ANIMATION DAS OUTRAS SEÇÕES
 // ==========================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -669,7 +669,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ==========================================
-// 3. CAMADA P5.JS (REVELAÇÃO LASER PREMIUM)
+// CAMADA P5.JS (REVELAÇÃO LASER OTIMIZADA PARA MOBILE)
 // ==========================================
 const productRevealSketch = (p) => {
   let container;
@@ -678,6 +678,7 @@ const productRevealSketch = (p) => {
     container = document.getElementById('produtos');
     let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
     canvas.parent('p5-reveal-layer');
+    p.pixelDensity(1); // Otimização extrema para ecrãs de telemóvel
   };
 
   p.draw = () => {
@@ -714,19 +715,22 @@ const productRevealSketch = (p) => {
 
     p.strokeCap(p.SQUARE);
     
-    p.drawingContext.shadowBlur = 40;
-    p.drawingContext.shadowColor = 'rgba(255, 77, 0, 0.9)';
+    // Simulação de Glow sem usar shadowBlur (MUITO mais rápido no Mobile)
+    p.strokeWeight(20);
+    p.stroke(255, 77, 0, 30);
+    p.line(revealX + slant, 0, revealX - slant, p.height);
+
+    p.strokeWeight(8);
+    p.stroke(255, 77, 0, 80);
+    p.line(revealX + slant, 0, revealX - slant, p.height);
+
     p.strokeWeight(3);
     p.stroke(255, 77, 0, 255); 
     p.line(revealX + slant, 0, revealX - slant, p.height);
 
-    p.drawingContext.shadowBlur = 10;
-    p.drawingContext.shadowColor = '#FFFFFF';
     p.strokeWeight(1);
-    p.stroke(255, 255, 255, 200);
+    p.stroke(255, 255, 255, 255);
     p.line(revealX + slant, 0, revealX - slant, p.height);
-
-    p.drawingContext.shadowBlur = 0; 
   };
 
   p.windowResized = () => {
