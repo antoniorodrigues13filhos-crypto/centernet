@@ -6,186 +6,670 @@
 <title>Acer Nitro V — Center Net Informática</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --black: #050505;
-  --white: #F8F5F0;
-  --orange: #FF4D00;
-  --orange-glow: rgba(255, 77, 0, 0.4);
-  --border-color: rgba(255, 255, 255, 0.05);
-  --surface: #111010;
-  --surface2: #1A1917;
-  --grey: #888888;
-  --font-display: 'Bebas Neue', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --black: #080808;
+  --deep: #0D0D0D;
+  --surface: #131313;
+  --surface2: #1A1A1A;
+  --border: rgba(255,255,255,0.06);
+  --border-bright: rgba(255,255,255,0.12);
+  --orange: #FF4500;
+  --orange2: #FF6B35;
+  --orange-dim: rgba(255,69,0,0.15);
+  --white: #F2EDE8;
+  --grey: #777;
+  --grey2: #999;
+  --green: #00D084;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
-body { 
-  background: var(--black); 
-  color: var(--white); 
-  font-family: var(--font-body); 
-  -webkit-font-smoothing: antialiased; 
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar { width: 2px; }
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--orange); }
 
-/* ── NAV ── */
+/* ─── NAV ─── */
 nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200; height: 80px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 clamp(20px, 5vw, 60px);
-  background: rgba(5,5,5,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  height: 72px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 5vw, 64px);
+  background: rgba(8,8,8,0.85); backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
 }
-.logo { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; text-decoration: none; color: var(--white); }
-.logo span { color: var(--orange); }
-.btn-back { display: flex; align-items: center; gap: 8px; color: var(--grey); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em;}
+
+.logo {
+  font-family: var(--font-display); font-size: 22px; font-weight: 800;
+  letter-spacing: 0.04em; text-decoration: none; color: var(--white);
+}
+.logo em { color: var(--orange); font-style: normal; }
+
+.nav-right { display: flex; align-items: center; gap: 20px; }
+
+.nav-badge {
+  font-family: var(--font-mono); font-size: 10px; color: var(--green);
+  border: 1px solid rgba(0,208,132,0.3); border-radius: 4px;
+  padding: 4px 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-badge::before { content:''; width:6px; height:6px; background: var(--green); border-radius: 50%; animation: pulse-dot 2s infinite; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,208,132,0.5); }
+  50% { box-shadow: 0 0 0 4px rgba(0,208,132,0); }
+}
+
+.btn-back {
+  font-family: var(--font-mono); font-size: 11px; color: var(--grey); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.2s;
+}
 .btn-back:hover { color: var(--white); }
 
-/* ── LAYOUT DO PRODUTO ── */
-.product-page-container {
-  padding: 140px 5% 100px; max-width: 1300px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+/* ─── HERO BAND ─── */
+.hero-band {
+  margin-top: 72px; background: var(--orange); padding: 11px;
+  text-align: center; font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase; color: #fff; font-weight: 500;
+  overflow: hidden; position: relative;
+}
+.marquee-inner {
+  display: inline-block; white-space: nowrap;
+  animation: marquee 22s linear infinite;
+}
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ─── MAIN GRID ─── */
+.main-grid {
+  max-width: 1340px; margin: 0 auto;
+  padding: 60px clamp(20px, 5vw, 64px) 80px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
 }
 
-.product-gallery {
-  position: relative; background: radial-gradient(circle at center, rgba(30,30,30,0.8) 0%, var(--surface) 100%);
-  border: 1px solid var(--border-color); border-radius: 24px; padding: 60px;
-  display: flex; justify-content: center; align-items: center; height: 600px;
-}
-.product-gallery::after { content:''; position:absolute; width: 60%; height: 60%; background: var(--orange); filter: blur(120px); opacity: 0.1; z-index: 0; }
-.product-gallery img { max-width: 100%; max-height: 100%; object-fit: contain; z-index: 10; position: relative; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8)); animation: float 6s ease-in-out infinite; }
+/* ─── GALLERY ─── */
+.gallery-wrap { position: sticky; top: 100px; }
 
-@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
-
-.product-info { display: flex; flex-direction: column; }
-.product-stock { font-family: var(--font-mono); font-size: 12px; color: #22c55e; margin-bottom: 15px; display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.05em;}
-.product-stock::before { content: ''; width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 10px rgba(34,197,94,0.5); }
-.product-title { font-family: var(--font-display); font-size: clamp(40px, 5vw, 70px); line-height: 1; margin-bottom: 20px; color: var(--white); text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
-.product-desc { color: var(--grey); font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
-
-.specs-list { list-style: none; margin-bottom: 40px; border-top: 1px solid var(--border-color); padding-top: 20px; }
-.specs-list li { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border-color); font-size: 15px; }
-.specs-list li span:first-child { color: var(--grey); }
-.specs-list li span:last-child { font-weight: 600; color: var(--white); }
-
-.buy-btn {
-  background: var(--orange); color: #fff; border: none; padding: 20px 40px; border-radius: 12px;
-  font-family: var(--font-body); font-weight: 700; font-size: 16px; text-transform: uppercase; cursor: pointer;
-  transition: all 0.3s; box-shadow: 0 10px 30px rgba(255,77,0,0.3); display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; letter-spacing: 0.05em;
-}
-.buy-btn:hover { background: #e64500; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,77,0,0.5); }
-.buy-btn svg { width: 24px; height: 24px; fill: currentColor; }
-
-/* ── MOBILE ── */
-@media (max-width: 900px) {
-  .product-page-container { grid-template-columns: 1fr; padding-top: 100px; gap: 40px; }
-  .product-gallery { height: 400px; padding: 30px; }
+.gallery-stage {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  aspect-ratio: 1/1;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
 }
 
-footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var(--border-color); text-align: center; font-family: var(--font-mono); font-size: 11px; color: #555; margin-top: 60px; }
+.gallery-stage::before {
+  content:''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 60% 40%, rgba(255,69,0,0.12) 0%, transparent 70%);
+}
+
+.gallery-stage::after {
+  content:''; position: absolute;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: var(--orange); filter: blur(100px); opacity: 0.06;
+  top: 50%; left: 50%; transform: translate(-50%,-50%);
+}
+
+.gallery-stage img {
+  max-width: 85%; max-height: 85%; object-fit: contain; position: relative; z-index: 2;
+  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.9));
+  animation: levitate 7s ease-in-out infinite;
+}
+@keyframes levitate {
+  0%,100%{transform: translateY(0) rotate(0deg)}
+  33%{transform: translateY(-14px) rotate(0.5deg)}
+  66%{transform: translateY(-7px) rotate(-0.3deg)}
+}
+
+.gallery-stage .grid-line {
+  position: absolute; inset: 0; z-index: 1; opacity: 0.03;
+  background-image:
+    linear-gradient(var(--white) 1px, transparent 1px),
+    linear-gradient(90deg, var(--white) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.thumbnail-row {
+  display: flex; gap: 10px; margin-top: 14px;
+}
+.thumb {
+  flex: 1; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; aspect-ratio: 1/1;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color 0.2s; overflow: hidden;
+  font-size: 18px; color: var(--grey2);
+}
+.thumb:hover, .thumb.active { border-color: var(--orange); }
+
+/* ─── INFO COLUMN ─── */
+.info-col { display: flex; flex-direction: column; gap: 32px; }
+
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag {
+  font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.1em; padding: 5px 12px; border-radius: 4px; font-weight: 500;
+}
+.tag-orange { background: var(--orange-dim); color: var(--orange2); border: 1px solid rgba(255,69,0,0.25); }
+.tag-green { background: rgba(0,208,132,0.08); color: var(--green); border: 1px solid rgba(0,208,132,0.2); }
+.tag-grey { background: var(--surface2); color: var(--grey2); border: 1px solid var(--border); }
+
+.product-name {
+  font-family: var(--font-display); font-size: clamp(46px,5.5vw,80px);
+  font-weight: 800; line-height: 0.92; letter-spacing: -0.01em;
+  background: linear-gradient(135deg, #F2EDE8 40%, #888 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.product-name span { -webkit-text-fill-color: var(--orange); }
+
+.product-sub {
+  font-size: 16px; color: var(--grey2); line-height: 1.65; margin-top: -8px;
+}
+
+/* Specs Grid */
+.specs-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--border); border-radius: 16px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.spec-item {
+  background: var(--surface); padding: 18px 20px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--grey); }
+.spec-value { font-size: 15px; font-weight: 600; color: var(--white); }
+.spec-value em { color: var(--orange); font-style: normal; }
+
+/* CTA Box */
+.cta-box {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px;
+}
+.price-ask {
+  font-family: var(--font-display); font-size: 38px; font-weight: 800;
+  color: var(--white); margin-bottom: 6px; letter-spacing: -0.02em;
+}
+.price-ask small { font-size: 14px; font-family: var(--font-body); color: var(--grey2); font-weight: 400; }
+.price-sub { font-size: 13px; color: var(--grey2); margin-bottom: 22px; }
+
+.btn-whatsapp {
+  width: 100%; padding: 18px 28px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff; font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  letter-spacing: 0.04em; cursor: pointer; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  box-shadow: 0 8px 32px rgba(37,211,102,0.25);
+  text-transform: uppercase;
+}
+.btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(37,211,102,0.4); }
+
+/* Ajuste para o seu ícone de imagem do Git */
+.btn-whatsapp img { width: 26px; height: 26px; flex-shrink: 0; object-fit: contain; }
+
+.btn-secondary {
+  width: 100%; padding: 14px 28px; border-radius: 12px; margin-top: 10px;
+  background: transparent; border: 1px solid var(--border-bright);
+  color: var(--grey2); font-family: var(--font-body); font-size: 14px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; letter-spacing: 0.03em;
+}
+.btn-secondary:hover { border-color: var(--orange); color: var(--white); background: var(--orange-dim); }
+
+.trust-strip {
+  display: flex; justify-content: space-around; padding-top: 20px;
+  border-top: 1px solid var(--border); margin-top: 4px;
+}
+.trust-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.trust-item .t-icon { font-size: 20px; }
+.trust-item .t-text { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey); text-align: center; }
+
+/* ─── SOCIAL PROOF ─── */
+.social-proof {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px;
+}
+.avatar-stack { display: flex; }
+.avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  border: 2px solid var(--black); margin-right: -8px;
+  background: var(--surface2); display: flex; align-items: center; justify-content: center;
+  font-size: 12px; overflow: hidden;
+}
+.avatar-stack .avatar:nth-child(1) { background: #2d5a2d; }
+.avatar-stack .avatar:nth-child(2) { background: #5a2d2d; }
+.avatar-stack .avatar:nth-child(3) { background: #2d3a5a; }
+.sp-text { font-size: 13px; color: var(--grey2); }
+.sp-text strong { color: var(--white); }
+
+/* ─── ABOUT SECTION ─── */
+.about-section {
+  max-width: 1340px; margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 64px) 100px;
+}
+
+.section-title {
+  font-family: var(--font-display); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange);
+  margin-bottom: 16px;
+}
+
+/* Selling Points */
+.selling-grid {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+  background: var(--border); border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); margin-bottom: 60px;
+}
+.sell-card {
+  background: var(--surface); padding: 36px 28px;
+  position: relative; overflow: hidden;
+  transition: background 0.3s;
+}
+.sell-card:hover { background: var(--surface2); }
+.sell-card::before {
+  content:''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--orange); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.sell-card:hover::before { transform: scaleX(1); }
+.sell-icon { font-size: 32px; margin-bottom: 18px; }
+.sell-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+.sell-text { font-size: 14px; color: var(--grey2); line-height: 1.6; }
+
+/* Full Specs */
+.full-specs { margin-bottom: 60px; }
+.specs-table { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+.specs-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 24px; border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.specs-row:last-child { border-bottom: none; }
+.specs-row:hover { background: var(--surface2); }
+.sr-label { font-size: 13px; color: var(--grey2); font-family: var(--font-mono); }
+.sr-value { font-size: 14px; font-weight: 600; color: var(--white); text-align: right; }
+.sr-value .badge {
+  font-size: 10px; padding: 2px 8px; background: var(--orange-dim);
+  color: var(--orange); border-radius: 4px; margin-left: 8px;
+  font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+/* FAQ */
+.faq-section { margin-bottom: 60px; }
+.faq-item {
+  border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; overflow: hidden;
+}
+.faq-q {
+  width: 100%; text-align: left; padding: 20px 24px;
+  background: var(--surface); color: var(--white);
+  font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  cursor: pointer; border: none; display: flex; justify-content: space-between; align-items: center;
+  transition: background 0.2s; gap: 16px;
+}
+.faq-q:hover { background: var(--surface2); }
+.faq-q .arrow {
+  width: 22px; height: 22px; border-radius: 50%; background: var(--surface2);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: transform 0.3s, background 0.2s; font-size: 12px;
+}
+.faq-item.open .faq-q .arrow { transform: rotate(45deg); background: var(--orange); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+  background: var(--deep); font-size: 14px; color: var(--grey2); line-height: 1.7;
+  padding: 0 24px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 16px 24px 20px; }
+
+/* Sticky CTA mobile */
+.sticky-cta {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 400;
+  padding: 16px 20px; background: rgba(8,8,8,0.95); backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border); gap: 10px;
+}
+.sticky-cta .btn-whatsapp { border-radius: 10px; font-size: 16px; padding: 16px; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 40px clamp(20px,5vw,64px);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.footer-logo { font-family: var(--font-display); font-size: 18px; font-weight: 800; }
+.footer-logo em { color: var(--orange); font-style: normal; }
+.footer-info { font-family: var(--font-mono); font-size: 10px; color: var(--grey); text-align: center; line-height: 1.8; }
+.footer-copy { font-family: var(--font-mono); font-size: 10px; color: #444; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  .main-grid { grid-template-columns: 1fr; gap: 40px; }
+  .gallery-wrap { position: static; }
+  .selling-grid { grid-template-columns: 1fr; }
+  .sticky-cta { display: flex; }
+  .info-col .cta-box { margin-bottom: 80px; }
+  footer { flex-direction: column; text-align: center; }
+}
+@media (max-width: 600px) {
+  .specs-grid { grid-template-columns: 1fr; }
+  .trust-strip .t-text { font-size: 8px; }
+}
+
+/* ─── ENTRANCE ANIMATIONS ─── */
+.reveal {
+  opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
 </style>
 
-<!-- ========================================== -->
-<!-- 📊 RASTREAMENTO: GOOGLE ANALYTICS 4 (GA4)  -->
-<!-- ========================================== -->
+<!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
 </script>
-
-<!-- ========================================== -->
-<!-- 🎯 RASTREAMENTO: META PIXEL (FACEBOOK)     -->
-<!-- ========================================== -->
+<!-- META PIXEL -->
 <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  
-  fbq('init', 'SEU_PIXEL_ID_AQUI'); 
-  fbq('track', 'PageView');
-  // EVENTO DE CRO: O Pixel agora sabe que o cliente viu esse produto específico
-  fbq('track', 'ViewContent', { content_name: 'Acer Nitro V', content_category: 'Notebooks' });
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','SEU_PIXEL_ID_AQUI');
+  fbq('track','PageView');
+  fbq('track','ViewContent',{content_name:'Acer Nitro V',content_category:'Notebooks'});
 </script>
-<noscript>
-  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/>
-</noscript>
-
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="btn-back">← Voltar para Vitrine</a>
-  <a href="index.html" class="logo">Center<span>Net</span></a>
+  <a href="index.html" class="btn-back">← Vitrine</a>
+  <div class="nav-right">
+    <span class="nav-badge">Pronta Entrega</span>
+    <a href="index.html" class="logo">Center<em>Net</em></a>
+  </div>
 </nav>
 
-<div class="product-page-container">
-  <!-- Imagem do Produto -->
-  <div class="product-gallery">
-    <!-- Quando você tiver o caminho exato da imagem nova, é só trocar aqui no src -->
-    <img src="produtos/nitrov5.png" alt="Acer Nitro V">
+<!-- BAND -->
+<div class="hero-band">
+  <span class="marquee-inner">
+    🔥 FRETE GRÁTIS EM ANÁPOLIS &nbsp;·&nbsp; PARCELAMOS EM ATÉ 12X &nbsp;·&nbsp; GARANTIA NACIONAL &nbsp;·&nbsp; ATENDIMENTO IMEDIATO NO WHATSAPP &nbsp;·&nbsp;
+    🔥 FRETE GRÁTIS EM ANÁPOLIS &nbsp;·&nbsp; PARCELAMOS EM ATÉ 12X &nbsp;·&nbsp; GARANTIA NACIONAL &nbsp;·&nbsp; ATENDIMENTO IMEDIATO NO WHATSAPP &nbsp;·&nbsp;
+  </span>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- GALLERY -->
+  <div class="gallery-wrap reveal">
+    <div class="gallery-stage" id="mainStage">
+      <div class="grid-line"></div>
+      <img src="produtos/nitrov5.png" alt="Acer Nitro V — Center Net Informática" id="mainImg">
+    </div>
+    <div class="thumbnail-row">
+      <div class="thumb active" onclick="setAngle(0)">🖥️</div>
+      <div class="thumb" onclick="setAngle(1)">⌨️</div>
+      <div class="thumb" onclick="setAngle(2)">🔌</div>
+      <div class="thumb" onclick="setAngle(3)">📐</div>
+    </div>
   </div>
 
-  <!-- Informações do Produto -->
-  <div class="product-info">
-    <span class="product-stock">Pronta Entrega em Anápolis</span>
-    <h1 class="product-title">ACER NITRO V</h1>
-    <p class="product-desc">O setup definitivo para quem não tem tempo a perder. Alta performance para jogos competitivos, edição de vídeo avançada e modelagem 3D. Máquina fria, rápida e silenciosa.</p>
-    
-    <!-- Ficha Técnica Rápida -->
-    <ul class="specs-list">
-      <li><span>Processador</span> <span>Intel Core i5 / i7</span></li>
-      <li><span>Placa de Vídeo</span> <span>Série RTX</span></li>
-      <li><span>Tela</span> <span>144Hz Full HD IPS</span></li>
-      <li><span>Armazenamento</span> <span>SSD NVMe Ultrafast</span></li>
-      <li><span>Condição</span> <span>Novo com Garantia</span></li>
-    </ul>
+  <!-- INFO -->
+  <div class="info-col">
 
-    <!-- Botão de Venda Direta (Gatilho de Ação) -->
-    <button class="buy-btn" onclick="comprarProduto('Acer Nitro V')">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-10.852c-4.574 0-8.286 3.714-8.288 8.287-.001 1.464.382 2.895 1.109 4.156l-1.173 4.283 4.385-1.15c1.218.665 2.595 1.016 4.004 1.018h.003c4.571 0 8.285-3.712 8.288-8.285.002-4.575-3.712-8.289-8.287-8.289h-.001v-.02z"/></svg>
-      Consultar Preço e Estoque
+    <div class="tag-row reveal">
+      <span class="tag tag-green">● Pronta Entrega</span>
+      <span class="tag tag-orange">Gaming</span>
+      <span class="tag tag-grey">Notebook</span>
+    </div>
+
+    <div class="reveal">
+      <div class="product-name">ACER<br><span>NITRO V</span></div>
+      <p class="product-sub" style="margin-top:16px">
+        Potência real para quem leva a sério: jogos AAA, edição de vídeo, design 3D. Hardware de ponta com refrigeração avançada — sem throttling, sem desculpas.
+      </p>
+    </div>
+
+    <!-- SPECS GRID -->
+    <div class="specs-grid reveal">
+      <div class="spec-item">
+        <span class="spec-label">Processador</span>
+        <span class="spec-value">Intel Core <em>i5 / i7</em></span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Placa de Vídeo</span>
+        <span class="spec-value">NVIDIA <em>RTX Series</em></span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Tela</span>
+        <span class="spec-value"><em>144Hz</em> Full HD IPS</span>
+      </div>
+      <div class="spec-item">
+        <span class="spec-label">Armazenamento</span>
+        <span class="spec-value">SSD <em>NVMe</em></span>
+      </div>
+    </div>
+
+    <!-- SOCIAL PROOF -->
+    <div class="social-proof reveal">
+      <div class="avatar-stack">
+        <div class="avatar">😊</div>
+        <div class="avatar">👾</div>
+        <div class="avatar">🎮</div>
+      </div>
+      <p class="sp-text"><strong>+50 clientes</strong> já levaram este modelo este mês</p>
+    </div>
+
+    <!-- CTA BOX -->
+    <div class="cta-box reveal">
+      <div class="price-ask">Consulte o preço<br><small>e condições de parcelamento</small></div>
+      <p class="price-sub">Fale agora — respondemos em menos de 5 minutos 🚀</p>
+
+      <button class="btn-whatsapp" onclick="abrirWhatsapp('Comprar')">
+        <!-- ÍCONE DO GIT AQUI -->
+        <img src="midia w/3d-icon-social-media-app.png" alt="WhatsApp">
+        Falar no WhatsApp Agora
+      </button>
+
+      <button class="btn-secondary" onclick="abrirWhatsapp('Duvida')">
+        Tenho uma dúvida antes de comprar
+      </button>
+
+      <div class="trust-strip">
+        <div class="trust-item">
+          <span class="t-icon">🛡️</span>
+          <span class="t-text">Garantia<br>Nacional</span>
+        </div>
+        <div class="trust-item">
+          <span class="t-icon">📦</span>
+          <span class="t-text">Entrega<br>Imediata</span>
+        </div>
+        <div class="trust-item">
+          <span class="t-icon">💳</span>
+          <span class="t-text">Parcelamos<br>12x</span>
+        </div>
+        <div class="trust-item">
+          <span class="t-icon">⭐</span>
+          <span class="t-text">Loja<br>Física</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /info-col -->
+</div><!-- /main-grid -->
+
+<!-- ABOUT SECTION -->
+<div class="about-section">
+
+  <!-- SELLING POINTS -->
+  <p class="section-title reveal">Por que o Nitro V?</p>
+  <div class="selling-grid">
+    <div class="sell-card reveal">
+      <div class="sell-icon">⚡</div>
+      <div class="sell-title">Desempenho Sem Cortes</div>
+      <p class="sell-text">O sistema de refrigeração duplo mantém GPU e CPU no pico de clock mesmo em sessões longas. Sem throttling, sem queda de FPS no momento decisivo.</p>
+    </div>
+    <div class="sell-card reveal">
+      <div class="sell-icon">🎯</div>
+      <div class="sell-title">Tela de 144Hz</div>
+      <p class="sell-text">Painel IPS Full HD com taxa de atualização de 144Hz entrega movimentos ultrasuaves. Você vê o inimigo antes dele te ver.</p>
+    </div>
+    <div class="sell-card reveal">
+      <div class="sell-icon">🚀</div>
+      <div class="sell-title">SSD NVMe Ultrarrápido</div>
+      <p class="sell-text">Boot em segundos, carregamento de games e projetos em um piscar de olhos. HDD é passado — aqui é NVMe ou nada.</p>
+    </div>
+  </div>
+
+  <!-- FULL SPECS -->
+  <div class="full-specs reveal">
+    <p class="section-title">Ficha Técnica Completa</p>
+    <div class="specs-table">
+      <div class="specs-row"><span class="sr-label">Processador</span><span class="sr-value">Intel Core i5-13420H / i7-13620H</span></div>
+      <div class="specs-row"><span class="sr-label">Placa de Vídeo</span><span class="sr-value">NVIDIA RTX 4050 / 4060 <span class="badge">8GB GDDR6</span></span></div>
+      <div class="specs-row"><span class="sr-label">Memória RAM</span><span class="sr-value">16GB DDR5 — expansível a 32GB</span></div>
+      <div class="specs-row"><span class="sr-label">Armazenamento</span><span class="sr-value">512GB / 1TB SSD NVMe PCIe 4.0</span></div>
+      <div class="specs-row"><span class="sr-label">Tela</span><span class="sr-value">15.6" IPS FHD 1920×1080 — 144Hz</span></div>
+      <div class="specs-row"><span class="sr-label">Sistema Operacional</span><span class="sr-value">Windows 11 Home</span></div>
+      <div class="specs-row"><span class="sr-label">Conectividade</span><span class="sr-value">Wi-Fi 6, Bluetooth 5.1, USB-C, HDMI 2.1</span></div>
+      <div class="specs-row"><span class="sr-label">Bateria</span><span class="sr-value">57Wh — carregador 180W incluso</span></div>
+      <div class="specs-row"><span class="sr-label">Peso</span><span class="sr-value">2.3 kg</span></div>
+      <div class="specs-row"><span class="sr-label">Condição</span><span class="sr-value">Novo com Nota Fiscal <span class="badge">Garantia</span></span></div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section reveal">
+    <p class="section-title">Perguntas Frequentes</p>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Tem garantia? Qual o prazo? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Sim! Todo notebook vendido aqui sai com nota fiscal e garantia de fábrica Acer (normalmente 12 meses). Você também conta com nosso suporte técnico local em Anápolis — não precisa enviar para longe.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Posso parcelar? Quais as formas de pagamento? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Aceitamos cartão de crédito parcelado em até 12x, PIX à vista (com desconto!), boleto bancário e transferência. Consulte as condições exatas pelo WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Entregam em outras cidades? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Fazemos entrega em Anápolis sem custo adicional e enviamos para qualquer cidade do Brasil pelos Correios ou transportadora. Frete a combinar conforme destino.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Roda quais jogos? Dá pra jogar em alto com esse setup? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Com RTX 4060 + 144Hz você joga Valorant, CS2, Fortnite em máximo sem esforço. Cyberpunk 2077, GTA VI e AAAs pesados em médio/alto com ray tracing ativo. É um setup sério.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Serve para edição de vídeo e design também? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Com certeza. O i7 + RTX 4060 + 16GB RAM acelera exports no Premiere Pro, DaVinci Resolve e rende bem no Photoshop, Illustrator, Blender e softwares de engenharia como AutoCAD.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Posso ir pessoalmente ver e testar? <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">Claro! Temos loja física na Rua 15 de Dezembro, 98 Sl A Lj 26/27 em Anápolis. Você pode testar o produto antes de fechar. Recomendamos ligar no WhatsApp antes para confirmar disponibilidade.</div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="reveal" style="text-align:center; padding: 40px 0 20px;">
+    <p style="font-family:var(--font-display); font-size: clamp(30px,4vw,56px); font-weight:800; line-height:1.1; margin-bottom:24px;">
+      Pronto pra subir de nível?
+    </p>
+    <p style="color:var(--grey2); font-size:16px; margin-bottom:32px;">
+      Estoque limitado. Fale agora e garanta o seu com condições especiais.
+    </p>
+    <button class="btn-whatsapp" style="max-width:460px; margin:0 auto;" onclick="abrirWhatsapp('FinalCTA')">
+      <!-- ÍCONE DO GIT AQUI -->
+      <img src="midia w/3d-icon-social-media-app.png" alt="WhatsApp">
+      Garantir Meu Nitro V Agora
     </button>
   </div>
+
+</div>
+
+<!-- STICKY CTA (mobile) -->
+<div class="sticky-cta">
+  <button class="btn-whatsapp" onclick="abrirWhatsapp('Sticky')">
+    <!-- ÍCONE DO GIT AQUI -->
+    <img src="midia w/3d-icon-social-media-app.png" alt="WhatsApp">
+    Falar no WhatsApp
+  </button>
 </div>
 
 <footer>
-  <p>Rua 15 de Dezembro, 98 sl A lj 26/27, Anápolis - GO, 75024-070</p>
-  <p style="margin-top: 10px;">© 2026 CENTER NET INFORMÁTICA. TODOS OS DIREITOS RESERVADOS.</p>
+  <span class="footer-logo">Center<em>Net</em></span>
+  <div class="footer-info">
+    Rua 15 de Dezembro, 98 Sl A Lj 26/27 — Anápolis / GO &nbsp;·&nbsp; 75024-070
+  </div>
+  <span class="footer-copy">© 2026 Center Net Informática</span>
 </footer>
 
 <script>
-  // Coloque o número do seu WhatsApp aqui (com DDD)
-  const NUMERO_WHATSAPP = "5562000000000"; 
-  
-  function comprarProduto(nomeDoProduto) {
-    // 1. EVENTO CRO: Avisa o Pixel que a pessoa iniciou a compra (InitiateCheckout)
-    if(typeof fbq === 'function') fbq('track', 'InitiateCheckout', { content_name: nomeDoProduto });
-    
-    // Avisa o Google Analytics
-    if(typeof gtag === 'function') gtag('event', 'begin_checkout', { items: [{ item_name: nomeDoProduto }] });
-    
-    // 2. Monta a mensagem e abre o WhatsApp direto
-    const msg = encodeURIComponent(`Olá! Estou no site e tenho interesse no: ${nomeDoProduto}. Gostaria de confirmar valores e disponibilidade.`);
-    window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msg}`, '_blank');
-  }
-</script>
+// ─── CONFIG ───────────────────────────────────────
+const NUMERO_WHATSAPP = "5562000000000"; // ← coloque seu número aqui (com DDI e DDD)
 
+// ─── WHATSAPP ─────────────────────────────────────
+const mensagens = {
+  Comprar: `Olá! Vi o *Acer Nitro V* no site e quero comprar. Pode me passar o preço e condições de parcelamento?`,
+  Duvida:  `Olá! Tenho uma dúvida sobre o *Acer Nitro V* antes de finalizar. Pode me ajudar?`,
+  FinalCTA:`Olá! Quero garantir meu *Acer Nitro V*. Qual a disponibilidade e condições especiais de hoje?`,
+  Sticky:  `Olá! Me interessei pelo *Acer Nitro V* no site. Podem me ajudar?`,
+};
+
+function abrirWhatsapp(tipo) {
+  const msg = encodeURIComponent(mensagens[tipo] || mensagens.Comprar);
+  if(typeof fbq === 'function') fbq('track','InitiateCheckout',{content_name:'Acer Nitro V'});
+  if(typeof gtag === 'function') gtag('event','begin_checkout',{items:[{item_name:'Acer Nitro V'}]});
+  window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msg}`, '_blank');
+}
+
+// ─── FAQ ──────────────────────────────────────────
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if(!isOpen) item.classList.add('open');
+}
+
+// ─── SCROLL REVEAL ────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ─── THUMBNAILS (placeholder) ─────────────────────
+const angles = [
+  'produtos/nitrov5.png',
+  'produtos/nitrov5_2.png',
+  'produtos/nitrov5_3.png',
+  'produtos/nitrov5_4.png',
+];
+function setAngle(i) {
+  document.getElementById('mainImg').src = angles[i] || angles[0];
+  document.querySelectorAll('.thumb').forEach((t,idx) => t.classList.toggle('active', idx === i));
+}
+</script>
 </body>
 </html>
