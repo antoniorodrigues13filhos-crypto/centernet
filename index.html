@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
 <style>
@@ -114,7 +113,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 @keyframes lineH { 0% { width: 0; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0; left: 100%; } }
 @keyframes lineV { 0% { height: 0; top: 0; } 50% { height: 100%; top: 0; } 100% { height: 0; top: 100%; } }
 
-/* Cenas Animadas (Otimizadas para GPU Mobile) */
+/* Cenas Animadas (Otimizadas para GPU) */
 .hero-content {
   position: relative; 
   z-index: 10;
@@ -186,7 +185,7 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 /* ── PRODUTOS ── */
 #produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; }
 .produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; }
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 10; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; position: relative; z-index: 10; }
 
 .product-card { 
   background: linear-gradient(160deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,1) 100%);
@@ -225,26 +224,12 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
   border-bottom: 1px solid var(--border-color);
 }
 .product-img-wrap::before {
-  content: '';
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  background: var(--orange);
-  filter: blur(60px);
-  border-radius: 50%;
-  opacity: 0.05;
-  transition: opacity 0.5s;
-  z-index: 1;
+  content: ''; position: absolute; width: 140px; height: 140px; background: var(--orange); filter: blur(60px); border-radius: 50%; opacity: 0.05; transition: opacity 0.5s; z-index: 1;
 }
 .product-card:hover .product-img-wrap::before { opacity: 0.15; }
 
 .product-img-wrap img { 
-  max-height: 100%; max-width: 100%; 
-  object-fit: contain; 
-  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); 
-  position: relative;
-  z-index: 2;
-  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  max-height: 100%; max-width: 100%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.8)); position: relative; z-index: 2; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .product-card:hover .product-img-wrap img { transform: scale(1.05); }
 
@@ -255,7 +240,7 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .spec-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; color: var(--grey); margin-bottom: 4px; }
 .spec-value { font-size: 13px; font-weight: 500; color: var(--white); }
 
-.card-cta { margin-top: auto; width: 100%; padding: 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; }
+.card-cta { margin-top: auto; width: 100%; padding: 16px; border-radius: 8px; font-size: 12px; font-weight: 600; text-transform: uppercase; cursor: pointer; border: none; font-family: var(--font-body); transition: all 0.25s; text-align: center;}
 .cta-filled { background: var(--orange); color: #fff; }
 .cta-filled:hover { background: var(--orange-dim); box-shadow: 0 5px 15px rgba(255,77,0,0.3); }
 .cta-outline { background: transparent; color: var(--grey-light); border: 1px solid var(--border-strong) !important; }
@@ -297,14 +282,54 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 /* REVEAL ANIMATIONS */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.1s; }
-.reveal-d2 { transition-delay: 0.2s; }
-.reveal-d3 { transition-delay: 0.3s; }
 
 @media (max-width: 900px) {
   .problema-grid { grid-template-columns: 1fr; gap: 40px; }
-  .products-grid { grid-template-columns: 1fr; }
 }
+
+/* ── WIDGET DO CHATBOT ABERTO ── */
+#chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 300; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+#chat-box { width: 360px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 20px; overflow: hidden; display: none; flex-direction: column; box-shadow: 0 32px 80px rgba(0,0,0,0.8); transform-origin: bottom right; animation: chatPop 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes chatPop { from{opacity:0;transform:scale(0.85)} to{opacity:1;transform:scale(1)} }
+
+.chat-head { background: var(--black); border-bottom: 1px solid var(--border-color); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; }
+.chat-agent { display: flex; align-items: center; gap: 12px; }
+
+/* Avatar da Camila */
+.chat-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--surface2); border: 2px solid var(--orange); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.chat-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.chat-avatar::after { content: ''; position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; background: #22c55e; border-radius: 50%; border: 2px solid var(--black); z-index: 2;}
+
+.chat-agent-name { font-weight: 600; font-size: 15px; color: var(--white); }
+.chat-agent-status { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: #22c55e; }
+#close-chat-btn { background: none; border: none; color: var(--grey); cursor: pointer; padding: 4px; transition: color 0.2s; }
+#close-chat-btn:hover { color: var(--white); }
+#close-chat-btn svg { width: 20px; height: 20px; }
+
+#chat-messages { flex: 1; height: 350px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; scrollbar-width: thin; scrollbar-color: rgba(255,77,0,0.3) transparent; }
+.msg-bot, .msg-user { max-width: 85%; padding: 14px 18px; border-radius: 12px; font-size: 13px; line-height: 1.6; }
+.msg-bot { background: var(--surface2); border: 1px solid var(--border-color); color: var(--white); align-self: flex-start; border-radius: 12px 12px 12px 4px; }
+.msg-user { background: var(--orange); color: #fff; align-self: flex-end; border-radius: 12px 12px 4px 12px; }
+
+.chat-input-area { padding: 14px 16px; background: var(--black); border-top: 1px solid var(--border-color); display: flex; gap: 10px; align-items: center; }
+#chat-input { flex: 1; background: var(--surface2); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 14px; font-size: 13px; color: var(--white); font-family: var(--font-body); outline: none; transition: border-color 0.2s; }
+#chat-input:focus { border-color: var(--orange); }
+#send-btn { width: 42px; height: 42px; background: var(--orange); border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
+#send-btn:hover { background: var(--orange-dim); }
+#send-btn svg { width: 18px; height: 18px; color: #fff; }
+
+/* Botão Flutuante Personalizado */
+#chat-fab { width: 64px; height: 64px; background: transparent; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,0,0,0.5); transition: transform 0.25s; position: relative; overflow: hidden; padding: 0;}
+#chat-fab:hover { transform: scale(1.08); }
+#chat-fab img { width: 100%; height: 100%; object-fit: contain; }
+.fab-badge { position: absolute; top: -2px; right: -2px; width: 20px; height: 20px; background: var(--orange); border-radius: 50%; border: 2px solid var(--black); font-family: var(--font-mono); font-size: 10px; font-weight: bold; color: #fff; display: flex; align-items: center; justify-content: center; }
+
+/* Typing animation */
+.typing { display: flex; gap: 4px; padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border-color); border-radius: 12px 12px 12px 4px; align-self: flex-start; width: fit-content; }
+.dot { width: 6px; height: 6px; background: var(--grey); border-radius: 50%; animation: dotbounce 1.2s infinite; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotbounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
 </style>
 </head>
 <body>
@@ -316,7 +341,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <nav>
   <div class="logo">Center<span>Net</span></div>
-  <button class="cta-pill" onclick="window.open('https://wa.me/5562993362276')">Falar com Especialista</button>
+  <button class="cta-pill" onclick="openChat()">Falar com Especialista</button>
 </nav>
 
 <!-- HERO TRACK COM FLUID SCROLL-TELLING DESACOPLADO -->
@@ -333,47 +358,34 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
     </div>
     
     <div class="hero-content">
-      
-      <!-- Cena 0 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">O SEU TEMPO VALE MAIS<br>QUE UM PC <span style="color: var(--orange);">LENTO.</span></h1>
         <p class="hero-sub">Demorando para ligar? Travando bem na hora que você mais precisa?</p>
       </div>
-
-      <!-- Cena 1 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">NÓS <span style="color: var(--orange);">ACELERAMOS.</span></h1>
         <p class="hero-sub">O celular quebrou ou a bateria viciou? Trocamos rápido para você não parar.</p>
       </div>
-
-      <!-- Cena 2 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">O JOGO TÁ <span style="color: var(--orange);">TRAVANDO?</span></h1>
         <p class="hero-sub">Identificamos o gargalo e fazemos o upgrade exato para a sua máquina voar.</p>
       </div>
-
-      <!-- Cena 3 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">SISTEMAS DE <span style="color: var(--orange);">SEGURANÇA.</span></h1>
         <p class="hero-sub">A rede caiu? Câmeras falhando? Nós reconectamos e protegemos seu patrimônio.</p>
       </div>
-
-      <!-- Cena 4 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">MÁQUINAS QUE NÃO<br>TE DEIXAM NA <span style="color: var(--orange);">MÃO.</span></h1>
         <p class="hero-sub">Especialistas em montagem, performance extrema e reparo cirúrgico.</p>
       </div>
-
-      <!-- Cena 5 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">RÁPIDO.<br>SEGURO.<br><span style="color: var(--orange);">DEFINITIVO.</span></h1>
         <p class="hero-sub">Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente.</p>
         <div class="hero-actions">
-          <button class="btn-premium btn-orange" onclick="window.open('https://wa.me/5562993362276')">Resolver Problema</button>
+          <button class="btn-premium btn-orange" onclick="openChatWith('Quero resolver um problema no meu aparelho.')">Resolver Problema</button>
           <button class="btn-premium" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: white;" onclick="document.getElementById('produtos').scrollIntoView({behavior:'smooth'})">Conheça nossos produtos</button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -389,25 +401,23 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
-<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS PARA REVELAÇÃO ESQUERDA -> DIREITA -->
+<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS OTIMIZADA -->
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
 
   <div class="produtos-header">
     <div>
       <div class="section-tag reveal">Vitrine</div>
-      <h2 class="section-title reveal reveal-d1">Conheça nossos <span class="dim">produtos.</span></h2>
+      <h2 class="section-title reveal">Conheça nossos <span class="dim">produtos.</span></h2>
     </div>
-    <p class="reveal reveal-d2" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Setups testados e otimizados antes de sair. Zero improviso.</p>
+    <p class="reveal" style="font-size:13px;color:var(--grey);max-width:280px;line-height:1.7">Setups testados e otimizados antes de sair. Zero improviso.</p>
   </div>
 
   <div class="products-grid">
     <!-- CARD 1 -->
-    <div class="product-card reveal reveal-d1">
+    <div class="product-card reveal">
       <span class="product-badge badge-default">Workstation V1</span>
-      <div class="product-img-wrap">
-        <img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT">
-      </div>
+      <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="AMD Ryzen 5 5600GT"></div>
       <div class="product-body">
         <div class="product-sku">SKU: AMD-5600</div>
         <div class="product-name">AMD Ryzen 5<br>5600GT</div>
@@ -415,16 +425,14 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <div><div class="spec-label">Processamento</div><div class="spec-value">6C / 12T</div></div>
           <div><div class="spec-label">Gráficos</div><div class="spec-value">Radeon™ iGPU</div></div>
         </div>
-        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276?text=Interesse na Workstation V1 (Ryzen 5 5600GT)')">Solicitar Cotação</button>
+        <button class="card-cta cta-filled" onclick="openChatWith('Quero um orçamento da Workstation V1 (Ryzen 5 5600GT)')">Solicitar Cotação</button>
       </div>
     </div>
 
     <!-- CARD 2 (FEATURED) -->
-    <div class="product-card featured reveal reveal-d2">
+    <div class="product-card featured reveal">
       <span class="product-badge badge-hot">🔥 Mais Vendido</span>
-      <div class="product-img-wrap">
-        <img src="produtos/nitrov5.png" alt="Acer Nitro V">
-      </div>
+      <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Acer Nitro V"></div>
       <div class="product-body">
         <div class="product-sku">SKU: NITRO-V</div>
         <div class="product-name">Acer Nitro V<br>Intel + RTX</div>
@@ -432,16 +440,14 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <div><div class="spec-label">Display</div><div class="spec-value">144Hz IPS</div></div>
           <div><div class="spec-label">GPU</div><div class="spec-value">NVIDIA RTX</div></div>
         </div>
-        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276?text=Interesse no Acer Nitro V')">Verificar Estoque</button>
+        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de verificar o estoque do Acer Nitro V')">Verificar Estoque</button>
       </div>
     </div>
 
     <!-- CARD 3 -->
-    <div class="product-card reveal reveal-d3">
+    <div class="product-card reveal">
       <span class="product-badge badge-new">Upgrade GPU</span>
-      <div class="product-img-wrap">
-        <img src="produtos/rtx3090.png" alt="RTX 3060 OC">
-      </div>
+      <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX 3060 OC"></div>
       <div class="product-body">
         <div class="product-sku">SKU: RTX-3060</div>
         <div class="product-name">GeForce RTX<br>3060 OC</div>
@@ -449,16 +455,14 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <div><div class="spec-label">VRAM</div><div class="spec-value">12GB GDDR6</div></div>
           <div><div class="spec-label">Arq.</div><div class="spec-value">Ampere</div></div>
         </div>
-        <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276?text=Interesse na RTX 3060 OC')">Consultar Valor</button>
+        <button class="card-cta cta-outline" onclick="openChatWith('Qual o valor da RTX 3060 OC?')">Consultar Valor</button>
       </div>
     </div>
 
     <!-- CARD 4 (CADEIRA) -->
-    <div class="product-card reveal reveal-d1">
+    <div class="product-card reveal">
       <span class="product-badge badge-default">Conforto</span>
-      <div class="product-img-wrap">
-        <img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright">
-      </div>
+      <div class="product-img-wrap"><img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright"></div>
       <div class="product-body">
         <div class="product-sku">SKU: CADEIRA-BRIGHT</div>
         <div class="product-name">Cadeira Gamer<br>Bright</div>
@@ -466,16 +470,14 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <div><div class="spec-label">Suporte</div><div class="spec-value">Até 120Kg</div></div>
           <div><div class="spec-label">Tipo</div><div class="spec-value">Reclinável</div></div>
         </div>
-        <button class="card-cta cta-filled" onclick="window.open('https://wa.me/5562993362276?text=Interesse na Cadeira Gamer Bright')">Verificar Estoque</button>
+        <button class="card-cta cta-filled" onclick="openChatWith('Tem Cadeira Gamer Bright no estoque?')">Verificar Estoque</button>
       </div>
     </div>
 
     <!-- CARD 5 (MONITOR) -->
-    <div class="product-card reveal reveal-d2">
+    <div class="product-card reveal">
       <span class="product-badge badge-new">Imersão</span>
-      <div class="product-img-wrap">
-        <img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer 27 Curvo Acer">
-      </div>
+      <div class="product-img-wrap"><img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer 27 Curvo Acer"></div>
       <div class="product-body">
         <div class="product-sku">SKU: ACER-ED273</div>
         <div class="product-name">Monitor Acer 27"<br>Curvo 144Hz</div>
@@ -483,7 +485,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <div><div class="spec-label">Resolução</div><div class="spec-value">Full HD</div></div>
           <div><div class="spec-label">Resposta</div><div class="spec-value">1ms</div></div>
         </div>
-        <button class="card-cta cta-outline" onclick="window.open('https://wa.me/5562993362276?text=Interesse no Monitor Acer 27')">Consultar Valor</button>
+        <button class="card-cta cta-outline" onclick="openChatWith('Gostaria de consultar o valor do Monitor Curvo 27 da Acer')">Consultar Valor</button>
       </div>
     </div>
   </div>
@@ -494,19 +496,19 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   <div class="problema-grid">
     <div>
       <div class="section-tag reveal">O Problema</div>
-      <h2 class="section-title reveal reveal-d1">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
+      <h2 class="section-title reveal">Tecnologia lenta <span class="dim">custa sua paz.</span></h2>
       <ul class="problema-list">
-        <li class="problema-item reveal reveal-d1">
+        <li class="problema-item reveal">
           <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <div class="problema-item-text"><strong>Lentidão e travamentos diários</strong>Seu PC ou notebook demora uma eternidade para iniciar e trava bem na hora que você precisa.</div>
         </li>
-        <li class="problema-item reveal reveal-d2">
+        <li class="problema-item reveal">
           <div class="problema-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
           <div class="problema-item-text"><strong>Celular quebrado ou bateria viciada</strong>A tela trincou, a bateria não dura nada ou o aparelho simplesmente apagou.</div>
         </li>
       </ul>
     </div>
-    <div class="reveal reveal-d2">
+    <div class="reveal">
       <div class="section-tag">A Solução</div>
       <h2 class="section-title">Assistência <span class="dim">de confiança.</span></h2>
       <div class="solucao-box">
@@ -516,7 +518,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
           <li class="solucao-point"><strong>Peças de alta qualidade</strong> — componentes que duram de verdade.</li>
           <li class="solucao-point"><strong>Garantia Real</strong> — estamos aqui para o que você precisar.</li>
         </ul>
-        <button class="btn-primary" style="margin-top:28px" onclick="window.open('https://wa.me/5562993362276')">Falar com um técnico agora</button>
+        <button class="btn-primary" style="margin-top:28px" onclick="openChatWith('Preciso de manutenção em um aparelho')">Falar com a Camila agora</button>
       </div>
     </div>
   </div>
@@ -526,24 +528,24 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 <section id="servicos">
   <div class="servicos-inner">
     <div class="section-tag reveal">Serviços</div>
-    <h2 class="section-title reveal reveal-d1">O que <span class="dim">fazemos.</span></h2>
+    <h2 class="section-title reveal">O que <span class="dim">fazemos.</span></h2>
     <div class="servicos-grid">
-      <div class="servico-item reveal reveal-d1">
+      <div class="servico-item reveal">
         <div class="servico-num">01</div>
         <div class="servico-title">PCs & Notebooks</div>
         <p class="servico-desc">Especialistas em computadores e portáteis. Da otimização de sistema ao reparo avançado de hardware.</p>
       </div>
-      <div class="servico-item reveal reveal-d2">
+      <div class="servico-item reveal">
         <div class="servico-num">02</div>
         <div class="servico-title">Periféricos & Segurança</div>
         <p class="servico-desc">Acessórios de alta performance para o seu setup e instalação profissional de sistemas de segurança (CFTV).</p>
       </div>
-      <div class="servico-item reveal reveal-d3">
+      <div class="servico-item reveal">
         <div class="servico-num">03</div>
         <div class="servico-title">Montagem & Manutenção</div>
         <p class="servico-desc">Montagem de máquinas do zero, limpeza preventiva e manutenção cirúrgica para prolongar a vida útil do hardware.</p>
       </div>
-      <div class="servico-item reveal reveal-d4">
+      <div class="servico-item reveal">
         <div class="servico-num">04</div>
         <div class="servico-title">Smartphones</div>
         <p class="servico-desc">Assistência técnica rápida e confiável. Troca de telas, baterias e recuperação completa de sistemas.</p>
@@ -573,9 +575,161 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </footer>
 
+<!-- WIDGET DO CHATBOT ABERTO -->
+<div id="chat-fab-wrap">
+  <div id="chat-box">
+    <div class="chat-head">
+      <div class="chat-agent">
+        <!-- AVATAR CAMILA -->
+        <div class="chat-avatar">
+          <img src="assetschat/camila.jpg.jpg" alt="Camila">
+        </div>
+        <div>
+          <div class="chat-agent-name">Camila</div>
+          <div class="chat-agent-status">● Online agora</div>
+        </div>
+      </div>
+      <button id="close-chat-btn" onclick="closeChat()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    
+    <div id="chat-messages">
+      <div class="msg-bot">
+        Olá! Sou a Camila, assistente virtual da Center Net Informática. 👋<br><br>
+        Posso te ajudar com dúvidas sobre nossos produtos (Workstations, Notebooks Nitro, RTX, Monitores, Cadeiras) ou agendar manutenções para PCs, celulares e CFTV. O que você procura?
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+      <button id="send-btn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ICONE DO FAB (3D APP) -->
+  <button id="chat-fab" onclick="toggleChat()">
+    <img src="midia w/3d-icon-social-media-app.png" alt="Chat" style="border-radius: 50%;">
+    <span class="fab-badge">1</span>
+  </button>
+</div>
+
 <script>
 // ==========================================
-// 1. LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
+// LÓGICA DO CHATBOT DA CAMILA (CONVERSA ABERTA & EASTER EGG)
+// ==========================================
+let chatOpen = false;
+
+function openChat() {
+  document.getElementById('chat-box').style.display = 'flex';
+  chatOpen = true;
+  document.querySelector('.fab-badge').style.display = 'none';
+  setTimeout(() => document.getElementById('chat-input').focus(), 100);
+}
+
+function closeChat() {
+  document.getElementById('chat-box').style.display = 'none';
+  chatOpen = false;
+}
+
+function toggleChat() {
+  chatOpen ? closeChat() : openChat();
+}
+
+function openChatWith(msg) {
+  openChat();
+  setTimeout(() => {
+    document.getElementById('chat-input').value = msg;
+    sendMessage();
+  }, 300);
+}
+
+// Cérebro do Chatbot
+function getBotResponse(input) {
+  const lowerInput = input.toLowerCase();
+
+  // EASTER EGG REQUERIDO
+  if (lowerInput.includes("jose") && lowerInput.includes("vagabundo") && lowerInput.includes("preguiçoso")) {
+    return "sim e e pq causa de homens assim que estamos indo para 3 guerra mundial";
+  }
+
+  // INTENÇÕES DOS PRODUTOS
+  if (lowerInput.includes("workstation") || lowerInput.includes("ryzen") || lowerInput.includes("v1") || lowerInput.includes("5600")) {
+    return "A nossa Workstation V1 vem equipada com o poderoso AMD Ryzen 5 5600GT (6 Núcleos / 12 Threads) e gráficos Radeon integrados. É o setup ideal para entrada profissional e alta performance sem gastar muito. Quer que eu te passe o valor final pelo WhatsApp?";
+  }
+  
+  if (lowerInput.includes("nitro") || lowerInput.includes("notebook") || lowerInput.includes("laptop")) {
+    return "O Acer Nitro V é o nosso monstro em mobilidade! 🔥 Vem com Intel e NVIDIA RTX dedicada, além de uma tela ultra fluida de 144Hz IPS. É perfeito pra rodar tudo ou trabalhar pesado onde você estiver. Quer consultar nosso estoque atual?";
+  }
+  
+  if (lowerInput.includes("rtx") || lowerInput.includes("3060") || lowerInput.includes("placa de video") || lowerInput.includes("gpu")) {
+    return "A GeForce RTX 3060 OC tem 12GB de VRAM GDDR6 e arquitetura Ampere. É a injeção de FPS e velocidade de renderização que a sua máquina tá pedindo. Quer que eu veja o preço para você?";
+  }
+  
+  if (lowerInput.includes("cadeira") || lowerInput.includes("bright")) {
+    return "A Cadeira Gamer Bright suporta até 120Kg e é totalmente reclinável. É o nível máximo de conforto para quem passa horas trabalhando ou jogando. Gostaria de saber as condições de pagamento?";
+  }
+  
+  if (lowerInput.includes("monitor") || lowerInput.includes("curvo") || lowerInput.includes("tela") || lowerInput.includes("144hz")) {
+    return "O Monitor Acer de 27 polegadas Curvo é incrível. Ele entrega Full HD a 144Hz com 1ms de resposta, dando uma vantagem competitiva enorme e imersão total. Posso te encaminhar pro especialista para fechar a compra?";
+  }
+
+  // INTENÇÕES DE SERVIÇOS
+  if (lowerInput.includes("manutenção") || lowerInput.includes("conserto") || lowerInput.includes("quebrou") || lowerInput.includes("arrumar") || lowerInput.includes("lento")) {
+    return "Nós somos especialistas! Realizamos diagnóstico de PCs lentos, limpeza técnica, instalação de câmeras (CFTV) e claro, conserto de telas e baterias de celulares. Se quiser, clique aqui para falar com um técnico de verdade no WhatsApp: <br><br><a href='https://wa.me/5562993362276' target='_blank' style='color:var(--orange); text-decoration:underline;'>Falar no WhatsApp</a>";
+  }
+
+  // RESPOSTA PADRÃO
+  return "Desculpe, não entendi muito bem. Sou uma assistente virtual focada nos nossos produtos da loja (Workstations, RTX 3060, Monitores, Cadeiras) e serviços de reparo. Como posso te ajudar hoje?";
+}
+
+function sendMessage() {
+  const inputEl = document.getElementById('chat-input');
+  const text = inputEl.value.trim();
+  if (!text) return;
+
+  const messagesContainer = document.getElementById('chat-messages');
+
+  // Adiciona Mensagem do Usuário
+  const userDiv = document.createElement('div');
+  userDiv.className = 'msg-user';
+  userDiv.textContent = text;
+  messagesContainer.appendChild(userDiv);
+  inputEl.value = '';
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  // Mostra indicador digitando...
+  setTimeout(() => {
+    const typing = document.createElement('div');
+    typing.className = 'typing';
+    typing.id = 'typing';
+    typing.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+    messagesContainer.appendChild(typing);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Processa a resposta do Bot
+    setTimeout(() => {
+      document.getElementById('typing')?.remove();
+      const botResponseText = getBotResponse(text);
+      
+      const botDiv = document.createElement('div');
+      botDiv.className = 'msg-bot';
+      botDiv.innerHTML = botResponseText;
+      messagesContainer.appendChild(botDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1200); // Simulando o tempo de resposta "humano" de 1.2s
+
+  }, 400);
+}
+
+document.getElementById('chat-input').addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+// ==========================================
+// SCROLL-TELLING E CANVAS FLUIDO
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -662,7 +816,7 @@ function animate() {
 animate();
 
 // ==========================================
-// 2. REVEAL ANIMATION (CSS CLASSES)
+// REVEAL ANIMATION (CSS CLASSES)
 // ==========================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -673,7 +827,7 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // ==========================================
-// 3. CAMADA P5.JS (REVELAÇÃO LASER VERTICAL - DA ESQUERDA PARA A DIREITA)
+// CAMADA P5.JS (REVELAÇÃO LASER VERTICAL OTIMIZADA)
 // ==========================================
 const productRevealSketch = (p) => {
   let container;
@@ -706,17 +860,13 @@ const productRevealSketch = (p) => {
     }
 
     p.noStroke();
-    // Mapeia de 0 até p.width (Esquerda para a Direita)
     let revealX = p.map(progress, 0, 1, 0, p.width);
 
-    // Fundo escuro na parte que AINDA NÃO FOI revelada (do X atual até ao final da direita)
     p.fill(5, 5, 5, 255);
     p.rect(revealX, 0, p.width - revealX, p.height);
 
     p.strokeCap(p.SQUARE);
     
-    // Simulação de Glow sem usar shadowBlur (MUITO mais rápido no Mobile)
-    // Linha reta vertical
     p.strokeWeight(20);
     p.stroke(255, 77, 0, 30);
     p.line(revealX, 0, revealX, p.height);
