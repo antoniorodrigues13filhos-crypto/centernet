@@ -168,17 +168,12 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── CHATBOT & WHATSAPP WIDGETS ── */
+/* ── CHATBOT WIDGET ── */
 #chat-fab-wrap { position: fixed; bottom: 28px; right: 28px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end; }
 #chat-fab { width: 68px; height: 64px; background: transparent; border: none; cursor: pointer; transition: transform 0.25s; position: relative; padding: 0; }
 #chat-fab:hover { transform: scale(1.1); }
 #chat-fab img { width: 100%; height: 100%; object-fit: contain; }
 .fab-badge { position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; background: var(--orange); border-radius: 50%; border: 3px solid var(--black); color: #fff; font-family: var(--font-mono); font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10;}
-
-/* Novo Botão Fixo de WhatsApp */
-#wa-fixed { position: fixed; bottom: 28px; left: 28px; z-index: 9998; background: #25D366; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: transform 0.3s; text-decoration: none; border: 3px solid var(--black); }
-#wa-fixed:hover { transform: scale(1.1) translateY(-5px); box-shadow: 0 15px 25px rgba(37, 211, 102, 0.4); }
-#wa-fixed svg { width: 30px; height: 30px; fill: #fff; }
 
 #chat-box { 
   width: 360px; max-height: 520px; background: var(--surface); 
@@ -212,8 +207,6 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 
 @media (max-width: 768px) {
   #chat-fab-wrap { bottom: 20px; right: 20px; }
-  #wa-fixed { bottom: 20px; left: 20px; width: 50px; height: 50px; }
-  #wa-fixed svg { width: 24px; height: 24px; }
   #chat-box {
     position: fixed; top: 0; left: 0; right: 0; bottom: 0;
     width: 100vw; height: 100dvh; max-height: none; 
@@ -233,11 +226,6 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
 <div id="preloader">
   <div class="load-bar"><div id="load-progress"></div></div>
 </div>
-
-<!-- Botão WA Fixo -->
-<a href="https://wa.me/5562000000000?text=Ol%C3%A1%21%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20um%20especialista." target="_blank" id="wa-fixed" title="Falar no WhatsApp">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824zm-3.392-10.852c-4.574 0-8.286 3.714-8.288 8.287-.001 1.464.382 2.895 1.109 4.156l-1.173 4.283 4.385-1.15c1.218.665 2.595 1.016 4.004 1.018h.003c4.571 0 8.285-3.712 8.288-8.285.002-4.575-3.712-8.289-8.287-8.289h-.001v-.02z"/></svg>
-</a>
 
 <nav>
   <div class="logo">Center<span>Net</span></div>
