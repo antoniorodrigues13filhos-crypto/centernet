@@ -92,7 +92,7 @@ nav .cta-pill:hover { background: #e64500; transform: scale(1.05); box-shadow: 0
 .hero-sub { font-size: clamp(14px, 2vw, 22px); max-width: 600px; line-height: 1.6; color: rgba(255,255,255,0.8); margin-bottom: 30px; }
 .hero-actions { display: flex; gap: 20px; flex-wrap: wrap; pointer-events: auto; }
 
-/* ── ESTILOS CRO (NOVOS) ── */
+/* ── ESTILOS CRO ── */
 .urgency-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 77, 0, 0.1); border: 1px solid rgba(255,77,0,0.3); padding: 6px 14px; border-radius: 100px; font-family: var(--font-mono); font-size: 12px; color: var(--orange); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
 .pulse-dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; box-shadow: 0 0 10px var(--orange); animation: pulseDot 1.5s infinite; }
 @keyframes pulseDot { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 77, 0, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(255, 77, 0, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 77, 0, 0); } }
@@ -124,7 +124,7 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 .section-title { font-family: var(--font-display); font-size: clamp(40px, 7vw, 90px); line-height: 0.92; margin-bottom: 20px; }
 .dim { color: var(--grey); }
 
-/* ── SERVIÇOS EXPRESSOS (NOVO CRO) ── */
+/* ── SERVIÇOS EXPRESSOS ── */
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 50px; }
 .service-card { background: var(--surface); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 16px; transition: transform 0.3s, border-color 0.3s; position: relative; overflow: hidden;}
 .service-card:hover { transform: translateY(-5px); border-color: var(--orange); }
@@ -154,7 +154,7 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 .cta-outline { background: transparent; color: var(--white); border: 1px solid var(--border-color); }
 .cta-outline:hover { border-color: var(--orange); background: rgba(255,77,0,0.1); }
 
-/* ── DEPOIMENTOS (NOVO CRO) ── */
+/* ── DEPOIMENTOS ── */
 .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .review-card { background: var(--surface2); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); }
 .review-stars { color: var(--orange); margin-bottom: 15px; font-size: 18px; letter-spacing: 2px; }
@@ -220,6 +220,40 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 
 footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var(--border-color); text-align: center; font-family: var(--font-mono); font-size: 11px; color: #555;}
 </style>
+
+<!-- ========================================== -->
+<!-- 📊 RASTREAMENTO: GOOGLE ANALYTICS 4 (GA4)  -->
+<!-- ========================================== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+<!-- ========================================== -->
+<!-- 🎯 RASTREAMENTO: META PIXEL (FACEBOOK)     -->
+<!-- ========================================== -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  
+  // Substitua pelo seu Pixel ID
+  fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+  fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"/>
+</noscript>
+
 </head>
 <body>
 
@@ -287,7 +321,7 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   </div>
 </div>
 
-<!-- NOVA SEÇÃO: SERVIÇOS EXPRESSOS -->
+<!-- SEÇÃO: SERVIÇOS EXPRESSOS -->
 <section id="servicos-cro">
   <div class="produtos-header" style="margin-bottom: 20px;">
     <div><div class="section-tag">Soluções Rápidas</div><h2 class="section-title">Nossos <span class="dim">Serviços.</span></h2></div>
@@ -325,7 +359,6 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
       <div class="product-body">
         <h3 class="product-name">ACER NITRO V</h3>
         <span class="product-stock">● Em Estoque</span>
-        <!-- CTA Melhorado -->
         <button class="card-cta cta-filled" onclick="openChatWith('Quero garantir o meu Acer Nitro V')">Garantir o Meu</button>
       </div>
     </div>
@@ -368,7 +401,7 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   </div>
 </section>
 
-<!-- NOVA SEÇÃO: PROVA SOCIAL -->
+<!-- SEÇÃO: PROVA SOCIAL -->
 <section id="depoimentos-cro" style="background: var(--surface);">
   <div class="produtos-header" style="justify-content: center; text-align: center;">
     <div><div class="section-tag" style="justify-content: center; margin-bottom: 20px;">Resultados Reais</div><h2 class="section-title">Aprovado por <span class="dim">quem usa.</span></h2></div>
@@ -430,7 +463,7 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
 
 <script>
 // ==========================================
-// FUNÇÃO DO NOVO FORMULÁRIO (HERO)
+// FUNÇÃO DO NOVO FORMULÁRIO (HERO) + TRACKING
 // ==========================================
 function submitHeroLead() {
   const phone = document.getElementById('hero-phone').value.trim();
@@ -438,7 +471,18 @@ function submitHeroLead() {
     alert("Por favor, insira um WhatsApp válido com DDD.");
     return;
   }
-  // Envia direto para o WhatsApp do vendedor já com a mensagem e o número que o cliente digitou
+  
+  // 🎯 DISPARO DE EVENTOS DE CONVERSÃO (CRO)
+  if(typeof fbq === 'function') {
+    fbq('track', 'Lead');
+  }
+  if(typeof gtag === 'function') {
+    gtag('event', 'generate_lead', {
+      'event_category': 'WhatsApp',
+      'event_label': 'Formulario_Hero'
+    });
+  }
+
   const msg = encodeURIComponent(`Olá! Quero garantir a prioridade para atendimento. Meu número é ${phone}.`);
   window.open(`https://wa.me/5562000000000?text=${msg}`, '_blank');
 }
