@@ -148,11 +148,11 @@ section { padding: 100px 5%; background: var(--black); border-bottom: 1px solid 
 .product-name { font-family: var(--font-display); font-size: 32px; line-height: 1; margin-bottom: 8px; color: var(--white); }
 .product-stock { font-family: var(--font-mono); font-size: 11px; color: #22c55e; margin-bottom: 20px; display: inline-block; padding: 4px 8px; background: rgba(34, 197, 94, 0.1); border-radius: 4px; }
 
-.card-cta { width: 100%; padding: 14px; border-radius: 8px; font-family: var(--font-body); font-weight: 700; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: auto; }
+.card-cta { width: 100%; padding: 14px; border-radius: 8px; font-family: var(--font-body); font-weight: 700; font-size: 13px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; margin-top: auto; pointer-events: none; /* Evita conflito com o clique do card */ }
 .cta-filled { background: var(--orange); color: #fff; border: none; }
-.cta-filled:hover { background: #e64500; }
+.product-card:hover .cta-filled { background: #e64500; }
 .cta-outline { background: transparent; color: var(--white); border: 1px solid var(--border-color); }
-.cta-outline:hover { border-color: var(--orange); background: rgba(255,77,0,0.1); }
+.product-card:hover .cta-outline { border-color: var(--orange); background: rgba(255,77,0,0.1); }
 
 /* ── DEPOIMENTOS ── */
 .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
@@ -347,56 +347,64 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
   </div>
 </section>
 
+<!-- SEÇÃO: PRODUTOS (COM CARDS CLICÁVEIS) -->
 <section id="produtos">
   <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
   <div class="produtos-header">
     <div><div class="section-tag">Ofertas Ativas</div><h2 class="section-title">Estoque <span class="dim">Selecionado.</span></h2></div>
   </div>
   <div class="products-grid">
-    <div class="product-card reveal">
+    
+    <!-- Produto 1: Acer Nitro V -->
+    <div class="product-card reveal" onclick="window.location.href='produto-nitro.html'" style="cursor: pointer;">
       <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Nitro V"></div>
       <div class="product-body">
         <h3 class="product-name">ACER NITRO V</h3>
         <span class="product-stock">● Em Estoque</span>
-        <button class="card-cta cta-filled" onclick="openChatWith('Quero garantir o meu Acer Nitro V')">Garantir o Meu</button>
+        <button class="card-cta cta-filled">Ver Detalhes</button>
       </div>
     </div>
     
-    <div class="product-card reveal">
+    <!-- Produto 2: Ryzen 5 -->
+    <div class="product-card reveal" onclick="window.location.href='produto-ryzen.html'" style="cursor: pointer;">
       <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="Ryzen"></div>
       <div class="product-body">
         <h3 class="product-name">RYZEN 5 5600GT</h3>
         <span class="product-stock">● Pronta Entrega</span>
-        <button class="card-cta cta-filled" onclick="openChatWith('Qual o valor atual do Ryzen 5 5600GT?')">Ver Preço Especial</button>
+        <button class="card-cta cta-filled">Ver Detalhes</button>
       </div>
     </div>
     
-    <div class="product-card reveal">
+    <!-- Produto 3: RTX 3060 -->
+    <div class="product-card reveal" onclick="window.location.href='produto-rtx.html'" style="cursor: pointer;">
       <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX"></div>
       <div class="product-body">
         <h3 class="product-name">RTX 3060 12GB</h3>
         <span class="product-stock" style="color:var(--orange); background:rgba(255,77,0,0.1)">● Últimas Unidades</span>
-        <button class="card-cta cta-outline" onclick="openChatWith('Gostaria de reservar a RTX 3060')">Reservar Agora</button>
+        <button class="card-cta cta-outline">Ver Detalhes</button>
       </div>
     </div>
 
-    <div class="product-card reveal">
+    <!-- Produto 4: Cadeira Gamer -->
+    <div class="product-card reveal" onclick="window.location.href='produto-cadeira.html'" style="cursor: pointer;">
       <div class="product-img-wrap"><img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright"></div>
       <div class="product-body">
         <h3 class="product-name">CADEIRA GAMER BRIGHT</h3>
         <span class="product-stock">● Em Estoque</span>
-        <button class="card-cta cta-filled" onclick="openChatWith('Quero saber detalhes e entrega da Cadeira Bright')">Comprar Agora</button>
+        <button class="card-cta cta-filled">Ver Detalhes</button>
       </div>
     </div>
 
-    <div class="product-card reveal">
+    <!-- Produto 5: Monitor Acer -->
+    <div class="product-card reveal" onclick="window.location.href='produto-monitor.html'" style="cursor: pointer;">
       <div class="product-img-wrap"><img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer Acer"></div>
       <div class="product-body">
         <h3 class="product-name">MONITOR ACER 27" CURVO</h3>
         <span class="product-stock">● Pronta Entrega</span>
-        <button class="card-cta cta-filled" onclick="openChatWith('Qual o valor do Monitor Acer Curvo?')">Consultar Oferta</button>
+        <button class="card-cta cta-filled">Ver Detalhes</button>
       </div>
     </div>
+
   </div>
 </section>
 
