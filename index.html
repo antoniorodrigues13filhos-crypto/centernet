@@ -134,7 +134,7 @@ nav .cta-pill:hover { background: var(--orange-dim); transform: scale(1.04); }
 .hero-headline {
   font-family: var(--font-display);
   font-size: clamp(50px, 9vw, 140px);
-  line-height: 0.95; /* Corrigido de 0.85 para 0.95 para evitar colisão de acentos */
+  line-height: 0.95; 
   margin-bottom: 20px;
   color: var(--white);
   text-shadow: 0 10px 30px rgba(0,0,0,0.8);
@@ -317,6 +317,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   <button class="cta-pill" onclick="window.open('https://wa.me/5562993362276')">Falar com Especialista</button>
 </nav>
 
+<!-- HERO TRACK COM FLUID SCROLL-TELLING -->
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
@@ -331,31 +332,37 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
     
     <div class="hero-content">
       
+      <!-- Cena 0 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">O SEU TEMPO VALE MAIS<br>QUE UM PC <span style="color: var(--orange);">LENTO.</span></h1>
         <p class="hero-sub">Demorando para ligar? Travando bem na hora que você mais precisa?</p>
       </div>
 
+      <!-- Cena 1 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">NÓS <span style="color: var(--orange);">ACELERAMOS.</span></h1>
         <p class="hero-sub">O celular quebrou ou a bateria viciou? Trocamos rápido para você não parar.</p>
       </div>
 
+      <!-- Cena 2 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">O JOGO TÁ <span style="color: var(--orange);">TRAVANDO?</span></h1>
         <p class="hero-sub">Identificamos o gargalo e fazemos o upgrade exato para a sua máquina voar.</p>
       </div>
 
+      <!-- Cena 3 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">SISTEMAS DE <span style="color: var(--orange);">SEGURANÇA.</span></h1>
         <p class="hero-sub">A rede caiu? Câmeras falhando? Nós reconectamos e protegemos seu patrimônio.</p>
       </div>
 
+      <!-- Cena 4 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">MÁQUINAS QUE NÃO<br>TE DEIXAM NA <span style="color: var(--orange);">MÃO.</span></h1>
         <p class="hero-sub">Especialistas em montagem, performance extrema e reparo cirúrgico.</p>
       </div>
 
+      <!-- Cena 5 -->
       <div class="scroll-scene">
         <h1 class="hero-headline">RÁPIDO.<br>SEGURO.<br><span style="color: var(--orange);">DEFINITIVO.</span></h1>
         <p class="hero-sub">Especialistas em montagem, performance e reparo. Deixe o trabalho pesado com a gente.</p>
@@ -380,6 +387,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
+<!-- SEÇÃO DE PRODUTOS -->
 <section id="produtos">
   <div class="produtos-header">
     <div>
@@ -390,6 +398,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 
   <div class="products-grid">
+    <!-- CARD 1 -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Workstation V1</span>
       <div class="product-img-wrap">
@@ -406,6 +415,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 2 (FEATURED) -->
     <div class="product-card featured reveal reveal-d2">
       <span class="product-badge badge-hot">🔥 Mais Vendido</span>
       <div class="product-img-wrap">
@@ -422,6 +432,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 3 -->
     <div class="product-card reveal reveal-d3">
       <span class="product-badge badge-new">Upgrade GPU</span>
       <div class="product-img-wrap">
@@ -438,6 +449,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 4 (CADEIRA) -->
     <div class="product-card reveal reveal-d1">
       <span class="product-badge badge-default">Conforto</span>
       <div class="product-img-wrap">
@@ -454,6 +466,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
       </div>
     </div>
 
+    <!-- CARD 5 (MONITOR) -->
     <div class="product-card reveal reveal-d2">
       <span class="product-badge badge-new">Imersão</span>
       <div class="product-img-wrap">
@@ -472,6 +485,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </section>
 
+<!-- PROBLEMA / SOLUÇÃO -->
 <section id="problema">
   <div class="problema-grid">
     <div>
@@ -504,6 +518,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </section>
 
+<!-- SERVIÇOS -->
 <section id="servicos">
   <div class="servicos-inner">
     <div class="section-tag reveal">Serviços</div>
@@ -533,6 +548,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -632,7 +648,7 @@ function animate() {
       
       // Efeito Parallax (O texto sobe/desce numa velocidade "falsa" e muito fluida)
       const yShift = normalizedDist * 120; 
-      const blur = Math.abs(normalizedDist) * 15;
+      const blur = Math.abs(normalizedDist) * 8; // Blur reduzido para manter nítido por mais tempo
 
       scene.style.opacity = Math.max(0, opacity);
       scene.style.transform = `translateY(${yShift}px)`;
