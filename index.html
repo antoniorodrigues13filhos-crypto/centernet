@@ -230,7 +230,6 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
     <span class="ticker-item">📹 Sistemas de Segurança</span>
     <span class="ticker-item">📱 Smartphones</span>
     <span class="ticker-item">⚡ Upgrades de Hardware</span>
-    <!-- Itens duplicados para a animação contínua funcionar melhor -->
     <span class="ticker-item">🖥️ PCs e Notebooks</span>
     <span class="ticker-item">🪛 Montagem e Manutenção</span>
     <span class="ticker-item">⌨️ Periféricos de Performance</span>
@@ -246,9 +245,46 @@ footer { padding: 60px 5%; background: var(--surface); border-top: 1px solid var
     <div><div class="section-tag">Vitrine</div><h2 class="section-title">Conheça nossos <span class="dim">produtos.</span></h2></div>
   </div>
   <div class="products-grid">
-    <div class="product-card reveal"><div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Nitro V"></div><div class="product-body"><h3 class="product-name">ACER NITRO V</h3><button class="card-cta cta-filled" onclick="openChatWith('Gostaria de saber o stock do Acer Nitro V')">Consultar Stock</button></div></div>
-    <div class="product-card reveal"><div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="Ryzen"></div><div class="product-body"><h3 class="product-name">RYZEN 5 5600GT</h3><button class="card-cta cta-filled" onclick="openChatWith('Quero o preço do processador Ryzen 5 5600GT')">Ver Preço</button></div></div>
-    <div class="product-card reveal"><div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX"></div><div class="product-body"><h3 class="product-name">RTX 3060 12GB</h3><button class="card-cta cta-outline" onclick="openChatWith('Qual o valor da RTX 3060?')">Consultar</button></div></div>
+    <div class="product-card reveal">
+      <div class="product-img-wrap"><img src="produtos/nitrov5.png" alt="Nitro V"></div>
+      <div class="product-body">
+        <h3 class="product-name">ACER NITRO V</h3>
+        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de saber o stock do Acer Nitro V')">Consultar Stock</button>
+      </div>
+    </div>
+    
+    <div class="product-card reveal">
+      <div class="product-img-wrap"><img src="produtos/amdryzen5.png" alt="Ryzen"></div>
+      <div class="product-body">
+        <h3 class="product-name">RYZEN 5 5600GT</h3>
+        <button class="card-cta cta-filled" onclick="openChatWith('Quero o preço do processador Ryzen 5 5600GT')">Ver Preço</button>
+      </div>
+    </div>
+    
+    <div class="product-card reveal">
+      <div class="product-img-wrap"><img src="produtos/rtx3090.png" alt="RTX"></div>
+      <div class="product-body">
+        <h3 class="product-name">RTX 3060 12GB</h3>
+        <button class="card-cta cta-outline" onclick="openChatWith('Qual o valor da RTX 3060?')">Consultar</button>
+      </div>
+    </div>
+
+    <!-- NOVOS PRODUTOS ADICIONADOS AQUI -->
+    <div class="product-card reveal">
+      <div class="product-img-wrap"><img src="produtos/Cadeira Gamer Bright, até 120Kg, Reclinável, Preto.png" alt="Cadeira Gamer Bright"></div>
+      <div class="product-body">
+        <h3 class="product-name">CADEIRA GAMER BRIGHT</h3>
+        <button class="card-cta cta-filled" onclick="openChatWith('Gostaria de saber mais sobre a Cadeira Gamer Bright')">Ver Detalhes</button>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-wrap"><img src="produtos/Monitor Gamer 27 Curvo Full Hd 144hz 1ms HDMI Ed273 - Acer.png" alt="Monitor Gamer Acer"></div>
+      <div class="product-body">
+        <h3 class="product-name">MONITOR ACER 27" CURVO</h3>
+        <button class="card-cta cta-filled" onclick="openChatWith('Quero saber o valor do Monitor Acer 27 Curvo 144hz')">Ver Preço</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -315,7 +351,7 @@ function sendMessage() {
     // Normalização: Remove acentos e joga tudo para minúsculo
     const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     
-    // THE EASTER EGG (Com a pontuação corrigida!)
+    // THE EASTER EGG
     if(low.includes("jose") && low.includes("vagabundo")) {
       reply = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
     } 
@@ -326,6 +362,10 @@ function sendMessage() {
       reply = "A RTX 3060 de 12GB é o upgrade perfeito para quem quer performance. Posso reservar uma para si?";
     } else if(low.includes("ryzen") || low.includes("5600")) {
       reply = "O Ryzen 5 5600GT é um campeão de vendas pelo seu custo-benefício com gráficos integrados potentes.";
+    } else if(low.includes("cadeira") || low.includes("bright")) {
+      reply = "A Cadeira Gamer Bright suporta até 120kg, é reclinável e super confortável para as suas gameplays. Quer que eu verifique a disponibilidade?";
+    } else if(low.includes("monitor") || low.includes("curvo") || low.includes("144hz")) {
+      reply = "Esse Monitor Curvo da Acer de 27 polegadas com 144Hz e 1ms é sensacional para competitivos. Gostaria de saber os métodos de pagamento?";
     }
     
     botMsg.innerHTML = reply;
