@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Importação do P5.js para o efeito de desfragmentação digital -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
 <style>
 :root {
@@ -182,9 +184,9 @@ section { padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 10%); position: rel
 .section-title .dim { color: var(--grey); }
 
 /* ── PRODUTOS ── */
-#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); }
-.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; }
-.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+#produtos { max-width: 1400px; margin: 0 auto; background: var(--surface); border-bottom: 1px solid var(--border-color); position: relative; }
+.produtos-header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 56px; position: relative; z-index: 10; }
+.products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; z-index: 10; }
 
 .product-card { 
   background: linear-gradient(160deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,1) 100%);
@@ -317,7 +319,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   <button class="cta-pill" onclick="window.open('https://wa.me/5562993362276')">Falar com Especialista</button>
 </nav>
 
-<!-- HERO TRACK COM FLUID SCROLL-TELLING OTMIZADO -->
+<!-- HERO TRACK COM FLUID SCROLL-TELLING DESACOPLADO -->
 <div id="hero-track">
   <div class="hero-sticky">
     <canvas id="hero-canvas"></canvas>
@@ -387,8 +389,11 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
   </div>
 </div>
 
-<!-- SEÇÃO DE PRODUTOS -->
+<!-- SEÇÃO DE PRODUTOS COM CAMADA P5.JS PARA DESFRAGMENTAÇÃO DIGITAL -->
 <section id="produtos">
+  <!-- A CAMADA DO CANVAS P5 -->
+  <div id="p5-reveal-layer" style="position: absolute; inset: 0; z-index: 50; pointer-events: none;"></div>
+
   <div class="produtos-header">
     <div>
       <div class="section-tag reveal">Vitrine</div>
@@ -571,7 +576,7 @@ footer { background: var(--surface); padding: 60px clamp(20px, 5vw, 10%); }
 
 <script>
 // ==========================================
-// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO
+// LÓGICA DE SCROLL-TELLING E CANVAS FLUIDO (HERO)
 // ==========================================
 const canvas = document.getElementById('hero-canvas');
 const ctx = canvas.getContext('2d');
@@ -608,9 +613,10 @@ function render(index) {
   }
 }
 
-// Interpolação Matemática (LERP) unificada para máxima fluidez
+// Interpolação Matemática (LERP) unificada para máxima fluidez do Hero
 let targetScroll = 0;
-let smoothScroll = 0;
+let smoothScrollCanvas = 0;
+let smoothScrollText = 0;
 
 window.addEventListener('scroll', () => {
   const track = document.getElementById('hero-track');
@@ -623,10 +629,10 @@ window.addEventListener('scroll', () => {
 });
 
 function animate() {
-  // LERP unificado (0.08 é o ideal para 60/120Hz sem lag)
-  smoothScroll += (targetScroll - smoothScroll) * 0.08;
+  smoothScrollCanvas += (targetScroll - smoothScrollCanvas) * 0.12;
+  smoothScrollText += (targetScroll - smoothScrollText) * 0.03;
   
-  const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.floor(smoothScroll * frameCount))); 
+  const frameIndex = Math.min(frameCount - 1, Math.max(0, Math.floor(smoothScrollCanvas * frameCount))); 
   render(frameIndex);
 
   const scenes = document.querySelectorAll('.scroll-scene');
@@ -634,17 +640,15 @@ function animate() {
   
   scenes.forEach((scene, index) => {
     const sceneCenter = index / (numScenes - 1); 
-    const dist = smoothScroll - sceneCenter;
-    const threshold = 1.0 / numScenes; 
+    const dist = smoothScrollText - sceneCenter;
+    const threshold = 1.2 / numScenes; 
     
     if (Math.abs(dist) < threshold) {
       const normalizedDist = dist / threshold; 
-      
       const opacity = 1 - Math.pow(Math.abs(normalizedDist), 2);
       
-      // O efeito Parallax vem do deslocamento Y
-      const yShift = normalizedDist * 150; 
-      const blur = Math.abs(normalizedDist) * 8; // <-- Blur mantido baixo e ajustado
+      const yShift = normalizedDist * 180; 
+      const blur = Math.abs(normalizedDist) * 8; 
 
       scene.style.opacity = Math.max(0, opacity);
       scene.style.transform = `translateY(${yShift}px)`;
@@ -668,6 +672,80 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ==========================================
+// LÓGICA DA CAMADA P5.JS (REVELAÇÃO DIGITAL DOS PRODUTOS)
+// ==========================================
+const productRevealSketch = (p) => {
+  let cols, rows;
+  const size = 60; 
+  let offsets = [];
+  let container;
+
+  p.setup = () => {
+    container = document.getElementById('produtos');
+    let canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('p5-reveal-layer');
+    calculateGrid();
+  };
+
+  function calculateGrid() {
+    cols = p.floor(p.width / size) + 1;
+    rows = p.floor(p.height / size) + 1;
+    offsets = [];
+    
+    for (let i = 0; i < cols * rows; i++) {
+      offsets.push(p.noise(i * 0.1) * p.random(0.5, 1)); 
+    }
+  }
+
+  p.draw = () => {
+    p.clear(); 
+    
+    if(!container) return;
+    
+    let rectBounds = container.getBoundingClientRect();
+    let viewportHeight = window.innerHeight;
+
+    let progress = p.map(rectBounds.top, viewportHeight * 0.8, viewportHeight * 0.2, 0, 1);
+    progress = p.constrain(progress, 0, 1);
+
+    if (rectBounds.top > viewportHeight || rectBounds.bottom < 0) return;
+
+    p.noStroke();
+
+    let index = 0;
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        
+        let blockProgress = p.map(progress, offsets[index] * 0.6, (offsets[index] * 0.6) + 0.4, 0, 1);
+        blockProgress = p.constrain(blockProgress, 0, 1);
+
+        let currentSize = size * (1 - blockProgress);
+
+        if (currentSize > 0.5) {
+          p.fill(5, 5, 5, 255); 
+          p.rect(x * size + (size - currentSize)/2, y * size + (size - currentSize)/2, currentSize, currentSize);
+
+          if (blockProgress > 0.1 && blockProgress < 0.9) {
+            p.fill(255, 77, 0, 180); 
+            p.rect(x * size + (size - currentSize)/2, y * size + (size - currentSize)/2, currentSize, 2); 
+          }
+        }
+        index++;
+      }
+    }
+  };
+
+  p.windowResized = () => {
+    if(container) {
+      p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+      calculateGrid();
+    }
+  };
+};
+
+new p5(productRevealSketch);
 </script>
 
 </body>
