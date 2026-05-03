@@ -494,93 +494,166 @@ function submitHeroLead() {
 }
 
 // ==========================================
-// CHATBOT LOGIC (FUNIL DE 2 PASSOS)
+// CHATBOT PROFISSIONAL (UX OTIMIZADA)
 // ==========================================
 let chatOpen = false;
-let chatStep = 0; // Passo 0 = Pegar Dúvida | Passo 1 = Pegar Nome
-let clienteDuvida = "";
+const chatMessages = document.getElementById('chat-messages');
+const chatInput = document.getElementById('chat-input');
+
+let leadData = { nome: "", interesse: "", detalhe: "" };
 
 function toggleChat() { chatOpen ? closeChat() : openChat(); }
-function openChat() { document.getElementById('chat-box').style.display = 'flex'; chatOpen = true; document.querySelector('.fab-badge').style.display = 'none'; }
+
+function openChat() { 
+  document.getElementById('chat-box').style.display = 'flex'; 
+  chatOpen = true; 
+  document.querySelector('.fab-badge').style.display = 'none';
+  if (chatMessages.children.length <= 1) {
+    chatMessages.innerHTML = '';
+    apresentarBot();
+  }
+}
+
 function closeChat() { document.getElementById('chat-box').style.display = 'none'; chatOpen = false; }
+
+function getSaudacao() {
+  const hora = new Date().getHours();
+  if (hora >= 5 && hora < 12) return "Bom dia";
+  if (hora >= 12 && hora < 18) return "Boa tarde";
+  return "Boa noite";
+}
+
+function addMessage(text, type) {
+  const msg = document.createElement('div');
+  msg.className = type === 'bot' ? 'msg-bot' : 'msg-user';
+  msg.innerHTML = text;
+  chatMessages.appendChild(msg);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return msg;
+}
+
+function addOptions(options) {
+  const container = document.createElement('div');
+  container.style.cssText = "display:flex; flex-direction:column; gap:8px; margin-top:5px; width:100%;";
+  
+  options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.innerText = opt.text;
+    btn.style.cssText = "background:var(--surface2); border:1px solid var(--orange); color:white; padding:10px; border-radius:8px; cursor:pointer; font-size:13px; text-align:left; transition:0.2s; font-family:var(--font-body);";
+    btn.onclick = () => {
+      container.remove();
+      handleUserChoice(opt);
+    };
+    btn.onmouseover = () => btn.style.background = "rgba(255,69,0,0.1)";
+    btn.onmouseout = () => btn.style.background = "var(--surface2)";
+    container.appendChild(btn);
+  });
+  chatMessages.appendChild(container);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function botTyping(callback, delay = 1200) {
+  chatInput.disabled = true;
+  const typing = addMessage("...", "bot");
+  setTimeout(() => {
+    typing.remove();
+    chatInput.disabled = false;
+    callback();
+  }, delay);
+}
+
+function apresentarBot() {
+  botTyping(() => {
+    addMessage(`${getSaudacao()}! Sou a Camila. No que posso ajudar hoje?`, 'bot');
+    addOptions([
+      { text: "📦 Quero saber sobre produtos e ofertas", val: "produtos" },
+      { text: "🛠️ Quero assistência técnica", val: "manutencao" }
+    ]);
+  });
+}
+
+function handleUserChoice(opt) {
+  addMessage(opt.text, 'user');
+  
+  if (opt.val === 'produtos') {
+    leadData.interesse = "Produtos";
+    botTyping(() => {
+      addMessage("Perfeito! Qual produto você quer?", "bot");
+      addOptions([
+        { text: "💻 Acer Nitro V", val: "Acer Nitro V" },
+        { text: "⚡ Ryzen 5 5600GT", val: "Ryzen 5 5600GT" },
+        { text: "🎮 NVIDIA RTX 3060", val: "NVIDIA RTX 3060" },
+        { text: "💺 Cadeira Bright", val: "Cadeira Bright" },
+        { text: "🖥️ Monitor Acer 27\"", val: "Monitor Acer 27" }
+      ]);
+    });
+  } else if (opt.val === 'manutencao') {
+    leadData.interesse = "Assistência Técnica";
+    botTyping(() => {
+      addMessage("Perfeito. Qual aparelho precisa de reparo?", "bot");
+      addOptions([
+        { text: "📱 Celular", val: "Celular" },
+        { text: "💻 Notebook", val: "Notebook" },
+        { text: "🖥️ Desktop", val: "Desktop" }
+      ]);
+    });
+  } else {
+    leadData.detalhe = opt.val;
+    pedirNome();
+  }
+}
+
+function pedirNome() {
+  botTyping(() => {
+    let feedback = "";
+    if(leadData.interesse === "Produtos") {
+      feedback = `Excelente escolha! O <b>${leadData.detalhe}</b> traz muita performance e ótimo custo-benefício.`;
+    } else {
+      feedback = `Entendido! Nossos técnicos são especialistas em <b>${leadData.detalhe}</b> e resolvem isso rápido.`;
+    }
+    addMessage(feedback + "<br><br>Para eu te passar as informações, <b>qual o seu nome?</b>", "bot");
+    chatInput.placeholder = "Digite seu nome...";
+    chatInput.focus();
+  });
+}
 
 function openChatWith(msg) {
   openChat();
-  document.getElementById('chat-input').value = msg;
-  sendMessage();
-}
-
-function forceZAP(nome) {
-  const finalMsg = encodeURIComponent(`Olá, meu nome é ${nome}. Vim pelo chat do site e preciso de: "${clienteDuvida}"`);
-  window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${finalMsg}`, '_blank');
+  if (!leadData.interesse) {
+    chatMessages.innerHTML = '';
+    leadData.interesse = "Contato via Site";
+    leadData.detalhe = msg;
+    addMessage(msg, 'user');
+    pedirNome();
+  }
 }
 
 function sendMessage() {
-  const input = document.getElementById('chat-input');
-  const text = input.value.trim();
-  if(!text) return;
+  const text = chatInput.value.trim();
+  if (!text) return;
 
-  const container = document.getElementById('chat-messages');
-  const userMsg = document.createElement('div');
-  userMsg.className = 'msg-user';
-  userMsg.textContent = text;
-  container.appendChild(userMsg);
-  input.value = '';
-  container.scrollTop = container.scrollHeight;
+  addMessage(text, 'user');
+  chatInput.value = "";
 
-  // Trava o input enquanto ela "digita"
-  input.disabled = true;
-
-  setTimeout(() => {
-    const botMsg = document.createElement('div');
-    botMsg.className = 'msg-bot';
-    let reply = "";
-    
-    // PASSO 0: LENDO A NECESSIDADE E PEDINDO O NOME
-    if (chatStep === 0) {
-        clienteDuvida = text; // Salva o que ele quer
-        const low = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        
-        let intro = "Entendi! Nossos especialistas resolvem isso rápido.";
-        
-        if(low.includes("jose") && low.includes("vagabundo")) {
-          intro = "Sim, é por causa de homens assim que estamos indo para a Terceira Guerra Mundial.";
-        } else if(low.includes("nitro") || low.includes("notebook")) {
-          intro = "O Acer Nitro V é incrível! Temos a pronta entrega.";
-        } else if(low.includes("rtx") || low.includes("3060")) {
-          intro = "A RTX 3060 é um upgrade e tanto. Estamos com preço especial.";
-        } else if(low.includes("cadeira") || low.includes("bright")) {
-          intro = "A Cadeira Bright é super confortável e suporta 120kg.";
-        } else if(low.includes("limpeza") || low.includes("preventiva")) {
-          intro = "Excelente! Nossa limpeza já inclui troca de pasta térmica de alta performance.";
-        }
-        
-        reply = intro + " Já vou avisar o técnico aqui e abrir seu WhatsApp. <br><br><b>Qual é o seu nome?</b>";
-        chatStep = 1; // Avança o funil
-    } 
-    // PASSO 1: PEGOU O NOME E JOGA PRO ZAP
-    else if (chatStep === 1) {
-        const clienteNome = text;
-        reply = `Obrigada, ${clienteNome}! Redirecionando para o nosso WhatsApp Seguro... 🚀<br><br><span style="font-size:12px; color:var(--grey)">Se não abrir automático, <a href="#" onclick="forceZAP('${clienteNome}')" style="color:var(--orange)">clique aqui</a>.</span>`;
-        
-        // Disparo de Conversão
-        if(typeof fbq === 'function') fbq('track', 'Lead');
-        if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot'});
-        
-        // Monta a mensagem pré-pronta e abre o zap
-        setTimeout(() => { forceZAP(clienteNome); }, 1500);
-        
-        chatStep = 0; // Reseta para o próximo cliente
-    }
-
-    botMsg.innerHTML = reply;
-    container.appendChild(botMsg);
-    container.scrollTop = container.scrollHeight;
-    
-    // Libera o input e foca
-    input.disabled = false;
-    input.focus();
-  }, 1200);
+  if (!leadData.nome) {
+    leadData.nome = text;
+    botTyping(() => {
+      addMessage(`Prazer, ${leadData.nome}! Me informe seu <b>WhatsApp com DDD</b> para enviarmos para o atendente:`, "bot");
+      chatInput.placeholder = "(00) 00000-0000";
+      chatInput.focus();
+    });
+  } else {
+    const telefone = text;
+    botTyping(() => {
+      addMessage("Obrigada! Redirecionando para o WhatsApp... 🚀", "bot");
+      
+      if(typeof fbq === 'function') fbq('track', 'Lead');
+      if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot'});
+      
+      const msgFinal = encodeURIComponent(`Olá, João Henrique! Aqui é ${leadData.nome}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
+      setTimeout(() => { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msgFinal}`, '_blank'); }, 1500);
+    });
+  }
 }
 
 document.getElementById('chat-input').addEventListener('keypress', e => { if(e.key === 'Enter') sendMessage(); });
@@ -679,5 +752,4 @@ new p5((p) => {
 </script>
 
 </body>
-</html>
 </html>
