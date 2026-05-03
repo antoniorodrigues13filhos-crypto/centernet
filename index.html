@@ -645,13 +645,32 @@ function sendMessage() {
   } else {
     const telefone = text;
     botTyping(() => {
-      addMessage("Obrigada! Redirecionando para o WhatsApp... 🚀", "bot");
+      addMessage("Obrigada! Registrando suas informações e redirecionando para o WhatsApp... 🚀", "bot");
+      
+      const scriptUrl = "https://script.google.com/macros/s/AKfycbxV39PMtrqp_gvsI0d7MR_i50e5KAjzOSa7Rz3g56TDPviJqB3KxMAGxbTel5hKe1VrFg/exec";
+      
+      const payload = {
+        nome: leadData.nome,
+        telefone: telefone,
+        interesse: leadData.interesse,
+        detalhe: leadData.detalhe,
+        data: new Date().toLocaleString('pt-BR')
+      };
+
+      fetch(scriptUrl, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" }, 
+        body: JSON.stringify(payload)
+      }).catch(err => console.error("Erro na planilha:", err));
       
       if(typeof fbq === 'function') fbq('track', 'Lead');
       if(typeof gtag === 'function') gtag('event', 'generate_lead', {'event_category': 'WhatsApp', 'event_label': 'Chatbot'});
       
       const msgFinal = encodeURIComponent(`Olá, João Henrique! Aqui é ${leadData.nome}. Vim pelo site e tenho interesse em ${leadData.interesse} para: ${leadData.detalhe}. Meu contato é: ${telefone}`);
-      setTimeout(() => { window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msgFinal}`, '_blank'); }, 1500);
+      
+      setTimeout(() => { 
+        window.open(`https://wa.me/${NUMERO_WHATSAPP}?text=${msgFinal}`, '_blank'); 
+      }, 1500);
     });
   }
 }
@@ -681,7 +700,6 @@ for (let i = 1; i <= frameCount; i++) {
         setTimeout(() => { 
           document.getElementById('preloader').style.display = 'none';
           
-          // 👇 O SEGREDO ESTÁ AQUI: Força o scroll para a vitrine após carregar 👇
           if(window.location.hash === '#produtos') {
             document.getElementById('produtos').scrollIntoView({ behavior: 'smooth' });
           }
